@@ -35,18 +35,57 @@ public class Gameboard {
 		GamePiece currentPiece = player.getPiece(player.getPiecesLeft().indexOf(piece));
 		for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
 			if (isValid(piece,player)) {
-				
+				grid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
+				player.getPiecesLeft().remove(piece);
 			}
 		}
 	}
 	
 	public boolean isValid (GamePiece piece, Player player) {
+		//checks for validness based on players' other pieces
 		for (int i = 0; i < piece.getCornerCoordinates().size(); i++) {
-			if (grid[piece.getCornerCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()] == player.getID()) {
-				
+			if (piece.getCornerCoordinates().get(i).getX() < gridSize-1 
+				&& grid[piece.getCornerCoordinates().get(i).getX()+1][piece.getCornerCoordinates().get(i).getY()] == player.getID()) {
+				for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
+					if (!piece.getPieceCoordinates().contains(new Position(piece.getCornerCoordinates().get(i).getX()+1, piece.getCornerCoordinates().get(i).getY()))) {
+						return false;
+					}
+				}
+			}
+			if (piece.getCornerCoordinates().get(i).getX() > 0 
+				&& grid[piece.getCornerCoordinates().get(i).getX()-1][piece.getCornerCoordinates().get(i).getY()] == player.getID()) {
+				for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
+					if (!piece.getPieceCoordinates().contains(new Position(piece.getCornerCoordinates().get(i).getX()-1, piece.getCornerCoordinates().get(i).getY()))) {
+						return false;
+					}
+				}
+			}
+			if (piece.getCornerCoordinates().get(i).getY() < gridSize-1 
+				&& grid[piece.getCornerCoordinates().get(i).getX()][piece.getCornerCoordinates().get(i).getY()+1] == player.getID()) {
+				for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
+					if (!piece.getPieceCoordinates().contains(new Position(piece.getCornerCoordinates().get(i).getX(), piece.getCornerCoordinates().get(i).getY()+1))) {
+						return false;
+					}
+				}
+			}
+			if (piece.getCornerCoordinates().get(i).getY() > 0 
+				&& grid[piece.getCornerCoordinates().get(i).getX()][piece.getCornerCoordinates().get(i).getY()-1] == player.getID()) {
+				for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
+					if (!piece.getPieceCoordinates().contains(new Position(piece.getCornerCoordinates().get(i).getX(), piece.getCornerCoordinates().get(i).getY()-1))) {
+						return false;
+					}
+				}
 			}
 		}
-		return false;
+		
+		//checks for validness based on other players' pieces
+		for (int i = 0; i < piece.getPieceCoordinates().size(); i++) {
+			if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0
+				&& grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != player.getID()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public void print(Gameboard board) {
@@ -61,7 +100,9 @@ public class Gameboard {
 	public static void main (String[] args) {
 		Gameboard board = new Gameboard(4);
 		Player player1 = new Player("matthew", 1);
+		Player player2 = new Player("jeffrey", 2);
 		board.placePiece(player1.getPiece(2), player1);
+		board.placePiece(player2.getPiece(1), player2);
 		board.print(board);
 	}
 }
