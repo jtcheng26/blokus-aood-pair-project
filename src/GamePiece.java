@@ -3,15 +3,21 @@ import java.util.List;
 
 public abstract class GamePiece {
 	private String name;
-	private Position loc = new Position(0, 0);
+	private Position loc;
 	GamePiece(String name) {
 		this.name = name;
+	}
+	GamePiece(String name, Position loc) {
+		this.name = name;
+		this.loc = loc;
 	}
 	public List<Position> getPieceCoordinates() {
 		List<Position> pieceDeltas = getPieceDeltas();
 		List<Position> pieceCoordinates = new ArrayList<Position>();
 		for (Position pos : pieceDeltas) {
-			pieceCoordinates.add(new Position(this.loc.getX() + pos.getX(), this.loc.getY() + pos.getY()));
+			int xLoc = this.loc.getX() + pos.getX();
+			int yLoc = this.loc.getY() + pos.getY();
+			pieceCoordinates.add(new Position(xLoc, yLoc));
 		}
 		return pieceCoordinates;
 	}
@@ -19,7 +25,10 @@ public abstract class GamePiece {
 		List<Position> cornerDeltas = getCornerDeltas();
 		List<Position> cornerCoordinates = new ArrayList<Position>();
 		for (Position pos : cornerDeltas) {
-			cornerCoordinates.add(new Position(this.loc.getX() + pos.getX(), this.loc.getY() + pos.getY()));
+			int xLoc = this.loc.getX() + pos.getX();
+			int yLoc = this.loc.getY() + pos.getY();
+			if (0 <= xLoc && xLoc < Gameboard.GRID_SIZE && 0 <= yLoc && yLoc < Gameboard.GRID_SIZE)
+				cornerCoordinates.add(new Position(xLoc, yLoc));
 		}
 		return cornerCoordinates;
 	}
@@ -104,7 +113,7 @@ public abstract class GamePiece {
 		piece.printPiece();
 	}
 	public static void main(String[] args) {
-		testPiece(new WPiece());
+		testPiece(new LPiece());
 	}
 }
 
@@ -112,7 +121,7 @@ class LPiece extends GamePiece {
 	private List<Position> pieceDeltas;
 	private List<Position> cornerDeltas;
 	LPiece() {
-		super("L Shape");
+		super("L Shape", new Position(-1, -1));
 		pieceDeltas = new ArrayList<Position>();
 		pieceDeltas.add(new Position(1, 1));
 		pieceDeltas.add(new Position(2, 1));
@@ -124,6 +133,7 @@ class LPiece extends GamePiece {
 		cornerDeltas.add(new Position(0, 0));
 		cornerDeltas.add(new Position(4, 0));
 		cornerDeltas.add(new Position(4, 2));
+		cornerDeltas.add(new Position(2, 4));
 		cornerDeltas.add(new Position(0, 4));
 		cornerDeltas.add(new Position(0, 4));
 	}
@@ -139,7 +149,7 @@ class XPiece extends GamePiece {
 	private List<Position> pieceDeltas;
 	private List<Position> cornerDeltas;
 	XPiece() {
-		super("Cross Shape");
+		super("Cross Shape", new Position(-1, -1));
 		pieceDeltas = new ArrayList<Position>();
 		pieceDeltas.add(new Position(2, 2));
 		pieceDeltas.add(new Position(2, 1));
@@ -169,7 +179,7 @@ class WPiece extends GamePiece {
 	private List<Position> pieceDeltas;
 	private List<Position> cornerDeltas;
 	WPiece() {
-		super("W Shape");
+		super("W Shape", new Position(-1, -1));
 		pieceDeltas = new ArrayList<Position>();
 		pieceDeltas.add(new Position(2, 2));
 		pieceDeltas.add(new Position(2, 3));
