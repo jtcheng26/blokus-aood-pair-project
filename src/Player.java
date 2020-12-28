@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-	 private List<GamePiece> piecesLeft;
+	 private List<GamePiece> piecesLeft = new ArrayList<GamePiece>();
 	 private int score;
 	 private String playerName;
 	 private int playerID;
@@ -40,5 +41,8 @@ public class Player {
 		 System.out.println(player1.getName());
 		 System.out.println(player1.getScore());
 		 System.out.println(player1.getID());
+		 System.out.println(player1.getPiece(0).getName());
+		 System.out.println(player1.getPiece(1).getName());
+		 System.out.println(player1.getPiece(2).getName());
 	 }
 }
