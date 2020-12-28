@@ -3,12 +3,28 @@ import java.util.List;
 
 public abstract class GamePiece {
 	private String name;
-	private Position loc;
+	private Position loc = new Position(0, 0);
 	GamePiece(String name) {
 		this.name = name;
 	}
-	abstract public List<Position> getPieceCoordinates();
-	abstract public List<Position> getCornerCoordinates();
+	public List<Position> getPieceCoordinates() {
+		List<Position> pieceDeltas = getPieceDeltas();
+		List<Position> pieceCoordinates = new ArrayList<Position>();
+		for (Position pos : pieceDeltas) {
+			pieceCoordinates.add(new Position(this.loc.getX() + pos.getX(), this.loc.getY() + pos.getY()));
+		}
+		return pieceCoordinates;
+	}
+	public List<Position> getCornerCoordinates() {
+		List<Position> cornerDeltas = getCornerDeltas();
+		List<Position> cornerCoordinates = new ArrayList<Position>();
+		for (Position pos : cornerDeltas) {
+			cornerCoordinates.add(new Position(this.loc.getX() + pos.getX(), this.loc.getY() + pos.getY()));
+		}
+		return cornerCoordinates;
+	}
+	abstract protected List<Position> getPieceDeltas();
+	abstract protected List<Position> getCornerDeltas();
 	public String getName() {
 		return this.name;
 	}
@@ -25,8 +41,8 @@ public abstract class GamePiece {
 		this.loc = new Position(loc.getX(), loc.getY() + 1);
 	}
 	public void rotatePiece() {
-		List<Position> coordinates = getPieceCoordinates();
-		List<Position>  corners = getCornerCoordinates();
+		List<Position> coordinates = getPieceDeltas();
+		List<Position>  corners = getCornerDeltas();
 		for (int i=0;i<coordinates.size();i++) {
 			coordinates.set(i, new Position(coordinates.get(i).getY(), 4 - coordinates.get(i).getX()));
 		}
@@ -35,8 +51,8 @@ public abstract class GamePiece {
 		}
 	}
 	public void flipPiece() {
-		List<Position> coordinates = getPieceCoordinates();
-		List<Position>  corners = getCornerCoordinates();
+		List<Position> coordinates = getPieceDeltas();
+		List<Position>  corners = getCornerDeltas();
 		for (int i=0;i<coordinates.size();i++) {
 			coordinates.set(i, new Position(4 - coordinates.get(i).getX(), coordinates.get(i).getY()));
 		}
@@ -93,87 +109,87 @@ public abstract class GamePiece {
 }
 
 class LPiece extends GamePiece {
-	private List<Position> pieceCoordinates;
-	private List<Position> cornerCoordinates;
+	private List<Position> pieceDeltas;
+	private List<Position> cornerDeltas;
 	LPiece() {
 		super("L Shape");
-		pieceCoordinates = new ArrayList<Position>();
-		pieceCoordinates.add(new Position(1, 1));
-		pieceCoordinates.add(new Position(2, 1));
-		pieceCoordinates.add(new Position(3, 1));
-		pieceCoordinates.add(new Position(1, 2));
-		pieceCoordinates.add(new Position(1, 3));
+		pieceDeltas = new ArrayList<Position>();
+		pieceDeltas.add(new Position(1, 1));
+		pieceDeltas.add(new Position(2, 1));
+		pieceDeltas.add(new Position(3, 1));
+		pieceDeltas.add(new Position(1, 2));
+		pieceDeltas.add(new Position(1, 3));
 		
-		cornerCoordinates = new ArrayList<Position>();
-		cornerCoordinates.add(new Position(0, 0));
-		cornerCoordinates.add(new Position(4, 0));
-		cornerCoordinates.add(new Position(4, 2));
-		cornerCoordinates.add(new Position(0, 4));
-		cornerCoordinates.add(new Position(0, 4));
+		cornerDeltas = new ArrayList<Position>();
+		cornerDeltas.add(new Position(0, 0));
+		cornerDeltas.add(new Position(4, 0));
+		cornerDeltas.add(new Position(4, 2));
+		cornerDeltas.add(new Position(0, 4));
+		cornerDeltas.add(new Position(0, 4));
 	}
-	public List<Position> getPieceCoordinates() {
-		return this.pieceCoordinates;
+	protected List<Position> getPieceDeltas() {
+		return this.pieceDeltas;
 	}
-	public List<Position> getCornerCoordinates() {
-		return this.cornerCoordinates;
+	protected List<Position> getCornerDeltas() {
+		return this.cornerDeltas;
 	}
 }
 
 class XPiece extends GamePiece {
-	private List<Position> pieceCoordinates;
-	private List<Position> cornerCoordinates;
+	private List<Position> pieceDeltas;
+	private List<Position> cornerDeltas;
 	XPiece() {
 		super("Cross Shape");
-		pieceCoordinates = new ArrayList<Position>();
-		pieceCoordinates.add(new Position(2, 2));
-		pieceCoordinates.add(new Position(2, 1));
-		pieceCoordinates.add(new Position(2, 3));
-		pieceCoordinates.add(new Position(1, 2));
-		pieceCoordinates.add(new Position(3, 2));
+		pieceDeltas = new ArrayList<Position>();
+		pieceDeltas.add(new Position(2, 2));
+		pieceDeltas.add(new Position(2, 1));
+		pieceDeltas.add(new Position(2, 3));
+		pieceDeltas.add(new Position(1, 2));
+		pieceDeltas.add(new Position(3, 2));
 		
-		cornerCoordinates = new ArrayList<Position>();
-		cornerCoordinates.add(new Position(1, 4));
-		cornerCoordinates.add(new Position(3, 4));
-		cornerCoordinates.add(new Position(1, 0));
-		cornerCoordinates.add(new Position(3, 0));
-		cornerCoordinates.add(new Position(0, 1));
-		cornerCoordinates.add(new Position(0, 3));
-		cornerCoordinates.add(new Position(4, 1));
-		cornerCoordinates.add(new Position(4, 3));
+		cornerDeltas = new ArrayList<Position>();
+		cornerDeltas.add(new Position(1, 4));
+		cornerDeltas.add(new Position(3, 4));
+		cornerDeltas.add(new Position(1, 0));
+		cornerDeltas.add(new Position(3, 0));
+		cornerDeltas.add(new Position(0, 1));
+		cornerDeltas.add(new Position(0, 3));
+		cornerDeltas.add(new Position(4, 1));
+		cornerDeltas.add(new Position(4, 3));
 	}
-	public List<Position> getPieceCoordinates() {
-		return this.pieceCoordinates;
+	protected List<Position> getPieceDeltas() {
+		return this.pieceDeltas;
 	}
-	public List<Position> getCornerCoordinates() {
-		return this.cornerCoordinates;
+	protected List<Position> getCornerDeltas() {
+		return this.cornerDeltas;
 	}
 }
 
 class WPiece extends GamePiece {
-	private List<Position> pieceCoordinates;
-	private List<Position> cornerCoordinates;
+	private List<Position> pieceDeltas;
+	private List<Position> cornerDeltas;
 	WPiece() {
 		super("W Shape");
-		pieceCoordinates = new ArrayList<Position>();
-		pieceCoordinates.add(new Position(2, 2));
-		pieceCoordinates.add(new Position(2, 3));
-		pieceCoordinates.add(new Position(1, 2));
-		pieceCoordinates.add(new Position(1, 1));
-		pieceCoordinates.add(new Position(3, 3));
+		pieceDeltas = new ArrayList<Position>();
+		pieceDeltas.add(new Position(2, 2));
+		pieceDeltas.add(new Position(2, 3));
+		pieceDeltas.add(new Position(1, 2));
+		pieceDeltas.add(new Position(1, 1));
+		pieceDeltas.add(new Position(3, 3));
 		
-		cornerCoordinates = new ArrayList<Position>();
-		cornerCoordinates.add(new Position(3, 1));
-		cornerCoordinates.add(new Position(0, 3));
-		cornerCoordinates.add(new Position(0, 0));
-		cornerCoordinates.add(new Position(2, 0));
-		cornerCoordinates.add(new Position(1, 4));
-		cornerCoordinates.add(new Position(4, 4));
-		cornerCoordinates.add(new Position(4, 2));
+		cornerDeltas = new ArrayList<Position>();
+		cornerDeltas.add(new Position(3, 1));
+		cornerDeltas.add(new Position(0, 3));
+		cornerDeltas.add(new Position(0, 0));
+		cornerDeltas.add(new Position(2, 0));
+		cornerDeltas.add(new Position(1, 4));
+		cornerDeltas.add(new Position(4, 4));
+		cornerDeltas.add(new Position(4, 2));
 	}
-	public List<Position> getPieceCoordinates() {
-		return this.pieceCoordinates;
+	protected List<Position> getPieceDeltas() {
+		return this.pieceDeltas;
 	}
-	public List<Position> getCornerCoordinates() {
-		return this.cornerCoordinates;
+	protected List<Position> getCornerDeltas() {
+		return this.cornerDeltas;
 	}
 }
