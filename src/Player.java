@@ -8,9 +8,6 @@ public class Player {
 	 private int playerID;
 	 
 	 Player (String name, int id) {
-		 piecesLeft.add(new LPiece());
-		 piecesLeft.add(new XPiece());
-		 piecesLeft.add(new WPiece());
 		 playerName = name;
 		 playerID = id;
 		 score = 0;
@@ -25,6 +22,9 @@ public class Player {
 	 }
 	 
 	 public int getScore () {
+		 for (int i = 0; i < this.getPiecesLeft().size(); i++) {
+			 score = 89-this.getPiecesLeft().get(i).getPieceCoordinates().size();
+		 }
 		 return score;
 	 }
 	 
