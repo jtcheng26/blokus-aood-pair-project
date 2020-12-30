@@ -81,6 +81,8 @@ class GamePieceTester {
 		//testPiece(new XPiece());
 		//testPiece(new WPiece());
 		//testPiece(new IPiece());
-		testPiece(new TPiece());
+		//testPiece(new TPiece());
+		//testPiece(new BPiece());
+		testPiece(new CPiece());
 	}
 }
