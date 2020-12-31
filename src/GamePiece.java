@@ -13,13 +13,6 @@ public class GamePiece {
 		this.pieceDeltas = pieceDeltas;
 		this.build();
 	}
-	GamePiece(String name, Position loc, List<Position> pieceDeltas, List<Position> cornerDeltas, List<Position> adjacentDeltas) {
-		this.name = name;
-		this.loc = loc;
-		this.pieceDeltas = pieceDeltas;
-		this.cornerDeltas = cornerDeltas;
-		this.adjacentDeltas = adjacentDeltas;
-	}
 	private void build() {
 		this.cornerDeltas = new ArrayList<Position>();
 		this.adjacentDeltas = new ArrayList<Position>();
@@ -86,6 +79,9 @@ public class GamePiece {
 	}
 	public String getName() {
 		return this.name;
+	}
+	public void setLocation(Position pos) { // testing purposes only
+		this.loc = pos;
 	}
 	public void moveUp() {
 		this.loc = new Position(loc.getX(), loc.getY() + 1);
