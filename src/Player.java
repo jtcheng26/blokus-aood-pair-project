@@ -11,6 +11,7 @@ public class Player {
 		 playerName = name;
 		 playerID = id;
 		 score = 0;
+		 piecesLeft = GamePieceFactory.getGamePieceSet();
 	 }
 	 
 	 public GamePiece getPiece (int index) {
