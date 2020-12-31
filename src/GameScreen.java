@@ -70,6 +70,8 @@ public class GameScreen {
 						if (onEnter()) {
 							done = true;
 							break;
+						} else {
+							System.out.println("Invalid");
 						}
 				}
 			}
@@ -84,7 +86,8 @@ public class GameScreen {
 		do {
 			currentTurn = (currentTurn + 1) % players.size();
 		} while (isOut[currentTurn] && currentTurn != orig);
-		System.out.println("changeTurns was called with 0 players remaining.");
+		if (orig == currentTurn)
+			System.out.println("changeTurns was called with 0 players remaining.");
 	}
 	private void endGame() {
 		ArrayList<Player> winners = new ArrayList<Player>();
