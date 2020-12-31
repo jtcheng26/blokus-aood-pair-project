@@ -47,10 +47,12 @@ public class Gameboard {
 	public boolean isValid (GamePiece piece, Player player) {
 		//checks if corner for first piece
 		if (player.getPiecesLeft().size() == 7) {
-			System.out.println("sds");
 			if (!piece.getCornerCoordinates().contains(new Position(0,0)) && !piece.getCornerCoordinates().contains(new Position(0,this.gridSize))
 				&& !piece.getCornerCoordinates().contains(new Position(this.gridSize,0)) && !piece.getCornerCoordinates().contains(new Position(this.gridSize,this.gridSize))) {
+				System.out.println("sfsfd");
 				return false;
+			} else {
+				return true;
 			}
 		} else {
 			//checks for validness based on players' other pieces
@@ -156,7 +158,6 @@ public class Gameboard {
 			}
 			return false;
 		}
-		return false;
 	}
 	
 	public void print(Gameboard board) {
