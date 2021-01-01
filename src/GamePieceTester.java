@@ -76,13 +76,56 @@ class GamePieceTester {
 		testReflection(piece);
 		testRotation(piece);
 	}
+	public static void test5Pieces() {
+		System.out.println("Testing all 5-square pieces");
+		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet5();
+		for (GamePiece piece : pieces) {
+			System.out.println("Testing 5-square piece: " + piece.getName());
+			piece.setLocation(new Position(0, 0));
+			printPiece(piece);
+		}
+	}
+	public static void test4Pieces() {
+		System.out.println("Testing all 4-square pieces");
+		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet4();
+		for (GamePiece piece : pieces) {
+			System.out.println("Testing 4-square piece: " + piece.getName());
+			piece.setLocation(new Position(0, 0));
+			printPiece(piece);
+		}
+	}
+	public static void test3Pieces() {
+		System.out.println("Testing all 3-square pieces");
+		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet3();
+		for (GamePiece piece : pieces) {
+			System.out.println("Testing 3-square piece: " + piece.getName());
+			piece.setLocation(new Position(0, 0));
+			printPiece(piece);
+		}
+	}
+	public static void test2Pieces() {
+		System.out.println("Testing all 2-square pieces");
+		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet2();
+		for (GamePiece piece : pieces) {
+			System.out.println("Testing 2-square piece: " + piece.getName());
+			piece.setLocation(new Position(0, 0));
+			printPiece(piece);
+		}
+	}
+	public static void test1Pieces() {
+		System.out.println("Testing all 1-square pieces");
+		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet1();
+		for (GamePiece piece : pieces) {
+			System.out.println("Testing 1-square piece: " + piece.getName());
+			piece.setLocation(new Position(0, 0));
+			printPiece(piece);
+		}
+	}
 	public static void main(String[] args) {
-		//testPiece(new LPiece());
-		//testPiece(new XPiece());
-		//testPiece(new WPiece());
-		//testPiece(new IPiece());
-		//testPiece(new TPiece());
-		//testPiece(new BPiece());
-		testPiece(new CPiece());
+		test5Pieces();
+		test4Pieces();
+		test3Pieces();
+		test2Pieces();
+		test1Pieces();
 	}
 }
