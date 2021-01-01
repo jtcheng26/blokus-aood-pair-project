@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class GameScreen {
 	private GamePiece selectedPiece;
-	private boolean valid;
 	private Gameboard board;
 	private List<Player> players;
 	private boolean[] isOut;
@@ -16,7 +15,6 @@ public class GameScreen {
 		this.isOut = new boolean[players.size()];
 		this.currentTurn = 0;
 		this.selectedPiece = null;
-		this.valid = false;
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -31,7 +29,6 @@ public class GameScreen {
 		this.isOut = new boolean[players.size()];
 		this.currentTurn = 0;
 		this.selectedPiece = null;
-		this.valid = false;
 		this.PLAY_CONSOLE_GAME();
 		sc.close();
 	}
@@ -42,16 +39,17 @@ public class GameScreen {
 		while (in > 0) {
 			currentPlayer = players.get(currentTurn);
 			board.print(board);
-			System.out.println("Choose a piece: ");
 			List<GamePiece> piecesLeft = currentPlayer.getPiecesLeft();
 			HashMap<String, GamePiece> pieces = new HashMap<String, GamePiece>();
-			for (GamePiece piece : piecesLeft) {
-				System.out.println("    " + piece.getName());
-				pieces.put(piece.getName(), piece);
+			for (int i=0;i<piecesLeft.size();i++) {
+				System.out.println("    " + piecesLeft.get(i).getName());
+				pieces.put(piecesLeft.get(i).getName(), piecesLeft.get(i));
 			}
+			System.out.println("Current turn: " + currentPlayer.getName());
+			System.out.println("Choose a piece: ");
 			String choice = sc.nextLine();
 			while (!pieces.containsKey(choice)) {
-				System.out.println("Invalid piece, choose again:");
+				System.out.println("Invalid piece. Choose again: ");
 				choice = sc.nextLine();
 			}
 			onSelect(pieces.get(choice));
@@ -60,31 +58,55 @@ public class GameScreen {
 			while (!done) {
 				choice = sc.next();
 				switch (choice) {
-					case "W": onUpArrow();
-					case "A": onLeftArrow();
-					case "S": onDownArrow();
-					case "D": onRightArrow();
-					case "R": onRotate();
-					case "F": onFlip();
+					case "W": 
+						System.out.println("Up");
+						onUpArrow();
+						break;
+					case "A": 
+						System.out.println("Left");
+						onLeftArrow();
+						break;
+					case "S": 
+						System.out.println("Down");
+						onDownArrow();
+						break;
+					case "D": 
+						System.out.println("Right");
+						onRightArrow();
+						break;
+					case "R": 
+						System.out.println("Rotate");
+						onRotate();
+						break;
+					case "F": 
+						System.out.println("Flip");
+						onFlip();
+						break;
 					case "E": 
 						if (onEnter()) {
 							done = true;
-							break;
 						} else {
 							System.out.println("Invalid");
 						}
+						break;
+					default:
+						System.out.println("Invalid command");
 				}
 			}
 			changeTurns();
+			sc.nextLine();
 		}
 		sc.close();
+		endGame();
 	}
 	private void changeTurns() {
 		int orig = currentTurn; // method should only be called when at least one player is still in
 		selectedPiece = null;
-		valid = false;
 		do {
 			currentTurn = (currentTurn + 1) % players.size();
+			board.rotateBoard();
+			if (players.size() == 2)
+				board.rotateBoard();
 		} while (isOut[currentTurn] && currentTurn != orig);
 		if (orig == currentTurn)
 			System.out.println("changeTurns was called with 0 players remaining.");
@@ -113,7 +135,6 @@ public class GameScreen {
 	private void onSelect(GamePiece selectedPiece) {
 		System.out.println("Selected " + selectedPiece.getName());
 		this.selectedPiece = selectedPiece;
-		this.valid = board.isValid(selectedPiece, this.players.get(currentTurn));
 	}
 	private void onLeftArrow() {
 		selectedPiece.moveLeft();
@@ -134,7 +155,7 @@ public class GameScreen {
 		selectedPiece.flipPiece();
 	}
 	private boolean onEnter() {
-		if (valid) {
+		if (board.isValid(selectedPiece, players.get(currentTurn))) {
 			board.placePiece(selectedPiece, players.get(currentTurn));
 			return true;
 		}

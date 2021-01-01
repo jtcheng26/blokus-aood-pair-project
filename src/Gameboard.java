@@ -182,11 +182,19 @@ public class Gameboard {
 		}
 		return returnBoolean;
 	}
-	
+	public void rotateBoard() {
+		int[][] newGrid = new int[gridSize][gridSize];
+		for (int i=0;i<gridSize;i++) {
+			for (int j=0;j<gridSize;j++) {
+				newGrid[j][gridSize - i - 1] = grid[i][j];
+			}
+		}
+		this.grid = newGrid;
+	}
 	public void print(Gameboard board) {
 		for (int i=0; i < board.gridSize; i++) {
 			for (int j=0; j < board.gridSize; j++) {
-				System.out.printf("%-3s", board.grid[j][i]);
+				System.out.printf("%-2s", board.grid[j][board.gridSize - i - 1] == 0 ? "." : board.grid[j][board.gridSize - i - 1]);
 			}
 			System.out.println();
 		}
