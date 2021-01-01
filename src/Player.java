@@ -3,7 +3,8 @@ import java.util.List;
 
 public class Player {
 	 private List<GamePiece> piecesLeft = new ArrayList<GamePiece>();
-	 private int score;
+	 private List<GamePiece> piecesUsed = new ArrayList<GamePiece>();
+	 private int score = 0;
 	 private String playerName;
 	 private int playerID;
 	 
@@ -23,8 +24,10 @@ public class Player {
 	 }
 	 
 	 public int getScore () {
-		 for (int i = 0; i < this.getPiecesLeft().size(); i++) {
-			 score = 89-this.getPiecesLeft().get(i).getPieceCoordinates().size();
+		 if (piecesUsed.size() > 0) {
+			 for (int i = 0; i < piecesUsed.size(); i++) {
+				 score = score+piecesUsed.get(i).getPieceCoordinates().size();
+			 }
 		 }
 		 return score;
 	 }
@@ -35,6 +38,10 @@ public class Player {
 	 
 	 public List<GamePiece> getPiecesLeft () {
 		 return piecesLeft;
+	 }
+	 
+	 public List<GamePiece> getPiecesUsed () {
+		 return piecesUsed;
 	 }
 	 
 	 public static void main(String[] args) {

@@ -33,131 +33,65 @@ public class Gameboard {
 	}
 	public void placePiece (GamePiece piece, Player player) {
 		GamePiece currentPiece = player.getPiece(player.getPiecesLeft().indexOf(piece));
-		for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
-			if (isValid(piece,player)) {
+		if (isValid(piece,player)) {
+			for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
 				grid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
-				player.getPiecesLeft().remove(piece);
-				//System.out.println("valid position");
-			} else {
-				//System.out.println("invalid position");
 			}
+			player.getPiecesLeft().remove(piece);
+			player.getPiecesUsed().add(piece);
 		}
 	}
 	
 	public boolean isValid (GamePiece piece, Player player) {
-		//checks if corner for first piece
+		/*
+		 * checks if corner for first piece
+		 */
+		/*
+		 * update size after jeffrey puts in all the pieces
+		 */
+		boolean returnBoolean = false;
 		if (player.getPiecesLeft().size() == 7) {
-			if (!piece.getCornerCoordinates().contains(new Position(0,0)) && !piece.getCornerCoordinates().contains(new Position(0,this.gridSize))
-				&& !piece.getCornerCoordinates().contains(new Position(this.gridSize,0)) && !piece.getCornerCoordinates().contains(new Position(this.gridSize,this.gridSize))) {
-				System.out.println("sfsfd");
-				return false;
-			} else {
-				return true;
+			for (int i=0; i < piece.getPieceCoordinates().size(); i++) {
+				if (!piece.getPieceCoordinates().get(i).equals(new Position(0,0)) && !piece.getPieceCoordinates().get(i).equals(new Position(0,this.gridSize))
+				&& !piece.getPieceCoordinates().get(i).equals(new Position(this.gridSize,0)) && !piece.getPieceCoordinates().get(i).equals(new Position(this.gridSize,this.gridSize))
+				&& grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] == 0) {
+					returnBoolean = true;
+				}
+				if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
+					returnBoolean = false;
+				}
 			}
 		} else {
-			//checks for validness based on players' other pieces
-			for (int i = 0; i < piece.getPieceCoordinates().size(); i++) {
-				//checks if directly right square is a player's piece
-				if (piece.getPieceCoordinates().get(i).getX() < gridSize-1 
-					&& grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()] == player.getID()) {
-					for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
-						if (!piece.getPieceCoordinates().contains(new Position(piece.getPieceCoordinates().get(j).getX()+1, piece.getPieceCoordinates().get(j).getY()))) {
-							return false;
-						}
-					}
-				}
-				//checks if directly left square is a player's piece
-				if (piece.getPieceCoordinates().get(i).getX() > 0 
-					&& grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()] == player.getID()) {
-					for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
-						if (!piece.getPieceCoordinates().contains(new Position(piece.getPieceCoordinates().get(j).getX()-1, piece.getPieceCoordinates().get(j).getY()))) {
-							return false;
-						}
-					}
-				}
-				//checks if directly below square is a player's piece
-				if (piece.getPieceCoordinates().get(i).getY() < gridSize-1 
-					&& grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-					for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
-						if (!piece.getPieceCoordinates().contains(new Position(piece.getPieceCoordinates().get(j).getX(), piece.getPieceCoordinates().get(j).getY()+1))) {
-							return false;
-						}
-					}
-				}
-				//checks if directly above square is a player's piece
-				if (piece.getPieceCoordinates().get(i).getY() > 0 
-					&& grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()) {
-					for (int j = 0; j < piece.getPieceCoordinates().size(); j++) {
-						if (!piece.getPieceCoordinates().contains(new Position(piece.getPieceCoordinates().get(j).getX(), piece.getPieceCoordinates().get(j).getY()-1))) {
-							return false;
-						}
-					}
-				}
-				//checks if corners are player's piece
-				if (player.getPiecesLeft().size() < 7) {
-					boolean returnBoolean = false;
-					//all pieces excluding pieces on border
-					if (piece.getPieceCoordinates().get(i).getY() > 0 && piece.getPieceCoordinates().get(i).getY() < this.gridSize) {
-						if (piece.getPieceCoordinates().get(i).getX() > 0 && piece.getPieceCoordinates().get(i).getX() < this.gridSize) {
-							if (grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()
-								|| grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()
-								|| grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()
-								|| grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-								returnBoolean = true;
-							}
-						}
-					}
-					//first column
-					if (piece.getPieceCoordinates().get(i).getX() == 0) {
-						//top left
-						if (piece.getPieceCoordinates().get(i).getY() == 0) {
-							if (grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-								returnBoolean = true;
-							}
-						} else
-						//bottom left
-						if (piece.getPieceCoordinates().get(i).getY() == this.gridSize) {
-							if (grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()) {
-								returnBoolean = true;
-							}
-						} else {
-							//in between
-							if (grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()) {
-								returnBoolean = true;
-							}
-							if (grid[piece.getPieceCoordinates().get(i).getX()+1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-								returnBoolean = true;
-							}
-						}
-					}
-					//last column
-					if (piece.getPieceCoordinates().get(i).getX() == this.gridSize) {
-						//top right
-						if (piece.getPieceCoordinates().get(i).getY() == 0) {
-							if (grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-								returnBoolean = true;
-							}
-						} else
-						//bottom right
-						if (piece.getPieceCoordinates().get(i).getY() == this.gridSize) {
-							if (grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()) {
-								returnBoolean = true;
-							}
-						} else {
-							//in between
-							if (grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()-1] == player.getID()) {
-								returnBoolean = true;
-							}
-							if (grid[piece.getPieceCoordinates().get(i).getX()-1][piece.getPieceCoordinates().get(i).getY()+1] == player.getID()) {
-								returnBoolean = true;
-							}
-						}
-					}
-					return returnBoolean;
+			/*
+			 * checks if position is empty
+			 */
+			for (int i=0; i < piece.getPieceCoordinates().size(); i++) {
+				if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
+					return false;
 				}
 			}
-			return false;
+			/*
+			 * adjacent
+			 */
+			for (int i=0; i < piece.getAdjacentCoordinates().size(); i++) {
+				if (grid[piece.getAdjacentCoordinates().get(i).getX()][piece.getAdjacentCoordinates().get(i).getY()] == player.getID()) {
+					return false;
+				}
+			}
+			/*
+			 * corners of other pieces
+			 */
+			for (int i=0; i < piece.getCornerCoordinates().size(); i++) {
+				if (grid[piece.getCornerCoordinates().get(i).getX()][piece.getCornerCoordinates().get(i).getY()] == player.getID()) {
+					returnBoolean = true;
+				}
+			}
 		}
+		return returnBoolean;
+	}
+	
+	public boolean playerOut (Player player) {
+		return false;
 	}
 	
 	public void print(Gameboard board) {
@@ -173,6 +107,11 @@ public class Gameboard {
 		Gameboard board = new Gameboard(4);
 		Player player1 = new Player("Matthew", 1);
 		board.placePiece(player1.getPiece(0), player1);
+		player1.getPiece(0).moveRight();
+		player1.getPiece(0).moveRight();
+		player1.getPiece(0).moveRight();
+		board.placePiece(player1.getPiece(0), player1);
+		System.out.println(player1.getScore());
 		board.print(board);
 	}
 }
