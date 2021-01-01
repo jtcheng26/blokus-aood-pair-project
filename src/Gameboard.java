@@ -1,3 +1,4 @@
+import java.util.List;
 
 public class Gameboard {
 	private int[][] grid;
@@ -46,43 +47,65 @@ public class Gameboard {
 		/*
 		 * checks if corner for first piece
 		 */
-		/*
-		 * update size after jeffrey puts in all the pieces
-		 */
 		boolean returnBoolean = false;
-		if (player.getPiecesLeft().size() == 7) {
-			for (int i=0; i < piece.getPieceCoordinates().size(); i++) {
-				if (!piece.getPieceCoordinates().get(i).equals(new Position(0,0)) && !piece.getPieceCoordinates().get(i).equals(new Position(0,this.gridSize))
-				&& !piece.getPieceCoordinates().get(i).equals(new Position(this.gridSize,0)) && !piece.getPieceCoordinates().get(i).equals(new Position(this.gridSize,this.gridSize))
-				&& grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] == 0) {
-					returnBoolean = true;
+		List<Position> pieceCoordinatesList = piece.getPieceCoordinates();
+		List<Position> pieceAdjacentCoordinatesList = piece.getAdjacentCoordinates();
+		List<Position> pieceCornerCoordinatesList = piece.getCornerCoordinates();
+		
+		if (player.getPiecesLeft().size() == 21) {
+			for (int i=0; i < pieceCoordinatesList.size(); i++) {
+				/*
+				System.out.println(pieceCoordinatesList.get(i).getX()+","+pieceCoordinatesList.get(i).getY());
+				System.out.println("test: "+pieceCoordinatesList.contains(new Position(0,0)));
+				*/
+				if (pieceCoordinatesList.get(i).getX() < 0 || pieceCoordinatesList.get(i).getX() >= this.gridSize
+					|| pieceCoordinatesList.get(i).getY() < 0 || pieceCoordinatesList.get(i).getY() >= this.gridSize) {
+					return false;
 				}
-				if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
-					returnBoolean = false;
+				/*
+				 * checks corner for first piece
+				 */
+				if (pieceCoordinatesList.get(i).equals(new Position(0,0)) || pieceCoordinatesList.get(i).equals(new Position(0,this.gridSize-1))
+				|| pieceCoordinatesList.get(i).equals(new Position(this.gridSize-1,0)) || pieceCoordinatesList.get(i).equals(new Position(this.gridSize-1,this.gridSize-1))) {
+					if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
+						return false;
+					} else {
+						returnBoolean = true;
+					}
 				}
 			}
+			return returnBoolean;
 		} else {
+			/*
+			 * checks if outside board
+			 */
+			for (int i=0; i < pieceCoordinatesList.size(); i++) {
+				if (pieceCoordinatesList.get(i).getX() < 0 || pieceCoordinatesList.get(i).getX() >= this.gridSize
+					|| pieceCoordinatesList.get(i).getY() < 0 || pieceCoordinatesList.get(i).getY() >= this.gridSize) {
+					return false;
+				}
+			}
 			/*
 			 * checks if position is empty
 			 */
-			for (int i=0; i < piece.getPieceCoordinates().size(); i++) {
-				if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
+			for (int i=0; i < pieceCoordinatesList.size(); i++) {
+				if (grid[pieceCoordinatesList.get(i).getX()][pieceCoordinatesList.get(i).getY()] != 0) {
 					return false;
 				}
 			}
 			/*
 			 * adjacent
 			 */
-			for (int i=0; i < piece.getAdjacentCoordinates().size(); i++) {
-				if (grid[piece.getAdjacentCoordinates().get(i).getX()][piece.getAdjacentCoordinates().get(i).getY()] == player.getID()) {
+			for (int i=0; i < pieceAdjacentCoordinatesList.size(); i++) {
+				if (grid[pieceAdjacentCoordinatesList.get(i).getX()][pieceAdjacentCoordinatesList.get(i).getY()] == player.getID()) {
 					return false;
 				}
 			}
 			/*
 			 * corners of other pieces
 			 */
-			for (int i=0; i < piece.getCornerCoordinates().size(); i++) {
-				if (grid[piece.getCornerCoordinates().get(i).getX()][piece.getCornerCoordinates().get(i).getY()] == player.getID()) {
+			for (int i=0; i < pieceCornerCoordinatesList.size(); i++) {
+				if (grid[pieceCornerCoordinatesList.get(i).getX()][pieceCornerCoordinatesList.get(i).getY()] == player.getID()) {
 					returnBoolean = true;
 				}
 			}
@@ -91,7 +114,13 @@ public class Gameboard {
 	}
 	
 	public boolean playerOut (Player player) {
-		return false;
+		boolean returnBoolean = false;
+		if (player.getPiecesLeft().size() == 0) {
+			returnBoolean = true;
+		} else {
+			
+		}
+		return returnBoolean;
 	}
 	
 	public void print(Gameboard board) {
@@ -104,14 +133,11 @@ public class Gameboard {
 	}
 	
 	public static void main (String[] args) {
-		Gameboard board = new Gameboard(4);
+		Gameboard board = new Gameboard(2);
 		Player player1 = new Player("Matthew", 1);
+		Player player2 = new Player("Jeffrey", 2);
 		board.placePiece(player1.getPiece(0), player1);
-		player1.getPiece(0).moveRight();
-		player1.getPiece(0).moveRight();
-		player1.getPiece(0).moveRight();
-		board.placePiece(player1.getPiece(0), player1);
-		System.out.println(player1.getScore());
+		board.placePiece(player2.getPiece(0), player2);
 		board.print(board);
 	}
 }
