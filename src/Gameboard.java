@@ -41,6 +41,17 @@ public class Gameboard {
 			player.getPiecesLeft().remove(piece);
 			player.getPiecesUsed().add(piece);
 		}
+		for (int i = 0; i < player.getPiecesUsed().size(); i++) {
+			for (int j = 0 ; j < player.getPiecesUsed().get(i).getCornerCoordinates().size(); j++) {
+				if (grid[player.getPiecesUsed().get(i).getCornerCoordinates().get(j).getX()][player.getPiecesUsed().get(i).getCornerCoordinates().get(j).getY()] == 0) {
+					if (!player.getCornerPositions().contains(player.getPiecesUsed().get(i).getCornerCoordinates().get(j))) {
+						player.getCornerPositions().add(player.getPiecesUsed().get(i).getCornerCoordinates().get(j));
+					}
+				} else {
+					player.getCornerPositions().remove(player.getPiecesUsed().get(i).getCornerCoordinates().get(j));
+				}
+			}
+		}
 	}
 	
 	public boolean isValid (GamePiece piece, Player player) {
@@ -118,7 +129,56 @@ public class Gameboard {
 		if (player.getPiecesLeft().size() == 0) {
 			returnBoolean = true;
 		} else {
-			
+			for (int i = 0; i < player.getPiecesLeft().size(); i++) {
+				for (int j = 0; j < player.getCornerPositions().size(); j++) {
+					player.getPiecesLeft().get(i).setLocation(player.getCornerPositions().get(j));
+					/*
+					 * insert body
+					 */
+					if (!isValid(player.getPiecesLeft().get(i), player)) {
+						player.getPiecesLeft().get(i).rotatePiece();
+						if (!isValid(player.getPiecesLeft().get(i), player)) {
+							player.getPiecesLeft().get(i).rotatePiece();
+							if (!isValid(player.getPiecesLeft().get(i), player)) {
+								player.getPiecesLeft().get(i).rotatePiece();
+								if (!isValid(player.getPiecesLeft().get(i), player)) {
+									player.getPiecesLeft().get(i).rotatePiece();
+									player.getPiecesLeft().get(i).flipPiece();
+									if (!isValid(player.getPiecesLeft().get(i), player)) {
+										player.getPiecesLeft().get(i).rotatePiece();
+										if (!isValid(player.getPiecesLeft().get(i), player)) {
+											player.getPiecesLeft().get(i).rotatePiece();
+											if (!isValid(player.getPiecesLeft().get(i), player)) {
+												player.getPiecesLeft().get(i).rotatePiece();
+												if (!isValid(player.getPiecesLeft().get(i), player)) {
+													returnBoolean = true;
+												} else {
+													returnBoolean = false;
+												}
+											} else {
+												returnBoolean = false;
+											}
+										} else {
+											returnBoolean = false;
+										}
+									} else {
+										returnBoolean = false;
+									}
+								} else {
+									returnBoolean = false;
+								}
+							} else {
+								returnBoolean = false;
+							}
+						} else {
+							returnBoolean = false;
+						}
+					} else {
+						returnBoolean = false;
+					}
+					player.getPiecesLeft().get(i).setLocation(new Position(0,0));
+				}
+			}
 		}
 		return returnBoolean;
 	}
@@ -126,7 +186,7 @@ public class Gameboard {
 	public void print(Gameboard board) {
 		for (int i=0; i < board.gridSize; i++) {
 			for (int j=0; j < board.gridSize; j++) {
-				System.out.printf("%-3s", board.grid[i][j]);
+				System.out.printf("%-3s", board.grid[j][i]);
 			}
 			System.out.println();
 		}
@@ -137,7 +197,14 @@ public class Gameboard {
 		Player player1 = new Player("Matthew", 1);
 		Player player2 = new Player("Jeffrey", 2);
 		board.placePiece(player1.getPiece(0), player1);
-		board.placePiece(player2.getPiece(0), player2);
+		player1.getPiece(0).moveRight();
+		player1.getPiece(0).moveRight();
+		player1.getPiece(0).moveRight();
+		board.placePiece(player1.getPiece(0), player1);
+		for (int i=0; i < player1.getCornerPositions().size(); i++) {
+			System.out.println(player1.getCornerPositions().get(i).getX()+","+player1.getCornerPositions().get(i).getY());
+		}
+		//board.placePiece(player2.getPiece(0), player2);
 		board.print(board);
 	}
 }
