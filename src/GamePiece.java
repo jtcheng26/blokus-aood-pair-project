@@ -117,4 +117,10 @@ public class GamePiece {
 			adjacentDeltas.set(i, new Position(4 - adjacentDeltas.get(i).getX(), adjacentDeltas.get(i).getY()));
 		}
 	}
+	public void setPieceCoordinateLocation(int index, Position pos) {
+		Position pieceCoordinate = getPieceCoordinates().get(index);
+		int dx = pieceCoordinate.getX() - pos.getX();
+		int dy = pieceCoordinate.getY() - pos.getY();
+		this.loc = new Position(this.loc.getX() - dx, this.loc.getY() - dy);
+	}
 }

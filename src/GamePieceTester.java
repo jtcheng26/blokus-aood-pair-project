@@ -121,11 +121,46 @@ class GamePieceTester {
 			printPiece(piece);
 		}
 	}
+	public static void testPieceCoordinateLocation(GamePiece piece) {
+		List<Position> coordinates = piece.getPieceCoordinates();
+		char[][] grid = new char[20][20];
+		grid[20 - coordinates.get(0).getY() - 1][coordinates.get(0).getX()] = 'X';
+		for (int i=1;i<coordinates.size();i++) {
+			grid[20 - coordinates.get(i).getY() - 1][coordinates.get(i).getX()] = 'O';
+		}
+		for (int i=0;i<20;i++) {
+			for (int j=0;j<20;j++) {
+				System.out.print((grid[i][j] == 'O' ? 'O' : grid[i][j] == 'X' ? 'X' : '.') + " ");
+			}
+			System.out.println("");
+		}
+		piece.rotatePiece();
+		piece.setPieceCoordinateLocation(0, new Position(5, 5));
+		for (int i=0;i<20;i++) {
+			for (int j=0;j<20;j++) {
+				grid[i][j] = '.';
+			}
+		}
+		System.out.println("");
+		coordinates = piece.getPieceCoordinates();
+		grid[20 - coordinates.get(0).getY() - 1][coordinates.get(0).getX()] = 'X';
+		for (int i=1;i<coordinates.size();i++) {
+			grid[20 - coordinates.get(i).getY() - 1][coordinates.get(i).getX()] = 'O';
+		}
+		for (int i=0;i<20;i++) {
+			for (int j=0;j<20;j++) {
+				System.out.print((grid[i][j] == 'O' ? 'O' : grid[i][j] == 'X' ? 'X' : '.') + " ");
+			}
+			System.out.println("");
+		}
+	}
 	public static void main(String[] args) {
+		/*
 		test5Pieces();
 		test4Pieces();
 		test3Pieces();
 		test2Pieces();
-		test1Pieces();
+		test1Pieces();*/
+		testPieceCoordinateLocation(new V5Piece());
 	}
 }
