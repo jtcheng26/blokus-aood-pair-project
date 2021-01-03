@@ -64,6 +64,25 @@ public class Gameboard {
 		}
 	}
 	
+	public void followCurrentPiece (GamePiece currentPiece, Player player ) {
+		for (int i=0; i < this.gridSize; i++) {
+			for (int j=0; j < this.gridSize; j++) {
+				instantaneousGrid[j][this.gridSize-i-1] = grid[j][this.gridSize-i-1];
+			}
+		}
+		/*
+		 * 5 is valid
+		 * 6 is invalid
+		 */
+		for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
+			if (isValid(currentPiece, player)) {
+				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 5;
+			} else {
+				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 6;
+			}
+		}
+	}
+	
 	public boolean isValid (GamePiece piece, Player player) {
 		/*
 		 * checks if corner for first piece
@@ -235,6 +254,7 @@ public class Gameboard {
 	}
 	
 	public void printInstantaneousGrid(Gameboard board) {
+		System.out.println();
 		for (int i=0; i < board.gridSize; i++) {
 			for (int j=0; j < board.gridSize; j++) {
 				System.out.printf("%-2s", board.instantaneousGrid[j][board.gridSize - i - 1] == 0 ? "." : board.instantaneousGrid[j][board.gridSize - i - 1]);
@@ -249,12 +269,15 @@ public class Gameboard {
 		Player player2 = new Player("Jeffrey", 2);
 		board.placePiece(player1.getPiece(0), player1);
 		player1.getPiece(0).moveRight();
+		board.followCurrentPiece(player1.getPiece(0), player1);
+		board.printInstantaneousGrid(board);
 		player1.getPiece(0).moveRight();
+		board.followCurrentPiece(player1.getPiece(0), player1);
+		board.printInstantaneousGrid(board);
 		player1.getPiece(0).moveRight();
+		board.followCurrentPiece(player1.getPiece(0), player1);
+		board.printInstantaneousGrid(board);
 		board.placePiece(player1.getPiece(0), player1);
-		for (int i=0; i < player1.getCornerPositions().size(); i++) {
-			System.out.println(player1.getCornerPositions().get(i).getX()+","+player1.getCornerPositions().get(i).getY());
-		}
 		//board.placePiece(player2.getPiece(0), player2);
 		board.printInstantaneousGrid(board);
 	}
