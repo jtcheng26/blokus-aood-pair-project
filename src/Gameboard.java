@@ -257,7 +257,7 @@ public class Gameboard {
 		System.out.println();
 		for (int i=0; i < board.gridSize; i++) {
 			for (int j=0; j < board.gridSize; j++) {
-				System.out.printf("%-2s", board.instantaneousGrid[j][board.gridSize - i - 1] == 0 ? "." : board.instantaneousGrid[j][board.gridSize - i - 1]);
+				System.out.printf("%-2s", board.instantaneousGrid[j][board.gridSize - i - 1] == 0 ? "." : board.instantaneousGrid[j][board.gridSize - i - 1] == 5 ? "O" : board.instantaneousGrid[j][board.gridSize - i - 1] == 6 ? "X" : board.instantaneousGrid[j][board.gridSize - i - 1]);
 			}
 			System.out.println();
 		}

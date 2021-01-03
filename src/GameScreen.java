@@ -56,6 +56,8 @@ public class GameScreen {
 			System.out.println("WASD to move piece, R to rotate, F to flip, and E to place");
 			boolean done = false;
 			while (!done) {
+				board.followCurrentPiece(selectedPiece, currentPlayer);
+				board.printInstantaneousGrid(board);
 				choice = sc.next();
 				switch (choice) {
 					case "W": 
