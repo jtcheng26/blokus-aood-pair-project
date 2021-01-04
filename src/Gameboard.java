@@ -77,8 +77,16 @@ public class Gameboard {
 		for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
 			if (isValid(currentPiece, player)) {
 				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 5;
+				System.out.println("valid");
 			} else {
-				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 6;
+				boolean outOfBounds = false;
+				if (currentPiece.getPieceCoordinates().get(i).getX() < 0 || currentPiece.getPieceCoordinates().get(i).getX() >= this.gridSize
+					|| currentPiece.getPieceCoordinates().get(i).getY() < 0 || currentPiece.getPieceCoordinates().get(i).getY() >= this.gridSize) {
+					outOfBounds = true;
+				}
+				if (!outOfBounds) {
+					instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 6;
+				}
 			}
 		}
 	}
@@ -267,17 +275,10 @@ public class Gameboard {
 		Gameboard board = new Gameboard(2);
 		Player player1 = new Player("Matthew", 1);
 		Player player2 = new Player("Jeffrey", 2);
-		board.placePiece(player1.getPiece(0), player1);
-		player1.getPiece(0).moveRight();
-		board.followCurrentPiece(player1.getPiece(0), player1);
-		board.printInstantaneousGrid(board);
-		player1.getPiece(0).moveRight();
-		board.followCurrentPiece(player1.getPiece(0), player1);
-		board.printInstantaneousGrid(board);
-		player1.getPiece(0).moveRight();
-		board.followCurrentPiece(player1.getPiece(0), player1);
-		board.printInstantaneousGrid(board);
-		board.placePiece(player1.getPiece(0), player1);
+		//board.placePiece(player1.getPiece(4), player1);
+		player1.getPiece(4).rotatePiece();
+		board.followCurrentPiece(player1.getPiece(4), player1);
+		
 		//board.placePiece(player2.getPiece(0), player2);
 		board.printInstantaneousGrid(board);
 	}
