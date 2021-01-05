@@ -52,13 +52,16 @@ public class Gameboard {
 			player.getPiecesUsed().add(piece);
 		}
 		for (int i = 0; i < player.getPiecesUsed().size(); i++) {
+			List<Position> cornerCoordinates = player.getPiecesUsed().get(i).getCornerCoordinates();
 			for (int j = 0 ; j < player.getPiecesUsed().get(i).getCornerCoordinates().size(); j++) {
-				if (grid[player.getPiecesUsed().get(i).getCornerCoordinates().get(j).getX()][player.getPiecesUsed().get(i).getCornerCoordinates().get(j).getY()] == 0) {
-					if (!player.getCornerPositions().contains(player.getPiecesUsed().get(i).getCornerCoordinates().get(j))) {
-						player.getCornerPositions().add(player.getPiecesUsed().get(i).getCornerCoordinates().get(j));
+				if (cornerCoordinates.get(j).getX() < this.gridSize && cornerCoordinates.get(j).getY() < this.gridSize) {
+					if (grid[cornerCoordinates.get(j).getX()][cornerCoordinates.get(j).getY()] == 0) {
+						if (!player.getCornerPositions().contains(cornerCoordinates.get(j))) {
+							player.getCornerPositions().add(cornerCoordinates.get(j));
+						}
+					} else {
+						player.getCornerPositions().remove(cornerCoordinates.get(j));
 					}
-				} else {
-					player.getCornerPositions().remove(player.getPiecesUsed().get(i).getCornerCoordinates().get(j));
 				}
 			}
 		}
@@ -145,16 +148,20 @@ public class Gameboard {
 			 * adjacent
 			 */
 			for (int i=0; i < pieceAdjacentCoordinatesList.size(); i++) {
-				if (grid[pieceAdjacentCoordinatesList.get(i).getX()][pieceAdjacentCoordinatesList.get(i).getY()] == player.getID()) {
-					return false;
+				if (pieceAdjacentCoordinatesList.get(i).getX() < this.gridSize && pieceAdjacentCoordinatesList.get(i).getY() < this.gridSize) {
+					if (grid[pieceAdjacentCoordinatesList.get(i).getX()][pieceAdjacentCoordinatesList.get(i).getY()] == player.getID()) {
+						return false;
+					}
 				}
 			}
 			/*
 			 * corners of other pieces
 			 */
 			for (int i=0; i < pieceCornerCoordinatesList.size(); i++) {
-				if (grid[pieceCornerCoordinatesList.get(i).getX()][pieceCornerCoordinatesList.get(i).getY()] == player.getID()) {
-					returnBoolean = true;
+				if (pieceCornerCoordinatesList.get(i).getX() < this.gridSize && pieceCornerCoordinatesList.get(i).getY() < this.gridSize) {
+					if (grid[pieceCornerCoordinatesList.get(i).getX()][pieceCornerCoordinatesList.get(i).getY()] == player.getID()) {
+						returnBoolean = true;
+					}
 				}
 			}
 		}

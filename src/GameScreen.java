@@ -24,7 +24,7 @@ public class GameScreen {
 		this.players = new ArrayList<Player>();
 		for (int i=1;i<=numPlayers;i++) {
 			System.out.println("Enter Player " + i + "'s name: ");
-			players.add(new Player(sc.next(), i));
+			players.add(new Player(sc.next(), i, 0));
 		}
 		this.isOut = new boolean[players.size()];
 		this.currentTurn = 0;
