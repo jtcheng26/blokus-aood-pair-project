@@ -9,7 +9,7 @@ public class Player {
 	 private String playerName;
 	 private int playerID;
 	 
-	 Player (String name, int id) {
+	 Player (String name, int id, int difficulty) {
 		 playerName = name;
 		 playerID = id;
 		 score = 0;
@@ -50,7 +50,7 @@ public class Player {
 	 }
 	 
 	 public static void main(String[] args) {
-		 Player player1 = new Player("matthew", 1);
+		 Player player1 = new Player("matthew", 1, 0);
 		 System.out.println(player1.getName());
 		 System.out.println(player1.getScore());
 		 System.out.println(player1.getID());
