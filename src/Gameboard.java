@@ -198,14 +198,14 @@ public class Gameboard {
 														player.getPiecesLeft().get(i).rotatePiece();
 														player.getPiecesLeft().get(i).flipPiece();
 														player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-														returnBoolean = false;
+														return false;
 													}
 												} else {
 													player.getPiecesLeft().get(i).rotatePiece();
 													player.getPiecesLeft().get(i).rotatePiece();
 													player.getPiecesLeft().get(i).flipPiece();
 													player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-													returnBoolean = false;
+													return false;
 												}
 											} else {
 												player.getPiecesLeft().get(i).rotatePiece();
@@ -213,34 +213,34 @@ public class Gameboard {
 												player.getPiecesLeft().get(i).rotatePiece();
 												player.getPiecesLeft().get(i).flipPiece();
 												player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-												returnBoolean = false;
+												return false;
 											}
 										} else {
 											player.getPiecesLeft().get(i).flipPiece();
 											player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-											returnBoolean = false;
+											return false;
 										}
 									} else {
 										player.getPiecesLeft().get(i).rotatePiece();
 										player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-										returnBoolean = false;
+										return false;
 									}
 								} else {
 									player.getPiecesLeft().get(i).rotatePiece();
 									player.getPiecesLeft().get(i).rotatePiece();
 									player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-									returnBoolean = false;
+									return false;
 								}
 							} else {
 								player.getPiecesLeft().get(i).rotatePiece();
 								player.getPiecesLeft().get(i).rotatePiece();
 								player.getPiecesLeft().get(i).rotatePiece();
 								player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-								returnBoolean = false;
+								return false;
 							}
 						} else {
 							player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
-							returnBoolean = false;
+							return false;
 						}
 					}
 				}

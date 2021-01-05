@@ -83,12 +83,20 @@ class PlayerOutTest {
 		Y51.rotatePiece();
 		Y51.setPieceCoordinateLocation(4, new Position(10, 1));
 		board.placePiece(Y51, player1);
+		board.print(board);
+		System.out.println("");
+		System.out.println(board.playerOut(player1));
 		O41.setPieceCoordinateLocation(3, new Position(12, 1));
 		board.placePiece(O41, player1);
 		// player 2 (not out)
 		board.print(board);
 		System.out.println("");
 		System.out.println(board.playerOut(player1)); // should be false
+		/*
+		for (int i=0; i < player1.getCornerPositions().size(); i++) {
+			System.out.println(player1.getCornerPositions().get(i).getX()+","+player1.getCornerPositions().get(i).getY());
+		}
+		*/
 		board.rotateBoard();
 		board.rotateBoard();
 		board.rotateBoard();
