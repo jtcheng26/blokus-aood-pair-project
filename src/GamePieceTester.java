@@ -81,7 +81,7 @@ class GamePieceTester {
 		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet5();
 		for (GamePiece piece : pieces) {
 			System.out.println("Testing 5-square piece: " + piece.getName());
-			piece.setLocation(new Position(0, 0));
+			piece.setInnerLocation(new Position(0, 0));
 			printPiece(piece);
 		}
 	}
@@ -90,7 +90,7 @@ class GamePieceTester {
 		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet4();
 		for (GamePiece piece : pieces) {
 			System.out.println("Testing 4-square piece: " + piece.getName());
-			piece.setLocation(new Position(0, 0));
+			piece.setInnerLocation(new Position(0, 0));
 			printPiece(piece);
 		}
 	}
@@ -99,7 +99,7 @@ class GamePieceTester {
 		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet3();
 		for (GamePiece piece : pieces) {
 			System.out.println("Testing 3-square piece: " + piece.getName());
-			piece.setLocation(new Position(0, 0));
+			piece.setInnerLocation(new Position(0, 0));
 			printPiece(piece);
 		}
 	}
@@ -108,7 +108,7 @@ class GamePieceTester {
 		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet2();
 		for (GamePiece piece : pieces) {
 			System.out.println("Testing 2-square piece: " + piece.getName());
-			piece.setLocation(new Position(0, 0));
+			piece.setInnerLocation(new Position(0, 0));
 			printPiece(piece);
 		}
 	}
@@ -117,7 +117,7 @@ class GamePieceTester {
 		List<GamePiece> pieces = GamePieceFactory.getGamePieceSet1();
 		for (GamePiece piece : pieces) {
 			System.out.println("Testing 1-square piece: " + piece.getName());
-			piece.setLocation(new Position(0, 0));
+			piece.setInnerLocation(new Position(0, 0));
 			printPiece(piece);
 		}
 	}
@@ -161,6 +161,7 @@ class GamePieceTester {
 		test3Pieces();
 		test2Pieces();
 		test1Pieces();*/
-		testPieceCoordinateLocation(new V5Piece());
+		testPiece(new GamePiece(new L5Piece()));
+		//testPieceCoordinateLocation(new V5Piece());
 	}
 }
