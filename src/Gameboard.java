@@ -80,7 +80,6 @@ public class Gameboard {
 		for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
 			if (isValid(currentPiece, player)) {
 				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = 5;
-				System.out.println("valid");
 			} else {
 				boolean outOfBounds = false;
 				if (currentPiece.getPieceCoordinates().get(i).getX() < 0 || currentPiece.getPieceCoordinates().get(i).getX() >= this.gridSize
