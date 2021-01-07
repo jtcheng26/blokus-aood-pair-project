@@ -173,72 +173,76 @@ public class Gameboard {
 			returnBoolean = true;
 		} else {
 			for (int i = 0; i < player.getPiecesLeft().size(); i++) {
+				GamePiece piece = player.getPiecesLeft().get(i);
+				GamePiece copyPiece = new GamePiece(piece);
 				for (int j = 0; j < player.getPiecesLeft().get(i).getPieceCoordinates().size(); j++) {
 					for (int k = 0; k < player.getCornerPositions().size(); k++) {
-						player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
-						if (!isValid(player.getPiecesLeft().get(i), player)) {
-							player.getPiecesLeft().get(i).rotatePiece();
-							if (!isValid(player.getPiecesLeft().get(i), player)) {
-								player.getPiecesLeft().get(i).rotatePiece();
-								if (!isValid(player.getPiecesLeft().get(i), player)) {
-									player.getPiecesLeft().get(i).rotatePiece();
-									if (!isValid(player.getPiecesLeft().get(i), player)) {
-										player.getPiecesLeft().get(i).rotatePiece();
-										player.getPiecesLeft().get(i).flipPiece();
-										if (!isValid(player.getPiecesLeft().get(i), player)) {
-											player.getPiecesLeft().get(i).rotatePiece();
-											if (!isValid(player.getPiecesLeft().get(i), player)) {
-												player.getPiecesLeft().get(i).rotatePiece();
-												if (!isValid(player.getPiecesLeft().get(i), player)) {
-													player.getPiecesLeft().get(i).rotatePiece();
-													if (!isValid(player.getPiecesLeft().get(i), player)) {
+						piece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
+						if (!isValid(copyPiece, player)) {
+							copyPiece.rotatePiece();
+							if (!isValid(copyPiece, player)) {
+								copyPiece.rotatePiece();
+								if (!isValid(copyPiece, player)) {
+									copyPiece.rotatePiece();
+									if (!isValid(copyPiece, player)) {
+										copyPiece.rotatePiece();
+										copyPiece.flipPiece();
+										if (!isValid(copyPiece, player)) {
+											copyPiece.rotatePiece();
+											if (!isValid(copyPiece, player)) {
+												copyPiece.rotatePiece();
+												if (!isValid(copyPiece, player)) {
+													copyPiece.rotatePiece();
+													if (!isValid(copyPiece, player)) {
 														returnBoolean = true;
+														copyPiece.rotatePiece();
+														copyPiece.flipPiece();
 													} else {
-														player.getPiecesLeft().get(i).rotatePiece();
-														player.getPiecesLeft().get(i).flipPiece();
-														player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+														copyPiece.rotatePiece();
+														copyPiece.flipPiece();
+														copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 														return false;
 													}
 												} else {
-													player.getPiecesLeft().get(i).rotatePiece();
-													player.getPiecesLeft().get(i).rotatePiece();
-													player.getPiecesLeft().get(i).flipPiece();
-													player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+													copyPiece.rotatePiece();
+													copyPiece.rotatePiece();
+													copyPiece.flipPiece();
+													copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 													return false;
 												}
 											} else {
-												player.getPiecesLeft().get(i).rotatePiece();
-												player.getPiecesLeft().get(i).rotatePiece();
-												player.getPiecesLeft().get(i).rotatePiece();
-												player.getPiecesLeft().get(i).flipPiece();
-												player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+												copyPiece.rotatePiece();
+												copyPiece.rotatePiece();
+												copyPiece.rotatePiece();
+												copyPiece.flipPiece();
+												copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 												return false;
 											}
 										} else {
-											player.getPiecesLeft().get(i).flipPiece();
-											player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+											copyPiece.flipPiece();
+											copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 											return false;
 										}
 									} else {
-										player.getPiecesLeft().get(i).rotatePiece();
-										player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+										copyPiece.rotatePiece();
+										copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 										return false;
 									}
 								} else {
-									player.getPiecesLeft().get(i).rotatePiece();
-									player.getPiecesLeft().get(i).rotatePiece();
-									player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+									copyPiece.rotatePiece();
+									copyPiece.rotatePiece();
+									copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 									return false;
 								}
 							} else {
-								player.getPiecesLeft().get(i).rotatePiece();
-								player.getPiecesLeft().get(i).rotatePiece();
-								player.getPiecesLeft().get(i).rotatePiece();
-								player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+								copyPiece.rotatePiece();
+								copyPiece.rotatePiece();
+								copyPiece.rotatePiece();
+								copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 								return false;
 							}
 						} else {
-							player.getPiecesLeft().get(i).setPieceCoordinateLocation(j, new Position(0,0));
+							copyPiece.setPieceCoordinateLocation(j, new Position(0,0));
 							return false;
 						}
 					}
