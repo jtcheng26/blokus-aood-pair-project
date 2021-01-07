@@ -177,7 +177,7 @@ public class Gameboard {
 				GamePiece copyPiece = new GamePiece(piece);
 				for (int j = 0; j < player.getPiecesLeft().get(i).getPieceCoordinates().size(); j++) {
 					for (int k = 0; k < player.getCornerPositions().size(); k++) {
-						piece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
+						copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 						if (!isValid(copyPiece, player)) {
 							copyPiece.rotatePiece();
 							if (!isValid(copyPiece, player)) {
