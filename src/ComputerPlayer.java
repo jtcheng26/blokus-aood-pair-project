@@ -21,8 +21,12 @@ public class ComputerPlayer extends Player {
 		return difficultyLevel;
 	}
 	
-	public GamePiece easyAI () {
+	/*
+	 * for AI's, access isValid and playerOut method from the board parameter
+	 */
+	public GamePiece easyAI (Gameboard board) {
 		List<GamePiece> easyAIPieces = this.getPiecesLeft();
+		//if (easyAIPieces.contains(new ))
 		if (easyAIPieces.size() == 21) {
 			/*
 			 * size: 1
@@ -33,40 +37,53 @@ public class ComputerPlayer extends Player {
 			 * size: 2
 			 */
 			return easyAIPieces.get(19);
-		} else if (easyAIPieces.size() == 19) {
+		} else if (easyAIPieces.size() == 19 || easyAIPieces.size() == 18) {
 			/*
 			 * size: 3
 			 */
-			int index = (int) Math.random()*(19-17+1)+17;
+			int index = (int) Math.random()*(easyAIPieces.size()-1-17+1)+17;
 			return  easyAIPieces.get(index);
-		} else if (easyAIPieces.size() == 18) {
-			/*
-			 * size: 3
-			 */
-			return easyAIPieces.get(17);
 		} else if (easyAIPieces.size() <= 17 && easyAIPieces.size() > 12) {
 			/*
 			 * size: 4
 			 */
-			int index = (int) Math.random()*(easyAIPieces.size()-13+1)+13;
-			return easyAIPieces.get(index);
+			int index = 0;
+			int counter = 0;
+			boolean noneCanBePlaced = false;
+			do {
+				index = (int) Math.random()*(easyAIPieces.size()-13+1)+13;
+				counter++;
+			} while (!board.isValid(easyAIPieces.get(index), this));
+			if (noneCanBePlaced) {
+				
+			} else {
+				return easyAIPieces.get(index);
+			}
 		} else {
 			/*
 			 * size: 5
 			 */
-			int index = (int) Math.random()*(easyAIPieces.size()+1);
+			int index = 0;
+			do {
+				index = (int) Math.random()*(easyAIPieces.size()+1);
+			} while (!board.isValid(easyAIPieces.get(index), this));
 			return easyAIPieces.get(index);
 		}
 	}
 	
-	public GamePiece mediumAI () {
+	public GamePiece mediumAI (Gameboard board) {
 		List<GamePiece> mediumAIPieces = this.getPiecesLeft();
 		int index = (int) Math.random()*(mediumAIPieces.size()+1);
 		return mediumAIPieces.get(index);
 	}
 	
-	public GamePiece hardAI () {
+	public GamePiece hardAI (Gameboard board) {
 		List<GamePiece> hardAIPieces = this.getPiecesLeft();
 		
+	}
+	
+	public static void main (String[] args) {
+		ComputerPlayer player = new ComputerPlayer("Computer Player 1", 1, 0);
+		System.out.println(player.getPiecesLeft().get(20).getName() == "O1 Shape");
 	}
 }

@@ -281,6 +281,10 @@ public class Gameboard {
 		}
 	}
 	
+	public Gameboard getGameboard () {
+		return this;
+	}
+
 	public static void main (String[] args) {
 		Gameboard board = new Gameboard(2);
 		Player player1 = new Player("Matthew", 1, 0);
