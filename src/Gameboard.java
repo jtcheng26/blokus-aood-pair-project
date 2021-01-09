@@ -281,8 +281,8 @@ public class Gameboard {
 		}
 	}
 	
-	public Gameboard getGameboard () {
-		return this;
+	public int[][] getGameboardGrid () {
+		return this.grid;
 	}
 
 	public static void main (String[] args) {
