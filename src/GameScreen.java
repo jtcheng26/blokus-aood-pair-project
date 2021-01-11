@@ -182,26 +182,41 @@ public class GameScreen extends JPanel implements KeyListener {
 
 	    if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
 	        onLeftArrow();
+	        if (!board.isPieceOnBoard(selectedPiece))
+	        	onRightArrow();
 	    }
 
 	    if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
 	        onRightArrow();
+	        if (!board.isPieceOnBoard(selectedPiece))
+	        	onLeftArrow();
 	    }
 
 	    if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
 	        onUpArrow();
+	        if (!board.isPieceOnBoard(selectedPiece))
+	        	onDownArrow();
 	    }
 
 	    if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
 	        onDownArrow();
+	        if (!board.isPieceOnBoard(selectedPiece))
+	        	onUpArrow();
 	    }
 	    
 	    if (key == KeyEvent.VK_R) {
 	    	onRotate();
+	    	if (!board.isPieceOnBoard(selectedPiece)) {
+	        	onRotate();
+	        	onRotate();
+	        	onRotate();
+	    	}
 	    }
 	    
 	    if (key == KeyEvent.VK_F) {
 	    	onFlip();
+	    	if (!board.isPieceOnBoard(selectedPiece))
+	        	onFlip();
 	    }
 	    //board.isValid(selectedPiece, players.get(currentTurn));
 	    board.followCurrentPiece(selectedPiece, players.get(currentTurn));
