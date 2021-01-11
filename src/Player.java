@@ -2,12 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-	 public List<GamePiece> piecesLeft = new ArrayList<GamePiece>();
+	 private List<GamePiece> piecesLeft = new ArrayList<GamePiece>();
 	 private List<GamePiece> piecesUsed = new ArrayList<GamePiece>();
 	 private List<Position> cornerPositions = new ArrayList<Position>();
 	 private int score = 0;
 	 private String playerName;
 	 private int playerID;
+	 public static final int HUMAN = 0;
 	 
 	 Player (String name, int id, int difficulty) {
 		 playerName = name;
