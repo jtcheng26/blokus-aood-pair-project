@@ -49,7 +49,7 @@ class GameTestData {
 		player2.piecesLeft.add(I32);
 		player2.piecesLeft.add(I42);
 		for (int i=0;i<13;i++) {
-			player2.piecesLeft.add(new T5Piece());
+			player2.piecesLeft.add(new F5Piece());
 		}
 		board.placePiece(V51, player1);
 		O11.setPieceCoordinateLocation(0, new Position(1, 3));
@@ -111,7 +111,7 @@ class GameTestData {
 		board.placePiece(I42, player2);
 		player2.piecesLeft.get(0).setPieceCoordinateLocation(3, new Position(7, 10));
 		//player2.piecesLeft.get(0).setPieceCoordinateLocation(3, new Position(7, 11));
-		board.followCurrentPiece(player2.piecesLeft.get(0), player2);
+		//board.followCurrentPiece(player2.piecesLeft.get(0), player2);
 		board.print(board);
 		return board;
 	}

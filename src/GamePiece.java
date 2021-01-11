@@ -58,6 +58,13 @@ public class GamePiece {
 			}
 		}
 	}
+	public List<Position> getGamePieceDeltas() {
+		List<Position> pieceDeltas = new ArrayList<Position>();
+		for (Position p : this.pieceDeltas) {
+			pieceDeltas.add(new Position(p.getX(), p.getY()));
+		}
+		return pieceDeltas;
+	}
 	public List<Position> getPieceCoordinates() {
 		List<Position> pieceCoordinates = new ArrayList<Position>();
 		for (Position pos : pieceDeltas) {
