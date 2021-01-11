@@ -9,12 +9,15 @@ public class ComputerPlayerTester {
 		board1.placePiece(cp1.getPiece(cp1.getDifficultyLevel(), board1), cp1);
 		board1.rotateBoard();
 		board1.rotateBoard();
+		board1.print(board1);
 		board1.placePiece(cp2.getPiece(cp2.getDifficultyLevel(), board1), cp2);
 		board1.rotateBoard();
 		board1.rotateBoard();
+		System.out.println();
+		board1.print(board1);
 		board1.placePiece(cp1.getPiece(cp1.getDifficultyLevel(), board1), cp1);
-		board1.placePiece(cp1.getPiece(cp1.getDifficultyLevel(), board1), cp1);
-		//System.out.println(cp1.getPiece(cp1.getDifficultyLevel(), board1).getName());
+		System.out.println(cp1.getPiece(cp1.getDifficultyLevel(), board1).getName());
+		System.out.println("printed");
 		board1.print(board1);
 	}
 }

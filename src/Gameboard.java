@@ -252,6 +252,16 @@ public class Gameboard {
 		return returnBoolean;
 	}
 	
+	public boolean isPieceOnBoard (GamePiece piece) {
+		for (int i=0; i < piece.getPieceCoordinates().size(); i++) {
+			if (piece.getPieceCoordinates().get(i).getX() >= 0 && piece.getPieceCoordinates().get(i).getX() < this.gridSize
+				&& piece.getPieceCoordinates().get(i).getY() >= 0 && piece.getPieceCoordinates().get(i).getY() < this.gridSize) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void rotateBoard () {
 		int[][] newGrid = new int[gridSize][gridSize];
 		for (int i=0;i<gridSize;i++) {
