@@ -57,12 +57,14 @@ public class ComputerPlayer extends Player {
 			/*
 			 * size: 1
 			 */
+			oneSquarePieces--;
 			return easyAIPieces.get(20);
 		}
 		if (twoSquarePieces > 0 && !checkSizeTwoE) {
 			/*
 			 * size: 2
 			 */
+			twoSquarePieces--;
 			return easyAIPieces.get(19);
 		}
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
