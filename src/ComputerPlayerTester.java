@@ -10,6 +10,6 @@ public class ComputerPlayerTester {
 		playerList.add(cp1);
 		playerList.add(cp2);
 		GameScreen screen1 = new GameScreen(playerList);
-		
+		board1.placePiece(cp1.getPiece(cp1.getDifficultyLevel(), board1), cp1);
 	}
 }

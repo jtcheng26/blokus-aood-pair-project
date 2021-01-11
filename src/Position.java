@@ -28,6 +28,6 @@ class Position {
 	}
 	public static void main (String[] args) {
 		Player player1 = new Player("Matthew", 1, 0);
-		System.out.println(player1.getPiece(0).getPieceCoordinates().get(0).equals(new Position (0,0)));
+		//System.out.println(player1.getPiece(0).getPieceCoordinates().get(0).equals(new Position (0,0)));
 	}
 }

@@ -42,7 +42,7 @@ public class Gameboard {
 	}
 	
 	public void placePiece (GamePiece piece, Player player) {
-		GamePiece currentPiece = player.getPiece(player.getPiecesLeft().indexOf(piece));
+		GamePiece currentPiece = player.getPiecesLeft().get(player.getPiecesLeft().indexOf(piece));
 		if (isValid(piece,player)) {
 			for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
 				grid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
@@ -298,8 +298,8 @@ public class Gameboard {
 		Player player1 = new Player("Matthew", 1, 0);
 		Player player2 = new Player("Jeffrey", 2, 0);
 		//board.placePiece(player1.getPiece(4), player1);
-		player1.getPiece(4).rotatePiece();
-		board.followCurrentPiece(player1.getPiece(4), player1);
+		//player1.getPiece(4).rotatePiece();
+		//board.followCurrentPiece(player1.getPiece(4), player1);
 		
 		//board.placePiece(player2.getPiece(0), player2);
 		board.printInstantaneousGrid(board);
