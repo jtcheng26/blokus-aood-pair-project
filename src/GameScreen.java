@@ -3,18 +3,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-public class GameScreen {
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class GameScreen extends JPanel {
 	private GamePiece selectedPiece;
 	private Gameboard board;
 	private List<Player> players;
 	private boolean[] isOut;
 	private int currentTurn;
 	GameScreen(List<Player> players) { // for GUI version
-		this.board = new Gameboard(players.size());
+		this.board = GameTestData.getSmallTestBoard1();//new Gameboard(players.size());
 		this.players = players;
 		this.isOut = new boolean[players.size()];
 		this.currentTurn = 0;
 		this.selectedPiece = null;
+		this.add(new GameboardScreen(this.board));
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
