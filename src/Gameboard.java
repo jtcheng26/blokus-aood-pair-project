@@ -288,7 +288,11 @@ public class Gameboard {
 	public int[][] getInstantaneousGameboardGrid () {
 		return this.instantaneousGrid;
 	}
-
+	
+	public int getGridSize () {
+		return this.gridSize;
+	}
+	
 	public static void main (String[] args) {
 		Gameboard board = new Gameboard(2);
 		Player player1 = new Player("Matthew", 1, 0);
