@@ -1,3 +1,5 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,19 +8,23 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GameScreen extends JPanel {
+public class GameScreen extends JPanel implements KeyListener {
 	private GamePiece selectedPiece;
 	private Gameboard board;
+	private GameboardScreen gameboardScreen;
 	private List<Player> players;
 	private boolean[] isOut;
 	private int currentTurn;
 	GameScreen(List<Player> players) { // for GUI version
-		this.board = GameTestData.getSmallTestBoard1();//new Gameboard(players.size());
+		addKeyListener(this);
+		this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));//new Gameboard(players.size());
+		selectedPiece = players.get(1).piecesLeft.get(0);
 		this.players = players;
 		this.isOut = new boolean[players.size()];
-		this.currentTurn = 0;
-		this.selectedPiece = null;
-		this.add(new GameboardScreen(this.board));
+		this.currentTurn = 1;
+		//this.selectedPiece = null;
+		this.gameboardScreen = new GameboardScreen(this.board);
+		this.add(gameboardScreen);
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -36,6 +42,10 @@ public class GameScreen extends JPanel {
 		this.PLAY_CONSOLE_GAME();
 		sc.close();
 	}
+	public void addNotify() {
+        super.addNotify();
+        requestFocus();
+    }
 	private void PLAY_CONSOLE_GAME() {
 		int in = players.size();
 		Player currentPlayer;
@@ -167,7 +177,47 @@ public class GameScreen extends JPanel {
 		}
 		return false;
 	}
+	public void keyPressed(KeyEvent e) {
+	    int key = e.getKeyCode();
+
+	    if (key == KeyEvent.VK_LEFT) {
+	        onLeftArrow();
+	    }
+
+	    if (key == KeyEvent.VK_RIGHT) {
+	        onRightArrow();
+	    }
+
+	    if (key == KeyEvent.VK_UP) {
+	        onUpArrow();
+	    }
+
+	    if (key == KeyEvent.VK_DOWN) {
+	        onDownArrow();
+	    }
+	    
+	    if (key == KeyEvent.VK_R) {
+	    	onRotate();
+	    }
+	    
+	    if (key == KeyEvent.VK_F) {
+	    	onFlip();
+	    }
+	    //board.isValid(selectedPiece, players.get(currentTurn));
+	    board.followCurrentPiece(selectedPiece, players.get(currentTurn));
+	    gameboardScreen.updateBoard();
+	}
 	public static void main(String[] args) {
 		GameScreen game = new GameScreen();
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

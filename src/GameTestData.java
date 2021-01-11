@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 
 class GameTestData {
-	public static Gameboard getSmallTestBoard1() {
+	public static Gameboard getSmallTestBoard1(Player player1, Player player2) {
 		Gameboard board = new Gameboard(2);
-		Player player1 = new Player("bruh", 1, 0);
-		Player player2 = new Player("bruh2", 2, 0);
 		// player 1 (out player) pieces
 		GamePiece V51 = new V5Piece();
 		GamePiece O11 = new O1Piece();
