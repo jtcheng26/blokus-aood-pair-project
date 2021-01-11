@@ -16,7 +16,7 @@ public class Player {
 		 piecesLeft = GamePieceFactory.getGamePieceSet();
 	 }
 	 
-	 public GamePiece getPiece (int index) {
+	 public GamePiece getPiece (int index, Gameboard board) {
 		return piecesLeft.get(index);
 	 }
 	 
