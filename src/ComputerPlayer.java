@@ -65,6 +65,14 @@ public class ComputerPlayer extends Player {
 			 * size: 2
 			 */
 			twoSquarePieces--;
+			do {
+				for (int i=0; i < easyAIPieces.get(19).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int index = (int) (Math.random()*(this.getCornerPositions().size()));
+						easyAIPieces.get(19).setPieceCoordinateLocation(i, this.getCornerPositions().get(index));
+					}
+				}
+			} while (!board.isValid(easyAIPieces.get(19), this));
 			return easyAIPieces.get(19);
 		}
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
@@ -75,7 +83,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(easyAIPieces.size()-17+1)+17;
+				index = (int) (Math.random()*(easyAIPieces.size()-17+1)+17);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(easyAIPieces.get(index)) && newPiece) {
@@ -99,6 +107,14 @@ public class ComputerPlayer extends Player {
 			} else {
 				checkSizeThreeE = false;
 				threeSquarePieces--;
+				do {
+					for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
+						for (int j=0; j < this.getCornerPositions().size(); j++) {
+							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+							easyAIPieces.get(19).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						}
+					}
+				} while (!board.isValid(easyAIPieces.get(index), this));
 				return easyAIPieces.get(index);
 			}
 		}
@@ -110,7 +126,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(easyAIPieces.size()-13+1)+13;
+				index = (int) (Math.random()*(easyAIPieces.size()-13+1)+13);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(easyAIPieces.get(index)) && newPiece) {
@@ -134,6 +150,14 @@ public class ComputerPlayer extends Player {
 			} else {
 				checkSizeFourE = false;
 				fourSquarePieces--;
+				do {
+					for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
+						for (int j=0; j < this.getCornerPositions().size(); j++) {
+							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+							easyAIPieces.get(19).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						}
+					}
+				} while (!board.isValid(easyAIPieces.get(index), this));
 				return easyAIPieces.get(index);
 			}
 		}
@@ -145,7 +169,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(fiveSquarePieces);
+				index = (int) (Math.random()*(fiveSquarePieces));
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(easyAIPieces.get(index)) && newPiece) {
@@ -169,6 +193,14 @@ public class ComputerPlayer extends Player {
 			} else {
 				checkSizeFiveE = false;
 				fiveSquarePieces--;
+				do {
+					for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
+						for (int j=0; j < this.getCornerPositions().size(); j++) {
+							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+							easyAIPieces.get(19).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						}
+					}
+				} while (!board.isValid(easyAIPieces.get(index), this));
 				return easyAIPieces.get(index);
 			}
 		}
@@ -179,7 +211,7 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> mediumAIPieces = this.getPiecesLeft();
 		int index = 0;
 		do {
-			index = (int) Math.random()*(mediumAIPieces.size());
+			index = (int) (Math.random()*(mediumAIPieces.size()));
 		} while (!board.isValid(mediumAIPieces.get(index), this));
 		return mediumAIPieces.get(index);
 	}
@@ -191,7 +223,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(fiveSquarePieces);
+				index = (int) (Math.random()*(fiveSquarePieces));
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
@@ -223,7 +255,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(fourSquarePieces)+fiveSquarePieces;
+				index = (int) (Math.random()*(fourSquarePieces)+fiveSquarePieces);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
@@ -255,7 +287,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces;
+				index = (int) (Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
@@ -287,7 +319,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(twoSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces;
+				index = (int) (Math.random()*(twoSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
@@ -319,7 +351,7 @@ public class ComputerPlayer extends Player {
 			int counter = 0;
 			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
 			do {
-				index = (int) Math.random()*(oneSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces+twoSquarePieces;
+				index = (int) (Math.random()*(oneSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces+twoSquarePieces);
 				boolean newPiece = true;
 				for (int i=0; i < checkedPieces.size(); i++) {
 					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
