@@ -54,7 +54,6 @@ public class ComputerPlayer extends Player {
 	
 	public GamePiece easyAI (Gameboard board) {
 		List<GamePiece> easyAIPieces = this.getPiecesLeft();
-		int rotationCounter = 0;
 		if (oneSquarePieces > 0 && !checkSizeOneE) {
 			oneSquarePieces--;
 			return easyAIPieces.get(20);
@@ -62,7 +61,12 @@ public class ComputerPlayer extends Player {
 		if (twoSquarePieces > 0 && !checkSizeTwoE) {
 			twoSquarePieces--;
 			int doCounter = 0;
+			int initialRotationCounter = 0;
 			do {
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					easyAIPieces.get(19).rotatePiece();
+				}
 				for (int i=0; i < easyAIPieces.get(19).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
 						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
@@ -84,9 +88,15 @@ public class ComputerPlayer extends Player {
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
 			int index;
 			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
 				//randomizes piece
 				index = (int) (Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces);
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					easyAIPieces.get(index).rotatePiece();
+				}
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
@@ -130,9 +140,15 @@ public class ComputerPlayer extends Player {
 		if (fourSquarePieces > 0 && !checkSizeFourE) {
 			int index = 0;
 			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
 				//randomizes piece
 				index = (int) (Math.random()*(fourSquarePieces)+fiveSquarePieces);
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					easyAIPieces.get(index).rotatePiece();
+				}
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
@@ -176,10 +192,15 @@ public class ComputerPlayer extends Player {
 		if (fiveSquarePieces > 0 && !checkSizeFive) {
 			int index = 0;
 			int doCounter = 0;
-			//List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
 				//randomizes piece
 				index = (int) (Math.random()*(fiveSquarePieces));
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					easyAIPieces.get(index).rotatePiece();
+				}
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
@@ -228,8 +249,13 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> mediumAIPieces = this.getPiecesLeft();
 		int index = 0;
 		int doCounter = 0;
+		int initialRotationCounter = 0;
 		do {
 			index = (int) (Math.random()*(mediumAIPieces.size()));
+			initialRotationCounter = (int) (Math.random()*4);
+			for (int i=0; i < initialRotationCounter; i++) {
+				mediumAIPieces.get(index).rotatePiece();
+			}
 			for (int i=0; i < mediumAIPieces.get(index).getPieceCoordinates().size(); i++) {
 				for (int j=0; j < this.getCornerPositions().size(); j++) {
 					int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
@@ -253,222 +279,262 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> hardAIPieces = this.getPiecesLeft();
 		if (fiveSquarePieces > 0 && !checkSizeFive) {
 			int index = 0;
-			int counter = 0;
-			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
+				//randomizes piece
 				index = (int) (Math.random()*(fiveSquarePieces));
-				boolean newPiece = true;
-				for (int i=0; i < checkedPieces.size(); i++) {
-					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
-						if (i == checkedPieces.size()-1) {
-							counter++;
-						}
-					} else {
-						newPiece = false;
-					}
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					hardAIPieces.get(index).rotatePiece();
 				}
-				if (newPiece) {
-					checkedPieces.add(hardAIPieces.get(index));
-				}
-			} while (!board.isValid(hardAIPieces.get(index), this) && counter < fiveSquarePieces);
-			if (counter >= fiveSquarePieces) {
-				checkSizeFive = true;
-			} else {
-				checkSizeFive = false;
-				checkSizeFour = false;
-				checkSizeThree = false;
-				checkSizeTwo = false;
-				checkSizeOne = false;
-				fiveSquarePieces--;
-				do {
-					for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
-						for (int j=0; j < this.getCornerPositions().size(); j++) {
-							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-							hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-							if (board.isValid(hardAIPieces.get(index), this)) {
-								i = hardAIPieces.get(index).getPieceCoordinates().size();
-								j = this.getCornerPositions().size();
+				//sets each position on the selected piece to each available corner position
+				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						//valid position
+						if (board.isValid(hardAIPieces.get(index), this)) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == hardAIPieces.get(index).getPieceCoordinates().size()-1
+								&& j == this.getCornerPositions().size()-1) {
+							hardAIPieces.get(index).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=0;
+							if (rotationCounter%4 == 0) {
+								hardAIPieces.get(index).flipPiece();
 							}
 						}
+						if (rotationCounter >= 8) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						}
 					}
-				} while (!board.isValid(hardAIPieces.get(index), this));
+				}
+			} while (!board.isValid(hardAIPieces.get(index), this) && doCounter < fiveSquarePieces);
+			if (board.isValid(hardAIPieces.get(index), this)) {
+				checkSizeFiveE = false;
+				fiveSquarePieces--;
 				return hardAIPieces.get(index);
+			} else {
+				checkSizeFiveE = true;
+				checkSizeFourE = false;
+				checkSizeThreeE = false;
+				checkSizeTwoE = false;
+				checkSizeOneE = false;
 			}
 		}
 		if (fourSquarePieces > 0 && !checkSizeFour) {
 			int index = 0;
-			int counter = 0;
-			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
+				//randomizes piece
 				index = (int) (Math.random()*(fourSquarePieces)+fiveSquarePieces);
-				boolean newPiece = true;
-				for (int i=0; i < checkedPieces.size(); i++) {
-					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
-						if (i == checkedPieces.size()-1) {
-							counter++;
-						}
-					} else {
-						newPiece = false;
-					}
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					hardAIPieces.get(index).rotatePiece();
 				}
-				if (newPiece) {
-					checkedPieces.add(hardAIPieces.get(index));
-				}
-			} while (!board.isValid(hardAIPieces.get(index), this) && counter < fourSquarePieces);
-			if (counter >= fourSquarePieces) {
-				checkSizeFour = true;
-			} else {
-				checkSizeFive = false;
-				checkSizeFour = false;
-				checkSizeThree = false;
-				checkSizeTwo = false;
-				checkSizeOne = false;
-				fourSquarePieces--;
-				do {
-					for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
-						for (int j=0; j < this.getCornerPositions().size(); j++) {
-							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-							hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-							if (board.isValid(hardAIPieces.get(index), this)) {
-								i = hardAIPieces.get(index).getPieceCoordinates().size();
-								j = this.getCornerPositions().size();
+				//sets each position on the selected piece to each available corner position
+				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						//valid position
+						if (board.isValid(hardAIPieces.get(index), this)) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == hardAIPieces.get(index).getPieceCoordinates().size()-1
+								&& j == this.getCornerPositions().size()-1) {
+							hardAIPieces.get(index).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=0;
+							if (rotationCounter%4 == 0) {
+								hardAIPieces.get(index).flipPiece();
 							}
 						}
+						if (rotationCounter >= 8) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						}
 					}
-				} while (!board.isValid(hardAIPieces.get(index), this));
+				}
+			} while (!board.isValid(hardAIPieces.get(index), this) && doCounter < fiveSquarePieces);
+			if (board.isValid(hardAIPieces.get(index), this)) {
+				checkSizeFourE = false;
+				fourSquarePieces--;
 				return hardAIPieces.get(index);
+			} else {
+				checkSizeFiveE = false;
+				checkSizeFourE = true;
+				checkSizeThreeE = false;
+				checkSizeTwoE = false;
+				checkSizeOneE = false;
 			}
 		}
 		if (threeSquarePieces > 0 && !checkSizeThree) {
 			int index = 0;
-			int counter = 0;
-			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
+				//randomizes piece
 				index = (int) (Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces);
-				boolean newPiece = true;
-				for (int i=0; i < checkedPieces.size(); i++) {
-					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
-						if (i == checkedPieces.size()-1) {
-							counter++;
-						}
-					} else {
-						newPiece = false;
-					}
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					hardAIPieces.get(index).rotatePiece();
 				}
-				if (newPiece) {
-					checkedPieces.add(hardAIPieces.get(index));
-				}
-			} while (!board.isValid(hardAIPieces.get(index), this) && counter < threeSquarePieces);
-			if (counter >= threeSquarePieces) {
-				checkSizeThree = true;
-			} else {
-				checkSizeFive = false;
-				checkSizeFour = false;
-				checkSizeThree = false;
-				checkSizeTwo = false;
-				checkSizeOne = false;
-				threeSquarePieces--;
-				do {
-					for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
-						for (int j=0; j < this.getCornerPositions().size(); j++) {
-							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-							hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-							if (board.isValid(hardAIPieces.get(index), this)) {
-								i = hardAIPieces.get(index).getPieceCoordinates().size();
-								j = this.getCornerPositions().size();
+				//sets each position on the selected piece to each available corner position
+				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						//valid position
+						if (board.isValid(hardAIPieces.get(index), this)) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == hardAIPieces.get(index).getPieceCoordinates().size()-1
+								&& j == this.getCornerPositions().size()-1) {
+							hardAIPieces.get(index).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=0;
+							if (rotationCounter%4 == 0) {
+								hardAIPieces.get(index).flipPiece();
 							}
 						}
+						if (rotationCounter >= 8) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						}
 					}
-				} while (!board.isValid(hardAIPieces.get(index), this));
+				}
+			} while (!board.isValid(hardAIPieces.get(index), this) && doCounter < fiveSquarePieces);
+			if (board.isValid(hardAIPieces.get(index), this)) {
+				checkSizeThreeE = false;
+				threeSquarePieces--;
 				return hardAIPieces.get(index);
+			} else {
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeThreeE = true;
+				checkSizeTwoE = false;
+				checkSizeOneE = false;
 			}
 		}
 		if (twoSquarePieces > 0 && !checkSizeTwo) {
 			int index = 0;
-			int counter = 0;
-			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
-				index = (int) (Math.random()*(twoSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces);
-				boolean newPiece = true;
-				for (int i=0; i < checkedPieces.size(); i++) {
-					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
-						if (i == checkedPieces.size()-1) {
-							counter++;
-						}
-					} else {
-						newPiece = false;
-					}
+				//randomizes piece
+				index = (int) (Math.random()*(twoSquarePieces)+threeSquarePieces+fourSquarePieces+fiveSquarePieces);
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					hardAIPieces.get(index).rotatePiece();
 				}
-				if (newPiece) {
-					checkedPieces.add(hardAIPieces.get(index));
-				}
-			} while (!board.isValid(hardAIPieces.get(index), this) && counter < twoSquarePieces);
-			if (counter >= twoSquarePieces) {
-				checkSizeTwo = true;
-			} else {
-				checkSizeFive = false;
-				checkSizeFour = false;
-				checkSizeThree = false;
-				checkSizeTwo = false;
-				checkSizeOne = false;
-				twoSquarePieces--;
-				do {
-					for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
-						for (int j=0; j < this.getCornerPositions().size(); j++) {
-							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-							hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-							if (board.isValid(hardAIPieces.get(index), this)) {
-								i = hardAIPieces.get(index).getPieceCoordinates().size();
-								j = this.getCornerPositions().size();
+				//sets each position on the selected piece to each available corner position
+				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						//valid position
+						if (board.isValid(hardAIPieces.get(index), this)) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == hardAIPieces.get(index).getPieceCoordinates().size()-1
+								&& j == this.getCornerPositions().size()-1) {
+							hardAIPieces.get(index).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=0;
+							if (rotationCounter%4 == 0) {
+								hardAIPieces.get(index).flipPiece();
 							}
 						}
+						if (rotationCounter >= 8) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						}
 					}
-				} while (!board.isValid(hardAIPieces.get(index), this));
+				}
+			} while (!board.isValid(hardAIPieces.get(index), this) && doCounter < fiveSquarePieces);
+			if (board.isValid(hardAIPieces.get(index), this)) {
+				checkSizeTwoE = false;
+				twoSquarePieces--;
 				return hardAIPieces.get(index);
+			} else {
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeThreeE = false;
+				checkSizeTwoE = true;
+				checkSizeOneE = false;
 			}
 		}
 		if (oneSquarePieces > 0 && !checkSizeOne) {
 			int index = 0;
-			int counter = 0;
-			List<GamePiece> checkedPieces = new ArrayList<GamePiece>();
+			int doCounter = 0;
+			int initialRotationCounter = 0;
+			int rotationCounter = 0;
 			do {
-				index = (int) (Math.random()*(oneSquarePieces)+fiveSquarePieces+fourSquarePieces+threeSquarePieces+twoSquarePieces);
-				boolean newPiece = true;
-				for (int i=0; i < checkedPieces.size(); i++) {
-					if (!checkedPieces.get(i).equals(hardAIPieces.get(index)) && newPiece) {
-						if (i == checkedPieces.size()-1) {
-							counter++;
-						}
-					} else {
-						newPiece = false;
-					}
+				//randomizes piece
+				index = (int) (Math.random()*(oneSquarePieces)+twoSquarePieces+threeSquarePieces+fourSquarePieces+fiveSquarePieces);
+				initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					hardAIPieces.get(index).rotatePiece();
 				}
-				if (newPiece) {
-					checkedPieces.add(hardAIPieces.get(index));
-				}
-			} while (!board.isValid(hardAIPieces.get(index), this) && counter < oneSquarePieces);
-			if (counter >= oneSquarePieces) {
-				checkSizeOne = true;
-			} else {
-				checkSizeFive = false;
-				checkSizeFour = false;
-				checkSizeThree = false;
-				checkSizeTwo = false;
-				checkSizeOne = false;
-				oneSquarePieces--;
-				do {
-					for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
-						for (int j=0; j < this.getCornerPositions().size(); j++) {
-							int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-							hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-							if (board.isValid(hardAIPieces.get(index), this)) {
-								i = hardAIPieces.get(index).getPieceCoordinates().size();
-								j = this.getCornerPositions().size();
+				//sets each position on the selected piece to each available corner position
+				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.getCornerPositions().size(); j++) {
+						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						//valid position
+						if (board.isValid(hardAIPieces.get(index), this)) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == hardAIPieces.get(index).getPieceCoordinates().size()-1
+								&& j == this.getCornerPositions().size()-1) {
+							hardAIPieces.get(index).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=0;
+							if (rotationCounter%4 == 0) {
+								hardAIPieces.get(index).flipPiece();
 							}
 						}
+						if (rotationCounter >= 8) {
+							i = hardAIPieces.get(index).getPieceCoordinates().size();
+							j = this.getCornerPositions().size();
+						}
 					}
-				} while (!board.isValid(hardAIPieces.get(index), this));
+				}
+			} while (!board.isValid(hardAIPieces.get(index), this) && doCounter < fiveSquarePieces);
+			if (board.isValid(hardAIPieces.get(index), this)) {
+				checkSizeOneE = false;
+				oneSquarePieces--;
 				return hardAIPieces.get(index);
+			} else {
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeThreeE = false;
+				checkSizeTwoE = false;
+				checkSizeOneE = true;
 			}
 		}
 		return null;
