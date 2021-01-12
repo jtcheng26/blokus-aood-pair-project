@@ -9,13 +9,19 @@ public class Player {
 	 private String playerName;
 	 private int playerID;
 	 public static final int HUMAN = 0;
+	 private int difficultyLevel;
 	 
 	 Player (String name, int id, int difficulty) {
 		 playerName = name;
 		 playerID = id;
 		 score = 0;
 		 piecesLeft = GamePieceFactory.getGamePieceSet();
+		 difficultyLevel = difficulty;
 	 }
+	 
+	 public int getDifficultyLevel () {
+			return difficultyLevel;
+		}
 	 
 	 public GamePiece getPiece (int index, Gameboard board) {
 		return piecesLeft.get(index);

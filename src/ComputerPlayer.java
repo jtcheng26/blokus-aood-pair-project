@@ -35,10 +35,6 @@ public class ComputerPlayer extends Player {
 		difficultyLevel = difficulty;
 	}
 	
-	public int getDifficultyLevel () {
-		return difficultyLevel;
-	}
-	
 	/*
 	 * for AI's, access isValid and playerOut method from the board parameter
 	 */
