@@ -41,7 +41,10 @@ public class ComputerPlayer extends Player {
 	 * for AI's, access isValid and playerOut method from the board parameter
 	 */
 	public GamePiece getPiece (int difficulty, Gameboard board) {
-		if (difficulty == EASY_AI) {
+		if (board.playerOut(this)) {
+			System.out.println("computer player out");
+			return null;
+		} else if (difficulty == EASY_AI) {
 			return easyAI(board);
 		} else if (difficulty == MEDIUM_AI) {
 			return mediumAI(board);
