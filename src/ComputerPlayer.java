@@ -4,9 +4,11 @@ import java.util.Random;
 
 public class ComputerPlayer extends Player {
 	private int difficultyLevel;
+	/*
 	public static final int EASY_AI = 1;
 	public static final int MEDIUM_AI = 2;
 	public static final int HARD_AI = 3;
+	*/
 	private int oneSquarePieces = 1;
 	private int twoSquarePieces = 1;
 	private int threeSquarePieces = 2;

@@ -143,6 +143,18 @@ public class GameScreen extends JPanel implements KeyListener {
 				endPlayer(players.get(currentTurn));
 			}
 		} while (isOut[currentTurn] && currentTurn != orig);
+		if (players.get(currentTurn).getDifficultyLevel() != 0) {
+			System.out.println("computer");
+			if (players.get(currentTurn).getDifficultyLevel() == Player.EASY_AI) {
+				board.placePiece(((ComputerPlayer) players.get(currentTurn)).easyAI(board), players.get(currentTurn));
+			}
+			if (players.get(currentTurn).getDifficultyLevel() == Player.MEDIUM_AI) {
+				board.placePiece(((ComputerPlayer) players.get(currentTurn)).mediumAI(board), players.get(currentTurn));
+			}
+			if (players.get(currentTurn).getDifficultyLevel() == Player.HARD_AI) {
+				board.placePiece(((ComputerPlayer) players.get(currentTurn)).hardAI(board), players.get(currentTurn));
+			}
+		}
 		inventoryPanel.add(inventories.get(currentTurn));
 		inventoryPanel.revalidate();
 		inventoryPanel.repaint();

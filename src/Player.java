@@ -9,6 +9,9 @@ public class Player {
 	 private String playerName;
 	 private int playerID;
 	 public static final int HUMAN = 0;
+	 public static final int EASY_AI = 1;
+	 public static final int MEDIUM_AI = 2;
+	 public static final int HARD_AI = 3;
 	 private int difficultyLevel;
 	 
 	 Player (String name, int id, int difficulty) {
@@ -21,7 +24,7 @@ public class Player {
 	 
 	 public int getDifficultyLevel () {
 			return difficultyLevel;
-		}
+	}
 	 
 	 public GamePiece getPiece (int index, Gameboard board) {
 		return piecesLeft.get(index);
