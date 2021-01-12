@@ -135,6 +135,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		selectedPiece = null;
 		inventoryPanel.removeAll();
 		do {
+			System.out.println("Turn " + currentTurn);
 			currentTurn = (currentTurn + 1) % players.size();
 			board.rotateBoard();
 			if (players.size() == 2)
@@ -144,14 +145,18 @@ public class GameScreen extends JPanel implements KeyListener {
 			} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
 				ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
 				if (p.getDifficultyLevel() == Player.EASY_AI) {
+					System.out.println("Placing easy " + currentTurn);
 					board.placePiece(p.easyAI(board), p);
 				}
 				if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
+					System.out.println("Placing med " + currentTurn);
 					board.placePiece(p.mediumAI(board), p);
 				}
 				if (p.getDifficultyLevel() == Player.HARD_AI) {
+					System.out.println("Placing hard " + currentTurn);
 					board.placePiece(p.hardAI(board), p);
 				}
+				updateBoard();
 			}
 		} while ((isOut[currentTurn] || players.get(currentTurn).getDifficultyLevel() != 0) && currentTurn != orig);
 		inventoryPanel.add(inventories.get(currentTurn));

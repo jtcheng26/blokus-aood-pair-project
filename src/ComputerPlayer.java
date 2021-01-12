@@ -57,34 +57,36 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> easyAIPieces = this.getPiecesLeft();
 		if (oneSquarePieces > 0 && !checkSizeOneE) {
 			oneSquarePieces--;
-			return easyAIPieces.get(20);
+			return easyAIPieces.get(fiveSquarePieces + fourSquarePieces + threeSquarePieces + twoSquarePieces);
 		}
 		if (twoSquarePieces > 0 && !checkSizeTwoE) {
 			twoSquarePieces--;
 			int doCounter = 0;
 			int initialRotationCounter = 0;
+			int k = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
 			do {
+				System.out.println("bruh");
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
-					easyAIPieces.get(19).rotatePiece();
+					easyAIPieces.get(k).rotatePiece();
 				}
-				for (int i=0; i < easyAIPieces.get(19).getPieceCoordinates().size(); i++) {
+				for (int i=0; i < easyAIPieces.get(k).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
 						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						easyAIPieces.get(19).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
-						if (board.isValid(easyAIPieces.get(19), this)) {
-							i = easyAIPieces.get(19).getPieceCoordinates().size();
+						easyAIPieces.get(k).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						if (board.isValid(easyAIPieces.get(k), this)) {
+							i = easyAIPieces.get(k).getPieceCoordinates().size();
 							j = this.getCornerPositions().size();
 						}
 					}
 				}
-				easyAIPieces.get(19).rotatePiece();
+				easyAIPieces.get(k).rotatePiece();
 				doCounter++;
-				if (doCounter > 3) {
-					easyAIPieces.get(19).flipPiece();
+				if (doCounter == 4) {
+					easyAIPieces.get(k).flipPiece();
 				}
-			} while (!board.isValid(easyAIPieces.get(19), this));
-			return easyAIPieces.get(19);
+			} while (!board.isValid(easyAIPieces.get(k), this));
+			return easyAIPieces.get(k);
 		}
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
 			int index;
@@ -92,6 +94,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);
@@ -144,6 +147,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(fourSquarePieces)+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);
@@ -196,6 +200,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(fiveSquarePieces));
 				initialRotationCounter = (int) (Math.random()*4);
@@ -284,6 +289,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(fiveSquarePieces));
 				initialRotationCounter = (int) (Math.random()*4);
@@ -336,6 +342,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(fourSquarePieces)+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);
@@ -388,6 +395,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(threeSquarePieces)+fourSquarePieces+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);
@@ -440,6 +448,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(twoSquarePieces)+threeSquarePieces+fourSquarePieces+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);
@@ -492,6 +501,7 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			do {
+				doCounter++;
 				//randomizes piece
 				index = (int) (Math.random()*(oneSquarePieces)+twoSquarePieces+threeSquarePieces+fourSquarePieces+fiveSquarePieces);
 				initialRotationCounter = (int) (Math.random()*4);

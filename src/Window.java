@@ -12,7 +12,7 @@ class Window {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(new Player("Player 1", 1, 0));
 		players.add(new ComputerPlayer("Player 2", 2, 1));
-		players.add(new ComputerPlayer("Player 3", 3, 2));
+		players.add(new ComputerPlayer("Player 3", 3, 1));
 		players.add(new ComputerPlayer("Player 4", 4, 3));
 		frame.setContentPane(new GameScreen(players));
 		frame.pack();
