@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GameScreen extends JPanel implements KeyListener {
@@ -20,11 +19,13 @@ public class GameScreen extends JPanel implements KeyListener {
 	private GameboardScreen gameboardScreen;
 	private List<Player> players;
 	private List<PieceInventory> inventories;
+	private JPanel inventoryPanel;
 	private boolean[] isOut;
 	private int currentTurn;
 	GameScreen(List<Player> players) { // for GUI version
 		addKeyListener(this);
-		this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));//new Gameboard(players.size());
+		//this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));
+		this.board = new Gameboard(players.size());
 		this.inventories = new ArrayList<PieceInventory>();
 		for (Player player : players) {
 			inventories.add(new PieceInventory(player));
@@ -32,11 +33,13 @@ public class GameScreen extends JPanel implements KeyListener {
 		//selectedPiece = players.get(1).getPiecesLeft().get(0);
 		this.players = players;
 		this.isOut = new boolean[players.size()];
-		this.currentTurn = 1;
+		this.currentTurn = 0;
 		this.selectedPiece = null;
-		this.add(inventories.get(currentTurn), BorderLayout.WEST);
+		inventoryPanel = new JPanel();
+		inventoryPanel.add(inventories.get(currentTurn));
+		this.add(inventoryPanel);
 		this.gameboardScreen = new GameboardScreen(this.board);
-		this.add(gameboardScreen);
+		this.add(gameboardScreen, BorderLayout.CENTER);
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -130,14 +133,28 @@ public class GameScreen extends JPanel implements KeyListener {
 	private void changeTurns() {
 		int orig = currentTurn; // method should only be called when at least one player is still in
 		selectedPiece = null;
+		inventoryPanel.removeAll();
 		do {
 			currentTurn = (currentTurn + 1) % players.size();
 			board.rotateBoard();
 			if (players.size() == 2)
 				board.rotateBoard();
+			if (board.playerOut(players.get(currentTurn))) {
+				endPlayer(players.get(currentTurn));
+			}
 		} while (isOut[currentTurn] && currentTurn != orig);
-		if (orig == currentTurn)
-			System.out.println("changeTurns was called with 0 players remaining.");
+		inventoryPanel.add(inventories.get(currentTurn));
+		inventoryPanel.revalidate();
+		inventoryPanel.repaint();
+		updateBoard();
+		if (orig == currentTurn) {
+			if (board.playerOut(players.get(currentTurn)))
+				endGame();
+		}
+	}
+	private void endPlayer(Player player) {
+		System.out.println(player.getName() + " is out.");
+		isOut[players.indexOf(player)] = true;
 	}
 	private void endGame() {
 		ArrayList<Player> winners = new ArrayList<Player>();
@@ -157,7 +174,7 @@ public class GameScreen extends JPanel implements KeyListener {
 			for (int i=0;i<winners.size()-1;i++) {
 				System.out.print(winners.get(i) + ", ");
 			}
-			System.out.println(", and " + winners.get(winners.size() - 1) + " tied for the win!");
+			System.out.println(", and " + winners.get(winners.size() - 1).getName() + " tied for the win!");
 		}
 	}
 	private void onSelect(GamePiece selectedPiece) {
@@ -236,6 +253,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		    	if (onEnter()) {
 		    		inventories.get(currentTurn).placedPiece(selectedPiece);
 		    		selectedPiece = null;
+		    		changeTurns();
 		    		// next turn
 		    	}
 		    }
@@ -248,9 +266,6 @@ public class GameScreen extends JPanel implements KeyListener {
 			board.followCurrentPiece(selectedPiece, players.get(currentTurn));
 		}
 	    gameboardScreen.updateBoard();
-	}
-	public static void main(String[] args) {
-		GameScreen game = new GameScreen();
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
