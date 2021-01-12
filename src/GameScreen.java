@@ -153,7 +153,7 @@ public class GameScreen extends JPanel implements KeyListener {
 					board.placePiece(p.hardAI(board), p);
 				}
 			}
-		} while (isOut[currentTurn] && currentTurn != orig);
+		} while ((isOut[currentTurn] || players.get(currentTurn).getDifficultyLevel() != 0) && currentTurn != orig);
 		inventoryPanel.add(inventories.get(currentTurn));
 		inventoryPanel.revalidate();
 		inventoryPanel.repaint();
