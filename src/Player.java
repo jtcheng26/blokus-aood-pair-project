@@ -58,7 +58,6 @@ public class Player {
 	 }
 	 
 	 public List<Position> getCornerPositions () {
-		 Collections.shuffle(cornerPositions);
 		 return cornerPositions;
 	 }
 	 

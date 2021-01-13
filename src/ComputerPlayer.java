@@ -97,6 +97,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+threeSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -150,6 +151,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fourSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -203,6 +205,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fiveSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -259,6 +262,7 @@ public class ComputerPlayer extends Player {
 		int doCounter = 0;
 		int initialRotationCounter = 0;
 		cornerPositions = this.getCornerPositions();
+		Collections.shuffle(cornerPositions);
 		do {
 			index = (int) (Math.random()*(mediumAIPieces.size()));
 			initialRotationCounter = (int) (Math.random()*4);
@@ -292,6 +296,7 @@ public class ComputerPlayer extends Player {
 			int startOfThisSizeIndex = 0;
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fiveSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			//randomizes piece
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
@@ -347,6 +352,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fourSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -400,6 +406,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+threeSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -453,6 +460,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+twoSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -506,6 +514,7 @@ public class ComputerPlayer extends Player {
 			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+oneSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
