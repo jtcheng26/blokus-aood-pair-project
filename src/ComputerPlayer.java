@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -66,6 +67,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int k = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
+			cornerPositions = this.getCornerPositions();
 			do {
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
@@ -93,6 +95,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -145,6 +148,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -197,6 +201,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -254,6 +259,7 @@ public class ComputerPlayer extends Player {
 		int index = 0;
 		int doCounter = 0;
 		int initialRotationCounter = 0;
+		cornerPositions = this.getCornerPositions();
 		do {
 			index = (int) (Math.random()*(mediumAIPieces.size()));
 			initialRotationCounter = (int) (Math.random()*4);
@@ -285,6 +291,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -337,6 +344,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -389,6 +397,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -441,6 +450,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
@@ -493,6 +503,7 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int initialRotationCounter = 0;
 			int rotationCounter = 0;
+			cornerPositions = this.getCornerPositions();
 			do {
 				doCounter++;
 				//randomizes piece
