@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -56,6 +57,7 @@ public class Player {
 	 }
 	 
 	 public List<Position> getCornerPositions () {
+		 Collections.shuffle(cornerPositions);
 		 return cornerPositions;
 	 }
 	 

@@ -72,8 +72,7 @@ public class ComputerPlayer extends Player {
 				}
 				for (int i=0; i < easyAIPieces.get(k).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						easyAIPieces.get(k).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						easyAIPieces.get(k).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						if (board.isValid(easyAIPieces.get(k), this)) {
 							i = easyAIPieces.get(k).getPieceCoordinates().size();
 							j = this.getCornerPositions().size();
@@ -104,8 +103,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(easyAIPieces.get(index), this)) {
 							i = easyAIPieces.get(index).getPieceCoordinates().size();
@@ -157,8 +155,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(easyAIPieces.get(index), this)) {
 							i = easyAIPieces.get(index).getPieceCoordinates().size();
@@ -210,8 +207,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < easyAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						easyAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(easyAIPieces.get(index), this)) {
 							i = easyAIPieces.get(index).getPieceCoordinates().size();
@@ -264,8 +260,7 @@ public class ComputerPlayer extends Player {
 			}
 			for (int i=0; i < mediumAIPieces.get(index).getPieceCoordinates().size(); i++) {
 				for (int j=0; j < this.getCornerPositions().size(); j++) {
-					int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-					mediumAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+					mediumAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 					if (board.isValid(mediumAIPieces.get(index), this)) {
 						i = mediumAIPieces.get(index).getPieceCoordinates().size();
 						j = this.getCornerPositions().size();
@@ -299,8 +294,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(hardAIPieces.get(index), this)) {
 							i = hardAIPieces.get(index).getPieceCoordinates().size();
@@ -352,8 +346,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(hardAIPieces.get(index), this)) {
 							i = hardAIPieces.get(index).getPieceCoordinates().size();
@@ -405,8 +398,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(hardAIPieces.get(index), this)) {
 							i = hardAIPieces.get(index).getPieceCoordinates().size();
@@ -458,8 +450,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(hardAIPieces.get(index), this)) {
 							i = hardAIPieces.get(index).getPieceCoordinates().size();
@@ -511,8 +502,7 @@ public class ComputerPlayer extends Player {
 				//sets each position on the selected piece to each available corner position
 				for (int i=0; i < hardAIPieces.get(index).getPieceCoordinates().size(); i++) {
 					for (int j=0; j < this.getCornerPositions().size(); j++) {
-						int cornerIndex = (int) (Math.random()*(this.getCornerPositions().size()));
-						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(cornerIndex));
+						hardAIPieces.get(index).setPieceCoordinateLocation(i, this.getCornerPositions().get(j));
 						//valid position
 						if (board.isValid(hardAIPieces.get(index), this)) {
 							i = hardAIPieces.get(index).getPieceCoordinates().size();
