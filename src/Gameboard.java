@@ -42,6 +42,7 @@ public class Gameboard {
 	}
 	
 	public void placePiece (GamePiece piece, Player player) {
+		System.out.println(player.getName() + " is placing " + piece.getName());
 		GamePiece currentPiece = player.getPiecesLeft().get(player.getPiecesLeft().indexOf(piece));
 		if (isValid(piece,player)) {
 			for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {

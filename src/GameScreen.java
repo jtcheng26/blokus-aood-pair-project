@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class GameScreen extends JPanel implements KeyListener {
@@ -24,6 +25,7 @@ public class GameScreen extends JPanel implements KeyListener {
 	private int currentTurn;
 	GameScreen(List<Player> players) { // for GUI version
 		addKeyListener(this);
+		this.setBackground(Color.white);
 		//this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));
 		this.board = new Gameboard(players.size());
 		this.inventories = new ArrayList<PieceInventory>();
@@ -36,6 +38,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.currentTurn = 0;
 		this.selectedPiece = null;
 		inventoryPanel = new JPanel();
+		inventoryPanel.setBackground(Color.white);
 		inventoryPanel.add(inventories.get(currentTurn));
 		this.add(inventoryPanel);
 		this.gameboardScreen = new GameboardScreen(this.board);
@@ -135,7 +138,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		selectedPiece = null;
 		inventoryPanel.removeAll();
 		do {
-			System.out.println("Turn " + currentTurn);
+			//System.out.println("Turn " + currentTurn);
 			currentTurn = (currentTurn + 1) % players.size();
 			board.rotateBoard();
 			if (players.size() == 2)
@@ -145,15 +148,15 @@ public class GameScreen extends JPanel implements KeyListener {
 			} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
 				ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
 				if (p.getDifficultyLevel() == Player.EASY_AI) {
-					System.out.println("Placing easy " + currentTurn);
+					//System.out.println("Placing easy " + currentTurn);
 					board.placePiece(p.easyAI(board), p);
 				}
 				if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
-					System.out.println("Placing med " + currentTurn);
+					//System.out.println("Placing med " + currentTurn);
 					board.placePiece(p.mediumAI(board), p);
 				}
 				if (p.getDifficultyLevel() == Player.HARD_AI) {
-					System.out.println("Placing hard " + currentTurn);
+					//System.out.println("Placing hard " + currentTurn);
 					board.placePiece(p.hardAI(board), p);
 				}
 				updateBoard();
@@ -176,6 +179,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		ArrayList<Player> winners = new ArrayList<Player>();
 		int winningScore = 0;
 		for (Player player : players) {
+			System.out.println(player.getName() + " score: " + player.getScore());
 			if (player.getScore() > winningScore) {
 				winningScore = player.getScore();
 				winners.clear();
@@ -188,9 +192,9 @@ public class GameScreen extends JPanel implements KeyListener {
 			System.out.println(winners.get(0).getName() + " won the game!");
 		else {
 			for (int i=0;i<winners.size()-1;i++) {
-				System.out.print(winners.get(i) + ", ");
+				System.out.print(winners.get(i).getName() + ", ");
 			}
-			System.out.println(", and " + winners.get(winners.size() - 1).getName() + " tied for the win!");
+			System.out.println("and " + winners.get(winners.size() - 1).getName() + " tied for the win!");
 		}
 	}
 	private void onSelect(GamePiece selectedPiece) {
@@ -303,6 +307,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		PieceInventory(Player player) {
 			this.player = player;
 			this.setLayout(new GridLayout(CELL_HEIGHT * 7, CELL_WIDTH * 3));
+			this.setBackground(Color.white);
 			grid = new GamePiece[CELL_HEIGHT * 7][CELL_WIDTH * 3];
 			visualGrid = new JPanel[CELL_HEIGHT * 7][CELL_WIDTH * 3];
 			List<GamePiece> pieces = player.getPiecesLeft();
@@ -334,6 +339,7 @@ public class GameScreen extends JPanel implements KeyListener {
 						}
 					});
 					visualGrid[r][c].setPreferredSize(new Dimension(24, 24));
+					visualGrid[i][j].setBackground(Color.white);
 					this.add(visualGrid[r][c]);
 				}
 			}
@@ -343,6 +349,7 @@ public class GameScreen extends JPanel implements KeyListener {
 			for (int i=0;i<CELL_HEIGHT * 7;i++) {
 				for (int j=0;j<CELL_WIDTH * 3;j++) {
 					if (grid[i][j] != null) {
+						visualGrid[i][j].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
 						visualGrid[i][j].setBackground(GameboardScreen.colors[player.getID() - 1]);
 					}
 				}
@@ -353,7 +360,8 @@ public class GameScreen extends JPanel implements KeyListener {
 				for (int j=0;j<CELL_WIDTH * 3;j++) {
 					if (grid[i][j] != null && grid[i][j] == piece) {
 						grid[i][j] = null;
-						visualGrid[i][j].setBackground(GameboardScreen.BLANK_COLOR);
+						visualGrid[i][j].setBackground(Color.white);
+						visualGrid[i][j].setBorder(null);
 					}
 				}
 			}

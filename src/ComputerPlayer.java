@@ -65,7 +65,6 @@ public class ComputerPlayer extends Player {
 			int initialRotationCounter = 0;
 			int k = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
 			do {
-				System.out.println("bruh");
 				initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					easyAIPieces.get(k).rotatePiece();
@@ -243,7 +242,8 @@ public class ComputerPlayer extends Player {
 				checkSizeOneE = false;
 			}
 		}
-		
+		System.out.println("returning null for " + this.getName());
+		System.out.println("playerout: " + board.playerOut(this));
 		return null;
 	}
 	
@@ -538,6 +538,8 @@ public class ComputerPlayer extends Player {
 				checkSizeOneE = true;
 			}
 		}
+		System.out.println("returning null for " + this.getName());
+		System.out.println("playerout: " + board.playerOut(this));
 		return null;
 	}
 	
