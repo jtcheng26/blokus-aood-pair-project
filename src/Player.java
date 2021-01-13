@@ -6,7 +6,7 @@ public class Player {
 	 public List<GamePiece> piecesLeft = new ArrayList<GamePiece>();
 	 private List<GamePiece> piecesUsed = new ArrayList<GamePiece>();
 	 private List<Position> cornerPositions = new ArrayList<Position>();
-	 private int score = 0;
+	 private int score;
 	 private String playerName;
 	 private int playerID;
 	 public static final int HUMAN = 0;
@@ -24,7 +24,7 @@ public class Player {
 	 }
 	 
 	 public int getDifficultyLevel () {
-			return difficultyLevel;
+		return difficultyLevel;
 	}
 	 
 	 public GamePiece getPiece (int index, Gameboard board) {
@@ -36,6 +36,7 @@ public class Player {
 	 }
 	 
 	 public int getScore () {
+		 score = 0;
 		 if (piecesUsed.size() > 0) {
 			 for (int i = 0; i < piecesUsed.size(); i++) {
 				 score = score+piecesUsed.get(i).getPieceCoordinates().size();

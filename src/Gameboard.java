@@ -44,24 +44,26 @@ public class Gameboard {
 	public void placePiece (GamePiece piece, Player player) {
 		System.out.println(player.getName() + " is placing " + piece.getName());
 		GamePiece currentPiece = player.getPiecesLeft().get(player.getPiecesLeft().indexOf(piece));
-		if (isValid(piece,player)) {
-			for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
-				grid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
-				instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
+		if (player.getPiecesLeft().indexOf(piece) >= 0) {
+			if (isValid(piece,player)) {
+				for (int i = 0; i < currentPiece.getPieceCoordinates().size(); i++) {
+					grid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
+					instantaneousGrid[currentPiece.getPieceCoordinates().get(i).getX()][currentPiece.getPieceCoordinates().get(i).getY()] = player.getID();
+				}
+				player.getPiecesLeft().remove(piece);
+				player.getPiecesUsed().add(piece);
 			}
-			player.getPiecesLeft().remove(piece);
-			player.getPiecesUsed().add(piece);
-		}
-		for (int i = 0; i < player.getPiecesUsed().size(); i++) {
-			List<Position> cornerCoordinates = player.getPiecesUsed().get(i).getCornerCoordinates();
-			for (int j = 0 ; j < player.getPiecesUsed().get(i).getCornerCoordinates().size(); j++) {
-				if (cornerCoordinates.get(j).getX() < this.gridSize && cornerCoordinates.get(j).getY() < this.gridSize) {
-					if (grid[cornerCoordinates.get(j).getX()][cornerCoordinates.get(j).getY()] == 0) {
-						if (!player.getCornerPositions().contains(cornerCoordinates.get(j))) {
-							player.getCornerPositions().add(cornerCoordinates.get(j));
+			for (int i = 0; i < player.getPiecesUsed().size(); i++) {
+				List<Position> cornerCoordinates = player.getPiecesUsed().get(i).getCornerCoordinates();
+				for (int j = 0 ; j < player.getPiecesUsed().get(i).getCornerCoordinates().size(); j++) {
+					if (cornerCoordinates.get(j).getX() < this.gridSize && cornerCoordinates.get(j).getY() < this.gridSize) {
+						if (grid[cornerCoordinates.get(j).getX()][cornerCoordinates.get(j).getY()] == 0) {
+							if (!player.getCornerPositions().contains(cornerCoordinates.get(j))) {
+								player.getCornerPositions().add(cornerCoordinates.get(j));
+							}
+						} else {
+							player.getCornerPositions().remove(cornerCoordinates.get(j));
 						}
-					} else {
-						player.getCornerPositions().remove(cornerCoordinates.get(j));
 					}
 				}
 			}
