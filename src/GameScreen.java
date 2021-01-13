@@ -143,23 +143,27 @@ public class GameScreen extends JPanel implements KeyListener {
 			board.rotateBoard();
 			if (players.size() == 2)
 				board.rotateBoard();
-			if (board.playerOut(players.get(currentTurn))) {
-				endPlayer(players.get(currentTurn));
-			} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
-				ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
-				if (p.getDifficultyLevel() == Player.EASY_AI) {
-					//System.out.println("Placing easy " + currentTurn);
-					board.placePiece(p.easyAI(board), p);
+			if (!isOut[currentTurn]) {
+				if (board.playerOut(players.get(currentTurn))) {
+					endPlayer(players.get(currentTurn));
+				} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
+					ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
+					if (p.getDifficultyLevel() == Player.EASY_AI) {
+						//System.out.println("Placing easy " + currentTurn);
+						board.placePiece(p.easyAI(board), p);
+					}
+					if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
+						//System.out.println("Placing med " + currentTurn);
+						board.placePiece(p.mediumAI(board), p);
+					}
+					if (p.getDifficultyLevel() == Player.HARD_AI) {
+						//System.out.println("Placing hard " + currentTurn);
+						board.placePiece(p.hardAI(board), p);
+					}
+					updateBoard();
 				}
-				if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
-					//System.out.println("Placing med " + currentTurn);
-					board.placePiece(p.mediumAI(board), p);
-				}
-				if (p.getDifficultyLevel() == Player.HARD_AI) {
-					//System.out.println("Placing hard " + currentTurn);
-					board.placePiece(p.hardAI(board), p);
-				}
-				updateBoard();
+			} else {
+				System.out.println("skipping, " + players.get(currentTurn).getName() + " is out already.");
 			}
 			for (int i=0; i < players.size(); i++) {
 				System.out.println("Player " + i + " score: " + players.get(i).getScore());
