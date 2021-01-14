@@ -25,6 +25,10 @@ public class GameScreen extends JPanel implements KeyListener {
 	private boolean[] isOut;
 	private int currentTurn;
 	GameScreen(List<Player> players) { // for GUI version
+		boolean hasPeople = false; // check if all computers
+		for (Player player : players) {
+			if (player.getDifficultyLevel() == 0) hasPeople = true;
+		}
 		addKeyListener(this);
 		this.setBackground(Color.white);
 		//this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));
@@ -46,6 +50,8 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.scoreboardScreen = new ScoreboardScreen(this.board, players);
 		this.add(gameboardScreen, BorderLayout.CENTER);
 		this.add(scoreboardScreen, BorderLayout.EAST);
+		if (!hasPeople)
+			RUN_TEST_GAME();
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -62,6 +68,38 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.selectedPiece = null;
 		this.PLAY_CONSOLE_GAME();
 		sc.close();
+	}
+	private void RUN_TEST_GAME() { // all computers
+		int out = 0;
+		while (out < players.size()) {
+			if (!isOut[currentTurn]) {
+				if (board.playerOut(players.get(currentTurn))) {
+					endPlayer(players.get(currentTurn));
+					out++;
+				} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
+					ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
+					if (p.getDifficultyLevel() == Player.EASY_AI) {
+						//System.out.println("Placing easy " + currentTurn);
+						board.placePiece(p.easyAI(board), p);
+					}
+					if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
+						//System.out.println("Placing med " + currentTurn);
+						board.placePiece(p.mediumAI(board), p);
+					}
+					if (p.getDifficultyLevel() == Player.HARD_AI) {
+						//System.out.println("Placing hard " + currentTurn);
+						board.placePiece(p.hardAI(board), p);
+					}
+					updateBoard();
+				}
+			}
+			currentTurn = (currentTurn + 1) % players.size();
+			board.rotateBoard();
+			if (players.size() == 2) board.rotateBoard();
+		}
+		updateBoard();
+		updateScoreboard();
+		endGame();
 	}
 	public void addNotify() {
         super.addNotify();
