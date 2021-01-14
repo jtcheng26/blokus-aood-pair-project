@@ -403,7 +403,7 @@ public class GameScreen extends JPanel implements KeyListener {
 			for (int i=0;i<CELL_HEIGHT * 7;i++) {
 				for (int j=0;j<CELL_WIDTH * 3;j++) {
 					if (grid[i][j] != null) {
-						visualGrid[i][j].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
+						visualGrid[i][j].setBorder(BorderFactory.createLineBorder(GameboardScreen.light_colors[player.getID() - 1], 1, false));
 						visualGrid[i][j].setBackground(GameboardScreen.colors[player.getID() - 1]);
 					}
 				}
