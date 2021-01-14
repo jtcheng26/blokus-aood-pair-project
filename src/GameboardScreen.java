@@ -7,7 +7,7 @@ class GameboardScreen extends JPanel {
 	private Gameboard board;
 	private JPanel[][] squares;
 	public static final Color[] colors = {Color.decode("#4D75B6"), Color.decode("#F5C446"), Color.decode("#4BAC65"), Color.decode("#DF4339")};
-	public static final Color[] lights_colors = {Color.decode("#809dcb"), Color.decode("#fae09e"), Color.decode("#83c996"), Color.decode("#ed9791")};
+	public static final Color[] light_colors = {Color.decode("#809dcb"), Color.decode("#fae09e"), Color.decode("#83c996"), Color.decode("#ed9791")};
 	public static final Color BLANK_COLOR = Color.decode("#EEEEEE");
 	public static final Color BACKGROUND_COLOR = Color.decode("#AAAAAA");
 	private int SIZE;
@@ -39,10 +39,10 @@ class GameboardScreen extends JPanel {
 			for (int j=0;j<SIZE;j++) {
 				if (stagingGrid[j][SIZE - i - 1] == 5 || stagingGrid[j][SIZE - i - 1] == 6) {
 					squares[i][j].setBackground(stagingGrid[j][SIZE - i - 1] == 5 ? Color.decode("#00FF00") : Color.decode("#FF7733"));
-					//squares[i][j].setBorder(BorderFactory.createLineBorder(stagingGrid[j][SIZE - i - 1] == 5 ? Color.decode("#00FF00") : Color.decode("#FF0000"), 1, false));
+					squares[i][j].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
 				} else if (grid[j][SIZE - i - 1] != 0) {
 					squares[i][j].setBackground(colors[grid[j][SIZE - i - 1] - 1]);
-					squares[i][j].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
+					squares[i][j].setBorder(BorderFactory.createLineBorder(light_colors[grid[j][SIZE - i - 1] - 1], 1, false));
 					//squares[i][j].setBorder(BorderFactory.createLineBorder(colors[grid[j][SIZE - i - 1] - 1], 1, false));
 				} else {
 					squares[i][j].setBackground(BLANK_COLOR);
