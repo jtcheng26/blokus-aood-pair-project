@@ -51,7 +51,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.add(gameboardScreen, BorderLayout.CENTER);
 		this.add(scoreboardScreen, BorderLayout.EAST);
 		if (!hasPeople)
-			RUN_TEST_GAME();
+			RUN_TEST_GAME(false);
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -69,7 +69,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.PLAY_CONSOLE_GAME();
 		sc.close();
 	}
-	private void RUN_TEST_GAME() { // all computers
+	private void RUN_TEST_GAME(boolean visual) { // all computers
 		int out = 0;
 		while (out < players.size()) {
 			if (!isOut[currentTurn]) {
@@ -97,9 +97,11 @@ public class GameScreen extends JPanel implements KeyListener {
 			board.rotateBoard();
 			if (players.size() == 2) board.rotateBoard();
 		}
-		updateBoard();
-		updateScoreboard();
-		endGame();
+		if (visual) {
+			updateBoard();
+			updateScoreboard();
+			endGame();
+		}
 	}
 	public void addNotify() {
         super.addNotify();
@@ -221,7 +223,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		}
 	}
 	private void endPlayer(Player player) {
-		System.out.println(player.getName() + " is out.");
+		//System.out.println(player.getName() + " is out.");
 		isOut[players.indexOf(player)] = true;
 	}
 	private void endGame() {
