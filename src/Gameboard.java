@@ -44,7 +44,6 @@ public class Gameboard {
 	}
 	
 	public void placePiece (GamePiece piece, Player player) {
-		piece.getName();
 		//System.out.println(player.getName() + " is placing " + piece.getName());
 		GamePiece currentPiece = player.getPiecesLeft().get(player.getPiecesLeft().indexOf(piece));
 		if (player.getPiecesLeft().indexOf(piece) >= 0) {

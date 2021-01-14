@@ -50,37 +50,63 @@ public class ComputerPlayer extends Player {
 	public GamePiece easyAI (Gameboard board) {
 		List<GamePiece> easyAIPieces = this.getPiecesLeft();
 		if (oneSquarePieces > 0 && !checkSizeOneE) {
-			oneSquarePieces--;
-			return easyAIPieces.get(fiveSquarePieces + fourSquarePieces + threeSquarePieces + twoSquarePieces);
+			int rotationCounter = 0;
+			int doCounter = 0;
+			int startOfThisSizeIndex = fiveSquarePieces + fourSquarePieces + threeSquarePieces + twoSquarePieces;
+			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+oneSquarePieces));
+			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
+			do {
+				choosePositionForPiece (easyAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
+				doCounter++;
+			} while (doCounter < oneSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
+			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
+				oneSquarePieces--;
+				return easyAIPieces.get(startOfThisSizeIndex+doCounter-1);
+			} else {
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
+				checkSizeOneE = true;
+			}
 		}
 		if (twoSquarePieces > 0 && !checkSizeTwoE) {
-			twoSquarePieces--;
+			int rotationCounter = 0;
 			int doCounter = 0;
-			int k = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
+			int startOfThisSizeIndex = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
+			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+twoSquarePieces));
 			cornerPositions = this.getCornerPositions();
+			Collections.shuffle(cornerPositions);
 			do {
-				for (int i=0; i < easyAIPieces.get(k).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						easyAIPieces.get(k).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						if (board.isValid(easyAIPieces.get(k), this)) {
-							i = easyAIPieces.get(k).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
-				easyAIPieces.get(k).rotatePiece();
+				choosePositionForPiece (easyAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
-				if (doCounter == 4) {
-					easyAIPieces.get(k).flipPiece();
-				}
-			} while (!board.isValid(easyAIPieces.get(k), this));
-			return easyAIPieces.get(k);
+			} while (doCounter < twoSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
+			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
+				twoSquarePieces--;
+				return easyAIPieces.get(startOfThisSizeIndex+doCounter-1);
+			} else {
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = true;
+				checkSizeOneE = false;
+			}
 		}
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fourSquarePieces+fiveSquarePieces;
-			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+threeSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -89,7 +115,11 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < threeSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
 				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				threeSquarePieces--;
 				return easyAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -104,7 +134,6 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces;
-			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fourSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -113,7 +142,11 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < fourSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
 				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				fourSquarePieces--;
 				return easyAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -128,7 +161,6 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = 0;
-			//randomizes piece
 			Collections.shuffle(easyAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fiveSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -137,7 +169,11 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < fiveSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
 				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				fiveSquarePieces--;
 				return easyAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -157,45 +193,43 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> mediumAIPieces = this.getPiecesLeft();
 		int doCounter = 0;
 		int rotationCounter = 0;
+		//randomize order of pieces every turn and randomize order of corners
 		Collections.shuffle(mediumAIPieces);
 		cornerPositions = this.getCornerPositions();
 		Collections.shuffle(cornerPositions);
-		if (mediumAIPieces.size() > 0) {
-			do {
-				int initialRotationCounter = (int) (Math.random()*4);
-				for (int i=0; i < initialRotationCounter; i++) {
-					mediumAIPieces.get(doCounter).rotatePiece();
-				}
-				for (int i=0; i < mediumAIPieces.get(doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						mediumAIPieces.get(doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position, exit loop
-						if (board.isValid(mediumAIPieces.get(doCounter), this)) {
-							i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == mediumAIPieces.get(doCounter).getPieceCoordinates().size()-1
-							&& j == this.cornerPositions.size()-1) {
-							mediumAIPieces.get(doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=-1;
-							if (rotationCounter%4 == 0) {
-								mediumAIPieces.get(doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
+		do {
+			//randomize rotation
+			int initialRotationCounter = (int) (Math.random()*4);
+			for (int i=0; i < initialRotationCounter; i++) {
+				mediumAIPieces.get(doCounter).rotatePiece();
+			}
+			for (int i=0; i < mediumAIPieces.get(doCounter).getPieceCoordinates().size(); i++) {
+				for (int j=0; j < this.cornerPositions.size(); j++) {
+					mediumAIPieces.get(doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
+					if (board.isValid(mediumAIPieces.get(doCounter), this)) {
+						i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
+						j = this.cornerPositions.size();
+					}
+					else if (i == mediumAIPieces.get(doCounter).getPieceCoordinates().size()-1
+						&& j == this.cornerPositions.size()-1) {
+						mediumAIPieces.get(doCounter).rotatePiece();
+						rotationCounter++;
+						i=0;
+						j=-1;
+						if (rotationCounter%4 == 0) {
+							mediumAIPieces.get(doCounter).flipPiece();
 						}
 					}
+					if (rotationCounter >= 8) {
+						i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
+						j = this.cornerPositions.size();
+					}
 				}
-				doCounter++;
-			} while (!board.isValid(mediumAIPieces.get(doCounter-1), this) && doCounter < mediumAIPieces.size());
-			if (board.isValid(mediumAIPieces.get(doCounter-1), this)) {
-				return mediumAIPieces.get(doCounter-1);
 			}
+			doCounter++;
+		} while (doCounter < mediumAIPieces.size() && !board.isValid(mediumAIPieces.get(doCounter-1), this));
+		if (board.isValid(mediumAIPieces.get(doCounter-1), this)) {
+			return mediumAIPieces.get(doCounter-1);
 		}
 		return null;
 	}
@@ -209,13 +243,16 @@ public class ComputerPlayer extends Player {
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fiveSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
-			//randomizes piece
 			do {
 				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < fiveSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
 				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				fiveSquarePieces--;
 				return hardAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -227,11 +264,9 @@ public class ComputerPlayer extends Player {
 			}
 		}
 		if (fourSquarePieces > 0 && !checkSizeFour) {
-			//int index = 0;
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces;
-			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fourSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -240,7 +275,11 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < fourSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
 				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				fourSquarePieces--;
 				return hardAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -255,7 +294,6 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces;
-			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+threeSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -264,7 +302,11 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < threeSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
 				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				threeSquarePieces--;
 				return hardAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -279,7 +321,6 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces+threeSquarePieces;
-			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+twoSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -288,6 +329,10 @@ public class ComputerPlayer extends Player {
 				doCounter++;
 			} while (doCounter < twoSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
+				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
 				checkSizeTwoE = false;
 				twoSquarePieces--;
 				return hardAIPieces.get(startOfThisSizeIndex+doCounter-1);
@@ -303,7 +348,6 @@ public class ComputerPlayer extends Player {
 			int doCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces+threeSquarePieces+twoSquarePieces;
-			//randomizes piece
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+oneSquarePieces));
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
@@ -313,6 +357,10 @@ public class ComputerPlayer extends Player {
 			} while (doCounter < oneSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
 				checkSizeOneE = false;
+				checkSizeThreeE = false;
+				checkSizeFiveE = false;
+				checkSizeFourE = false;
+				checkSizeTwoE = false;
 				oneSquarePieces--;
 				return hardAIPieces.get(startOfThisSizeIndex+doCounter-1);
 			} else {
@@ -344,7 +392,7 @@ public class ComputerPlayer extends Player {
 				} 
 				//invalid position, so rotation needed
 				else if (i == pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size()-1
-						&& j == this.cornerPositions.size()-1) {
+						&& j == this.cornerPositions.size()-1 && !gameBoard.isValid(pieceList.get(listStartIndex+doLoopCounter), this)) {
 					pieceList.get(listStartIndex+doLoopCounter).rotatePiece();
 					numberOfRotations++;
 					i=0;

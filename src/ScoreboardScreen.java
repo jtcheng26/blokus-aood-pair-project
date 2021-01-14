@@ -69,9 +69,10 @@ public class ScoreboardScreen extends JPanel {
 			}
 			if (playersList.get(i-1).getScore() < playersList.get(i).getScore() 
 				&& playersList.get(i).getScore() > highestScore) {
-				highestScoreIndex = i;
+				highestScoreIndex = i+1;
 				highestScore = playersList.get(i).getScore();
 			}
 		}
+		copyLeaderboard[1][0] = leaderboard[highestScoreIndex][0];
 	}
 }
