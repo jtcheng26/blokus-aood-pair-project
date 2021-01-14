@@ -209,7 +209,7 @@ public class GameScreen extends JPanel implements KeyListener {
 				System.out.println("skipping, " + players.get(currentTurn).getName() + " is out already.");
 			}
 			for (int i=0; i < players.size(); i++) {
-				System.out.println("Player " + i + " score: " + players.get(i).getScore());
+				//System.out.println("Player " + i + " score: " + players.get(i).getScore());
 			}
 		} while ((isOut[currentTurn] || players.get(currentTurn).getDifficultyLevel() != 0) && currentTurn != orig);
 		inventoryPanel.add(inventories.get(currentTurn));

@@ -10,7 +10,7 @@ class GameTester {
 		return players;
 	}
 	public static void main(String[] args) {
-		final int GAMES = 1000;
+		final int GAMES = 10000;
 		for (int i=0;i<GAMES;i++) {
 			System.out.println("Game " + (i + 1) + "/" + GAMES);
 			new GameScreen(getPlayers());

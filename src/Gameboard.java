@@ -9,15 +9,15 @@ public class Gameboard {
 	Gameboard (int numPlayers) {
 		numberOfPlayers = numPlayers;
 		if (numPlayers == 2) {
-			grid = new int[15][15];
-			instantaneousGrid = new int[15][15];
-			for (int hor=0; hor < 15; hor++) {
-				for (int vert=0; vert < 15; vert++) {
+			grid = new int[14][14];
+			instantaneousGrid = new int[14][14];
+			for (int hor=0; hor < 14; hor++) {
+				for (int vert=0; vert < 14; vert++) {
 					grid[hor][vert] = 0;
 					instantaneousGrid[hor][vert] = 0;
 				}
 			}
-			gridSize = 15;
+			gridSize = 14;
 		}
 		if (numPlayers == 3) {
 			grid = new int [18][18];
