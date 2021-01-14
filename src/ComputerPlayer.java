@@ -64,11 +64,10 @@ public class ComputerPlayer extends Player {
 		if (twoSquarePieces > 0 && !checkSizeTwoE) {
 			twoSquarePieces--;
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int k = fiveSquarePieces + fourSquarePieces + threeSquarePieces;
 			cornerPositions = this.getCornerPositions();
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					easyAIPieces.get(k).rotatePiece();
 				}
@@ -91,7 +90,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (threeSquarePieces > 0 && !checkSizeThreeE) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fourSquarePieces+fiveSquarePieces;
 			//randomizes piece
@@ -99,36 +97,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						easyAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								easyAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece (easyAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < threeSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -145,7 +118,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (fourSquarePieces > 0 && !checkSizeFourE) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces;
 			//randomizes piece
@@ -153,36 +125,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						easyAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								easyAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece (easyAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < fourSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -199,7 +146,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (fiveSquarePieces > 0 && !checkSizeFive) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = 0;
 			//randomizes piece
@@ -207,36 +153,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						easyAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							easyAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								easyAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = easyAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece (easyAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < fiveSquarePieces && !board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(easyAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -291,7 +212,6 @@ public class ComputerPlayer extends Player {
 		List<GamePiece> hardAIPieces = this.getPiecesLeft();
 		if (fiveSquarePieces > 0 && !checkSizeFive) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = 0;
 			Collections.shuffle(hardAIPieces.subList(startOfThisSizeIndex, startOfThisSizeIndex+fiveSquarePieces));
@@ -299,36 +219,12 @@ public class ComputerPlayer extends Player {
 			Collections.shuffle(cornerPositions);
 			//randomizes piece
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
 				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						hardAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								hardAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < fiveSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -346,7 +242,6 @@ public class ComputerPlayer extends Player {
 		if (fourSquarePieces > 0 && !checkSizeFour) {
 			//int index = 0;
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces;
 			//randomizes piece
@@ -354,36 +249,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						hardAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								hardAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < fourSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -400,7 +270,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (threeSquarePieces > 0 && !checkSizeThree) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces;
 			//randomizes piece
@@ -408,36 +277,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						hardAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								hardAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < threeSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -454,7 +298,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (twoSquarePieces > 0 && !checkSizeTwo) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces+threeSquarePieces;
 			//randomizes piece
@@ -462,36 +305,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						hardAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								hardAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < twoSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -508,7 +326,6 @@ public class ComputerPlayer extends Player {
 		}
 		if (oneSquarePieces > 0 && !checkSizeOne) {
 			int doCounter = 0;
-			int initialRotationCounter = 0;
 			int rotationCounter = 0;
 			int startOfThisSizeIndex = fiveSquarePieces+fourSquarePieces+threeSquarePieces+twoSquarePieces;
 			//randomizes piece
@@ -516,36 +333,11 @@ public class ComputerPlayer extends Player {
 			cornerPositions = this.getCornerPositions();
 			Collections.shuffle(cornerPositions);
 			do {
-				initialRotationCounter = (int) (Math.random()*4);
+				int initialRotationCounter = (int) (Math.random()*4);
 				for (int i=0; i < initialRotationCounter; i++) {
 					hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
 				}
-				//sets each position on the selected piece to each available corner position
-				for (int i=0; i < hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size(); i++) {
-					for (int j=0; j < this.cornerPositions.size(); j++) {
-						hardAIPieces.get(startOfThisSizeIndex+doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
-						//valid position
-						if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter), this)) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						} 
-						//invalid position, so rotation needed
-						else if (i == hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size()-1
-								&& j == this.cornerPositions.size()-1) {
-							hardAIPieces.get(startOfThisSizeIndex+doCounter).rotatePiece();
-							rotationCounter++;
-							i=0;
-							j=0;
-							if (rotationCounter%4 == 0) {
-								hardAIPieces.get(startOfThisSizeIndex+doCounter).flipPiece();
-							}
-						}
-						if (rotationCounter >= 8) {
-							i = hardAIPieces.get(startOfThisSizeIndex+doCounter).getPieceCoordinates().size();
-							j = this.cornerPositions.size();
-						}
-					}
-				}
+				choosePositionForPiece(hardAIPieces, board, startOfThisSizeIndex, doCounter, rotationCounter);
 				doCounter++;
 			} while (doCounter < oneSquarePieces && !board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this));
 			if (board.isValid(hardAIPieces.get(startOfThisSizeIndex+doCounter-1), this)) {
@@ -563,6 +355,35 @@ public class ComputerPlayer extends Player {
 		System.out.println("returning null for " + this.getName());
 		System.out.println("playerout: " + board.playerOut(this));
 		return null;
+	}
+	
+	//sets each position on the selected piece to each available corner position
+	private void choosePositionForPiece (List<GamePiece> pieceList, Gameboard gameBoard, int listStartIndex, int doLoopCounter, int numberOfRotations) {
+		for (int i=0; i < pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size(); i++) {
+			for (int j=0; j < this.cornerPositions.size(); j++) {
+				pieceList.get(listStartIndex+doLoopCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
+				//valid position
+				if (gameBoard.isValid(pieceList.get(listStartIndex+doLoopCounter), this)) {
+					i = pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size();
+					j = this.cornerPositions.size();
+				} 
+				//invalid position, so rotation needed
+				else if (i == pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size()-1
+						&& j == this.cornerPositions.size()-1) {
+					pieceList.get(listStartIndex+doLoopCounter).rotatePiece();
+					numberOfRotations++;
+					i=0;
+					j=-1;
+					if (numberOfRotations%4 == 0) {
+						pieceList.get(listStartIndex+doLoopCounter).flipPiece();
+					}
+				}
+				if (numberOfRotations >= 8) {
+					i = pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size();
+					j = this.cornerPositions.size();
+				}
+			}
+		}
 	}
 	
 	public static void main (String[] args) {
