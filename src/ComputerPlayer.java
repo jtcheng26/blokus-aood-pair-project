@@ -211,7 +211,7 @@ public class ComputerPlayer extends Player {
 						j = this.cornerPositions.size();
 					}
 					else if (i == mediumAIPieces.get(doCounter).getPieceCoordinates().size()-1
-						&& j == this.cornerPositions.size()-1) {
+						&& j == this.cornerPositions.size()-1 && !board.isValid(mediumAIPieces.get(doCounter), this)) {
 						mediumAIPieces.get(doCounter).rotatePiece();
 						rotationCounter++;
 						i=0;
@@ -221,9 +221,11 @@ public class ComputerPlayer extends Player {
 						}
 					}
 					if (rotationCounter >= 8) {
+						rotationCounter = 0;
 						i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
 						j = this.cornerPositions.size();
 					}
+					//System.out.println("i: " + i + ", j: " + j);
 				}
 			}
 			doCounter++;
@@ -402,6 +404,7 @@ public class ComputerPlayer extends Player {
 					}
 				}
 				if (numberOfRotations >= 8) {
+					numberOfRotations = 0;
 					i = pieceList.get(listStartIndex+doLoopCounter).getPieceCoordinates().size();
 					j = this.cornerPositions.size();
 				}
