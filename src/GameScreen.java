@@ -18,6 +18,7 @@ public class GameScreen extends JPanel implements KeyListener {
 	private GamePiece selectedPiece;
 	private Gameboard board;
 	private GameboardScreen gameboardScreen;
+	private ScoreboardScreen scoreboardScreen;
 	private List<Player> players;
 	private List<PieceInventory> inventories;
 	private JPanel inventoryPanel;
@@ -42,7 +43,9 @@ public class GameScreen extends JPanel implements KeyListener {
 		inventoryPanel.add(inventories.get(currentTurn));
 		this.add(inventoryPanel);
 		this.gameboardScreen = new GameboardScreen(this.board);
+		this.scoreboardScreen = new ScoreboardScreen(this.board, players);
 		this.add(gameboardScreen, BorderLayout.CENTER);
+		this.add(scoreboardScreen, BorderLayout.EAST);
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -173,6 +176,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		inventoryPanel.revalidate();
 		inventoryPanel.repaint();
 		updateBoard();
+		updateScoreboard();
 		if (orig == currentTurn) {
 			if (board.playerOut(players.get(currentTurn)))
 				endGame();
@@ -293,6 +297,9 @@ public class GameScreen extends JPanel implements KeyListener {
 			board.followCurrentPiece(selectedPiece, players.get(currentTurn));
 		}
 	    gameboardScreen.updateBoard();
+	}
+	private void updateScoreboard() {
+		scoreboardScreen.updateScoreboard();
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {

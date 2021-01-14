@@ -4,8 +4,10 @@ public class Gameboard {
 	private int[][] grid;
 	private int[][] instantaneousGrid;
 	private int gridSize;
+	private int numberOfPlayers;
 	
 	Gameboard (int numPlayers) {
+		numberOfPlayers = numPlayers;
 		if (numPlayers == 2) {
 			grid = new int[15][15];
 			instantaneousGrid = new int[15][15];
@@ -304,6 +306,10 @@ public class Gameboard {
 	
 	public int getGridSize () {
 		return this.gridSize;
+	}
+	
+	public int getNumberOfPlayers () {
+		return numberOfPlayers;
 	}
 	
 	public static void main (String[] args) {

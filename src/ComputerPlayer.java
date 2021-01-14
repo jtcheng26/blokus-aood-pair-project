@@ -6,11 +6,6 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
 	private int difficultyLevel;
 	private List<Position> cornerPositions;
-	/*
-	public static final int EASY_AI = 1;
-	public static final int MEDIUM_AI = 2;
-	public static final int HARD_AI = 3;
-	*/
 	private int oneSquarePieces = 1;
 	private int twoSquarePieces = 1;
 	private int threeSquarePieces = 2;
@@ -39,9 +34,6 @@ public class ComputerPlayer extends Player {
 		difficultyLevel = difficulty;
 	}
 	
-	/*
-	 * for AI's, access isValid and playerOut method from the board parameter
-	 */
 	public GamePiece getPiece (int difficulty, Gameboard board) {
 		if (board.playerOut(this)) {
 			System.out.println("computer player out");
@@ -163,17 +155,49 @@ public class ComputerPlayer extends Player {
 	
 	public GamePiece mediumAI (Gameboard board) {
 		List<GamePiece> mediumAIPieces = this.getPiecesLeft();
-		int index = 0;
 		int doCounter = 0;
 		int rotationCounter = 0;
 		Collections.shuffle(mediumAIPieces);
 		cornerPositions = this.getCornerPositions();
 		Collections.shuffle(cornerPositions);
-		do {
-			choosePositionForPiece(mediumAIPieces, board, 0, doCounter, rotationCounter);
-			doCounter++;
-		} while (!board.isValid(mediumAIPieces.get(index), this));
-		return mediumAIPieces.get(index);
+		if (mediumAIPieces.size() > 0) {
+			do {
+				int initialRotationCounter = (int) (Math.random()*4);
+				for (int i=0; i < initialRotationCounter; i++) {
+					mediumAIPieces.get(doCounter).rotatePiece();
+				}
+				for (int i=0; i < mediumAIPieces.get(doCounter).getPieceCoordinates().size(); i++) {
+					for (int j=0; j < this.cornerPositions.size(); j++) {
+						mediumAIPieces.get(doCounter).setPieceCoordinateLocation(i, this.cornerPositions.get(j));
+						//valid position, exit loop
+						if (board.isValid(mediumAIPieces.get(doCounter), this)) {
+							i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
+							j = this.cornerPositions.size();
+						} 
+						//invalid position, so rotation needed
+						else if (i == mediumAIPieces.get(doCounter).getPieceCoordinates().size()-1
+							&& j == this.cornerPositions.size()-1) {
+							mediumAIPieces.get(doCounter).rotatePiece();
+							rotationCounter++;
+							i=0;
+							j=-1;
+							if (rotationCounter%4 == 0) {
+								mediumAIPieces.get(doCounter).flipPiece();
+							}
+						}
+						if (rotationCounter >= 8) {
+							i = mediumAIPieces.get(doCounter).getPieceCoordinates().size();
+							j = this.cornerPositions.size();
+						}
+					}
+				}
+				doCounter++;
+			} while (!board.isValid(mediumAIPieces.get(doCounter-1), this) && doCounter < mediumAIPieces.size());
+			if (board.isValid(mediumAIPieces.get(doCounter-1), this)) {
+				return mediumAIPieces.get(doCounter-1);
+			}
+		}
+		return null;
 	}
 	
 	public GamePiece hardAI (Gameboard board) {
