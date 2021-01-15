@@ -176,6 +176,9 @@ public class GameScreen extends JPanel implements KeyListener {
 		sc.close();
 		endGame();
 	}
+	public Player getCurrentTurn() {
+		return this.players.get(currentTurn);
+	}
 	private void changeTurns() {
 		int orig = currentTurn; // method should only be called when at least one player is still in
 		selectedPiece = null;
