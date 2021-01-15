@@ -36,11 +36,10 @@ public class ScoreboardScreen extends JPanel {
 	}
 	
 	private void setUpScoreboardBoard () {
-		this.setPreferredSize(new Dimension(200, 120+80*(playersArray.length+1)));
+		this.setPreferredSize(new Dimension(280, 120+80*(playersArray.length+1)));
 		this.setLayout(new GridLayout((playersArray.length+2), 1));
 		leaderboard = new JPanel[playersArray.length+2][1];
 		leaderboard[0][0] = new JPanel();
-		leaderboard[0][0].setPreferredSize(new Dimension(200, 200));
 		leaderboard[0][0].setBackground(Color.WHITE);
 		leaderboard[0][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
 		leaderboard[0][0].add(currentTurnLabel);
@@ -49,7 +48,6 @@ public class ScoreboardScreen extends JPanel {
 		currentTurnLabel.setForeground(colors[0]);
 		
 		leaderboard[1][0] = new JPanel();
-		leaderboard[1][0].setPreferredSize(new Dimension(200,80));
 		leaderboard[1][0].setBackground(Color.WHITE);
 		leaderboard[1][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
 		leaderboard[1][0].add(SCOREBOARD_TITLE);
