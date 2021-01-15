@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class ScoreboardScreen extends JPanel {
 	private Player[] playersArray;
@@ -34,25 +36,32 @@ public class ScoreboardScreen extends JPanel {
 	}
 	
 	private void setUpScoreboardBoard () {
-		this.setPreferredSize(new Dimension(200, 80*(playersArray.length+1)));
+		this.setPreferredSize(new Dimension(200, 120+80*(playersArray.length+1)));
 		this.setLayout(new GridLayout((playersArray.length+2), 1));
 		leaderboard = new JPanel[playersArray.length+2][1];
 		leaderboard[0][0] = new JPanel();
+		leaderboard[0][0].setPreferredSize(new Dimension(200, 200));
 		leaderboard[0][0].setBackground(Color.WHITE);
 		leaderboard[0][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
-		leaderboard[0][0].add(SCOREBOARD_TITLE);
+		leaderboard[0][0].add(currentTurnLabel);
 		leaderboard[1][0] = new JPanel();
+		leaderboard[1][0].setPreferredSize(new Dimension(200,80));
 		leaderboard[1][0].setBackground(Color.WHITE);
 		leaderboard[1][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
-		leaderboard[1][0].add(currentTurnLabel);
+		leaderboard[1][0].add(SCOREBOARD_TITLE);
+		SCOREBOARD_TITLE.setFont(new Font(SCOREBOARD_TITLE.getFont().getFontName(), Font.BOLD, 20));
 		SCOREBOARD_TITLE.setText("SCOREBOARD");
-		currentTurnLabel.setText("Current Turn: "+gameScreen.getCurrentTurn().getName());
+		currentTurnLabel.setText("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>");
+		currentTurnLabel.setFont(new Font(currentTurnLabel.getFont().getName(), Font.BOLD, 30));
+		currentTurnLabel.setForeground(colors[0]);
 		this.add(leaderboard[0][0]);
 		this.add(leaderboard[1][0]);
 		
 		for (int j=0;j<playersArray.length;j++) {
 			leaderboard[2+j][0] = new JPanel();
+			leaderboard[2+j][0].setPreferredSize(new Dimension(200,80));
 			scores[j] = new JLabel();
+			scores[j].setFont(new Font(scores[j].getFont().getName(), Font.PLAIN, 20));
 			scores[j].setText("Player "+playersArray[j].getID()+" score: "+playersArray[j].getScore());
 			leaderboard[2+j][0].add(scores[j]);
 			leaderboard[2+j][0].setBackground(colors[j]);
@@ -67,7 +76,7 @@ public class ScoreboardScreen extends JPanel {
 		for (int i=0; i < scoreIntArray.length; i++) {
 			scoreIntArray[i] = playersArray[i].getScore();
 		}
-		currentTurnLabel.setText("Current Turn: "+gameScreen.getCurrentTurn().getName());
+		currentTurnLabel.setText(("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>"));
 		bubbleSort(scoreIntArray, scores, colors, playersArray);
 		for (int i=0; i < playersArray.length; i++) {
 			scores[i].setText("Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]);
@@ -76,6 +85,7 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[2+i][0].setBackground(colors[i]);
 			leaderboard[2+i][0].setForeground(Color.WHITE);
 		}
+		
 		this.revalidate();
 		this.repaint();
 		
