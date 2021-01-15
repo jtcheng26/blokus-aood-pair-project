@@ -97,7 +97,10 @@ public class HomeScreen extends JPanel {
 				for (int i=0;i<rows.size();i++) {
 					String name = names.get(i).getText();
 					int playerType = playerTypes.get(i).getSelectedIndex();
-					players.add(new Player(name, i+1, playerType));
+					if (playerType == 0)
+						players.add(new Player(name, i+1, 0));
+					else
+						players.add(new ComputerPlayer(name, i+1, playerType));
 				}
 				setGameScreen(new GameScreen(frame, players));
 			}
