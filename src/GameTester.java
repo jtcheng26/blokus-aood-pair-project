@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 class GameTester {
 	public static ArrayList<Player> getPlayers() {
 		ArrayList<Player> players = new ArrayList<Player>();

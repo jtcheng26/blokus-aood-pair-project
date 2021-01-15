@@ -20,7 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class HomeScreen extends JPanel {
 	private JPanel container;
@@ -41,17 +43,22 @@ public class HomeScreen extends JPanel {
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		this.setLayout(new GridBagLayout());
 		this.add(container);
+		this.setPreferredSize(new Dimension(960, 960));
 		this.setVisible(true);
 		container.setVisible(true);
 		setSize();
-		Border b = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
 		Font titleFont = new Font("Helvetica", Font.BOLD, 20);
-		JLabel title = new JLabel("Players");
+		JLabel title = new JLabel("Blokus");
+		container.setOpaque(false);
+		container.setBorder(null);
+		this.setOpaque(false);
 		title.setFont(titleFont);
 		title.setBorder(new EmptyBorder(10, 0, 10, 0));
 		title.setAlignmentX(CENTER_ALIGNMENT);
 		container.add(title);
 		JPanel selectPanel = new JPanel();
+		selectPanel.setOpaque(false);
+		selectPanel.setBorder(null);
 		container.add(selectPanel);
 		playerCounts = new JComboBox<String>(countList);
 		playerCounts.setSelectedIndex(0);
@@ -71,13 +78,13 @@ public class HomeScreen extends JPanel {
 			}
 		});
 		setMenu();
-		container.setBorder(b);
-		JButton startButton = new JButton("Start");
+		JButton startButton = new JButton("Play");
 		startButton.setAlignmentX(CENTER_ALIGNMENT);
-		startButton.setBorderPainted(false);
+		startButton.setBorderPainted(true);
 		startButton.setOpaque(true);
-		startButton.setBackground(Color.GREEN);
-		startButton.setBorder(new EmptyBorder(10, 20, 10, 20));
+		//startButton.setPreferredSize(new Dimension(200, 50));
+		startButton.setBackground(Color.white);
+		startButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(10, 50, 10, 50)));
 		container.add(startButton);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,6 +100,14 @@ public class HomeScreen extends JPanel {
 	}
     protected void paintComponent(Graphics og) {
         super.paintComponent(og);
+        og.setColor(GameboardScreen.colors[0]);
+        og.fillRect(0, 0, 480, 480);
+        og.setColor(GameboardScreen.colors[1]);
+        og.fillRect(480, 0, 480, 480);
+        og.setColor(GameboardScreen.colors[2]);
+        og.fillRect(0, 480, 480, 480);
+        og.setColor(GameboardScreen.colors[3]);
+        og.fillRect(480, 480, 480, 480);
         //og.drawImage(game.board.getPicture(), 0, 0, null);
     }  
     private void clearAll() {
@@ -100,18 +115,21 @@ public class HomeScreen extends JPanel {
     		this.container.remove(row);
     	}
     	this.rows.clear();
+    	this.names.clear();
+    	this.playerTypes.clear();
     	this.playerTypes.clear();
     }
     private void setGameScreen(GameScreen screen) {
     	this.removeAll();
     	this.setLayout(new BorderLayout());
     	this.add(screen);
+    	this.setPreferredSize(new Dimension(1400, 960));
     	this.revalidate();
     	this.repaint();
     	this.frame.pack();
     }
 	private void setSize() {
-		Dimension d = new Dimension(350, 120 + this.rows.size() * 45);
+		Dimension d = new Dimension(350, 130 + this.rows.size() * 45);
 		container.setPreferredSize(d);
 	}
 	private void setMenu() {
@@ -124,6 +142,7 @@ public class HomeScreen extends JPanel {
 		JTextField name = new JTextField("Player " + (this.rows.size() + 1));
 		row.add(playerType);
 		row.add(name);
+		row.setOpaque(false);
 		names.add(name);
 		rows.add(row);
 		playerTypes.add(playerType);

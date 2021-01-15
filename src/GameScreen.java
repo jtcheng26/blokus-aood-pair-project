@@ -240,6 +240,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		inventoryPanel.revalidate();
 		inventoryPanel.repaint();
 		updateBoard();
+		System.out.println(players.get(currentTurn).getName());
 		updateScoreboard();
 		if (orig == currentTurn) {
 			if (board.playerOut(players.get(currentTurn)))
