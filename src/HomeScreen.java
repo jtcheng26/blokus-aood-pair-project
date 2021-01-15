@@ -101,13 +101,13 @@ public class HomeScreen extends JPanel {
     protected void paintComponent(Graphics og) {
         super.paintComponent(og);
         og.setColor(GameboardScreen.colors[0]);
-        og.fillRect(0, 0, 480, 480);
+        og.fillRect(0, 0, getWidth() / 2, getHeight() / 2);
         og.setColor(GameboardScreen.colors[1]);
-        og.fillRect(480, 0, 480, 480);
+        og.fillRect(getWidth() / 2, 0, getWidth() / 2, getHeight() / 2);
         og.setColor(GameboardScreen.colors[2]);
-        og.fillRect(0, 480, 480, 480);
+        og.fillRect(0, getHeight() / 2, getWidth() / 2, getHeight() / 2);
         og.setColor(GameboardScreen.colors[3]);
-        og.fillRect(480, 480, 480, 480);
+        og.fillRect(getWidth() / 2, getHeight() / 2, getWidth() / 2, getHeight() / 2);
         //og.drawImage(game.board.getPicture(), 0, 0, null);
     }  
     private void clearAll() {
