@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GameScreen extends JPanel implements KeyListener {
@@ -24,11 +25,9 @@ public class GameScreen extends JPanel implements KeyListener {
 	private JPanel inventoryPanel;
 	private boolean[] isOut;
 	private int currentTurn;
-	GameScreen(List<Player> players) { // for GUI version
-		boolean hasPeople = false; // check if all computers
-		for (Player player : players) {
-			if (player.getDifficultyLevel() == 0) hasPeople = true;
-		}
+	private JFrame frame;
+	GameScreen(JFrame frame, List<Player> players) { // for GUI version
+		this.frame = frame;
 		addKeyListener(this);
 		this.setBackground(Color.white);
 		//this.board = GameTestData.getSmallTestBoard1(players.get(0), players.get(1));
@@ -50,8 +49,27 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.scoreboardScreen = new ScoreboardScreen(this.board, players, this);
 		this.add(gameboardScreen, BorderLayout.CENTER);
 		this.add(scoreboardScreen, BorderLayout.EAST);
-		if (!hasPeople)
-			RUN_TEST_GAME(false);
+	}
+	GameScreen(List<Player> players) {
+		this.board = new Gameboard(players.size());
+		this.inventories = new ArrayList<PieceInventory>();
+		for (Player player : players) {
+			inventories.add(new PieceInventory(player));
+		}
+		//selectedPiece = players.get(1).getPiecesLeft().get(0);
+		this.players = players;
+		this.isOut = new boolean[players.size()];
+		this.currentTurn = 0;
+		this.selectedPiece = null;
+		inventoryPanel = new JPanel();
+		inventoryPanel.setBackground(Color.white);
+		inventoryPanel.add(inventories.get(currentTurn));
+		this.add(inventoryPanel);
+		this.gameboardScreen = new GameboardScreen(this.board);
+		this.scoreboardScreen = new ScoreboardScreen(this.board, players, this);
+		this.add(gameboardScreen, BorderLayout.CENTER);
+		this.add(scoreboardScreen, BorderLayout.EAST);
+		RUN_TEST_GAME(false);
 	}
 	GameScreen() { // for console game (console version exists to test backend separately)
 		System.out.println("How many players?");
@@ -68,6 +86,9 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.selectedPiece = null;
 		this.PLAY_CONSOLE_GAME();
 		sc.close();
+	}
+	public JFrame getFrame() {
+		return frame;
 	}
 	private void RUN_TEST_GAME(boolean visual) { // all computers
 		int out = 0;

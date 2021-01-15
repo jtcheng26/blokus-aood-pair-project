@@ -15,7 +15,7 @@ class Window {
 		players.add(new ComputerPlayer("Player 3", 3, 2));
 		players.add(new ComputerPlayer("Player 4", 4, 0));
 		//frame.setContentPane(new GameScreen(players));
-		frame.setContentPane(new GameScreen(players));
+		frame.setContentPane(new HomeScreen(frame));
 		frame.pack();
 		frame.setVisible(true);
 	}
