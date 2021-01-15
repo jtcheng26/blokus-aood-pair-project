@@ -29,10 +29,9 @@ public class HomeScreen extends JPanel {
 	private List<JPanel> rows = new ArrayList<JPanel>();
 	private List<JTextField> names = new ArrayList<JTextField>();
 	private List<JComboBox<String> > playerTypes = new ArrayList<JComboBox<String> >();
-	private GameScreen game;
 	private JFrame frame;
 	private JComboBox<String> playerCounts;
-	private String[] countList = {"2", "3", "4"};
+	private String[] countList = {"2 Players", "4 Players"};
 	private String[] playerTypeList = {"Human", "Easy AI", "Medium AI", "Hard AI"};
 	HomeScreen(JFrame frame) {
 		this.frame = frame;
@@ -47,11 +46,12 @@ public class HomeScreen extends JPanel {
 		this.setVisible(true);
 		container.setVisible(true);
 		setSize();
-		Font titleFont = new Font("Helvetica", Font.BOLD, 20);
+		Font titleFont = new Font("Arial", Font.BOLD, 50);
 		JLabel title = new JLabel("Blokus");
 		container.setOpaque(false);
 		container.setBorder(null);
 		this.setOpaque(false);
+		title.setForeground(Color.white);
 		title.setFont(titleFont);
 		title.setBorder(new EmptyBorder(10, 0, 10, 0));
 		title.setAlignmentX(CENTER_ALIGNMENT);
@@ -63,13 +63,17 @@ public class HomeScreen extends JPanel {
 		playerCounts = new JComboBox<String>(countList);
 		playerCounts.setSelectedIndex(0);
 		playerCounts.setPreferredSize(new Dimension(200, 25));
+		playerCounts.setOpaque(true);
+		playerCounts.setBorder(null);
+		playerCounts.setBackground(Color.white);
+		playerCounts.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(0, 5, 0, 5)));
 		selectPanel.add(playerCounts);
 		for (int i=0;i<2;i++) {
 			addRow();
 		}
 		playerCounts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int count = playerCounts.getSelectedIndex() + 2;
+				int count = 2 * (playerCounts.getSelectedIndex() + 1);
 				clearAll();
 				for (int i=0;i<count;i++) {
 					addRow();
@@ -79,12 +83,13 @@ public class HomeScreen extends JPanel {
 		});
 		setMenu();
 		JButton startButton = new JButton("Play");
+		startButton.setFont(new Font("Arial", 20, 30));
 		startButton.setAlignmentX(CENTER_ALIGNMENT);
 		startButton.setBorderPainted(true);
 		startButton.setOpaque(true);
 		//startButton.setPreferredSize(new Dimension(200, 50));
 		startButton.setBackground(Color.white);
-		startButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(10, 50, 10, 50)));
+		startButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(20, 100, 20, 100)));
 		container.add(startButton);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,7 +134,7 @@ public class HomeScreen extends JPanel {
     	this.frame.pack();
     }
 	private void setSize() {
-		Dimension d = new Dimension(350, 130 + this.rows.size() * 45);
+		Dimension d = new Dimension(350, 200 + this.rows.size() * 60);
 		container.setPreferredSize(d);
 	}
 	private void setMenu() {
@@ -140,6 +145,13 @@ public class HomeScreen extends JPanel {
 		JPanel row = new JPanel();
 		JComboBox<String> playerType = new JComboBox<String>(playerTypeList);
 		JTextField name = new JTextField("Player " + (this.rows.size() + 1));
+		name.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(5, 30, 5, 30)));
+		name.setFont(new Font("Arial", Font.BOLD, 15));
+		name.setForeground(GameboardScreen.colors[names.size()]);
+		playerType.setOpaque(true);
+		playerType.setBorder(null);
+		playerType.setBackground(Color.white);
+		playerType.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(0, 5, 0, 5)));
 		row.add(playerType);
 		row.add(name);
 		row.setOpaque(false);
