@@ -10,55 +10,106 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ScoreboardScreen extends JPanel {
-	private List<Player> playersList;
+	private Player[] playersArray;
 	private JPanel[][] leaderboard;
 	private JLabel[] scores;
 	private int[] scoreIntArray;
 	public static final Color BLANK_COLOR = Color.decode("#EEEEEE");
 	public static final Color BACKGROUND_COLOR = Color.decode("#AAAAAA");
 	public static final Color[] colors = {Color.decode("#4D75B6"), Color.decode("#F5C446"), Color.decode("#4BAC65"), Color.decode("#DF4339")};
-	public static final JLabel SCOREBOARD_TITLE = new JLabel("SCOREBOARD");
+	private static final JLabel SCOREBOARD_TITLE = new JLabel("SCOREBOARD");
+	private JLabel currentTurnLabel = new JLabel("Current Turn: ");
+	private GameScreen gameScreen;
 	
-	ScoreboardScreen (Gameboard board, List<Player> players) {
+	ScoreboardScreen (Gameboard board, List<Player> players, GameScreen screen) {
 		this.setBackground(BACKGROUND_COLOR);
-		playersList = players;
-		scoreIntArray = new int[playersList.size()];
-		scores = new JLabel[playersList.size()];
+		playersArray = new Player[players.size()];
+		for (int i=0; i < playersArray.length; i++) {
+			playersArray[i] = players.get(i);
+		}
+		scoreIntArray = new int[playersArray.length];
+		scores = new JLabel[playersArray.length];
+		gameScreen = screen;
 		setUpScoreboardBoard();
 	}
 	
 	private void setUpScoreboardBoard () {
-		this.setPreferredSize(new Dimension(200, 80*(playersList.size()+1)));
-		this.setLayout(new GridLayout((playersList.size()+1), 1));
-		leaderboard = new JPanel[playersList.size()+1][1];
+		this.setPreferredSize(new Dimension(200, 80*(playersArray.length+1)));
+		this.setLayout(new GridLayout((playersArray.length+2), 1));
+		leaderboard = new JPanel[playersArray.length+2][1];
 		leaderboard[0][0] = new JPanel();
 		leaderboard[0][0].setBackground(Color.WHITE);
 		leaderboard[0][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
-		leaderboard[0][0].add("Scoreboard", SCOREBOARD_TITLE);
 		leaderboard[0][0].add(SCOREBOARD_TITLE);
+		leaderboard[1][0] = new JPanel();
+		leaderboard[1][0].setBackground(Color.WHITE);
+		leaderboard[1][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
+		leaderboard[1][0].add(currentTurnLabel);
+		SCOREBOARD_TITLE.setText("SCOREBOARD");
+		currentTurnLabel.setText("Current Turn: "+gameScreen.getCurrentTurn().getName());
 		this.add(leaderboard[0][0]);
-		for (int j=0;j<playersList.size();j++) {
-			leaderboard[1+j][0] = new JPanel();
+		this.add(leaderboard[1][0]);
+		
+		for (int j=0;j<playersArray.length;j++) {
+			leaderboard[2+j][0] = new JPanel();
 			scores[j] = new JLabel();
-			scoreIntArray[j] = playersList.get(j).getScore();
-			leaderboard[1+j][0].setBackground(colors[j]);
-			leaderboard[1+j][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
+			scores[j].setText("Player "+playersArray[j].getID()+" score: "+playersArray[j].getScore());
+			leaderboard[2+j][0].add(scores[j]);
+			leaderboard[2+j][0].setBackground(colors[j]);
 			scores[j].setForeground(Color.WHITE);
-			scores[j].setText("Player "+(j+1)+" score: "+playersList.get(j).getScore());
-			leaderboard[1+j][0].add(scores[j]);
-			this.add(leaderboard[1+j][0]);
+			this.add(leaderboard[2+j][0]);
 		}
+		
 		this.updateScoreboard();
 	}
 	
 	public void updateScoreboard () {
-		for (int j=0;j<playersList.size();j++) {
-			scores[j].setForeground(Color.WHITE);
-			scores[j].setText("Player "+(j+1)+" score: "+playersList.get(j).getScore());
+		for (int i=0; i < scoreIntArray.length; i++) {
+			scoreIntArray[i] = playersArray[i].getScore();
+		}
+		currentTurnLabel.setText("Current Turn: "+gameScreen.getCurrentTurn().getName());
+		bubbleSort(scoreIntArray, scores, colors, playersArray);
+		for (int i=0; i < playersArray.length; i++) {
+			scores[i].setText("Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]);
+			scores[i].setForeground(Color.WHITE);
+			leaderboard[2+i][0].add(scores[i]);
+			leaderboard[2+i][0].setBackground(colors[i]);
+			leaderboard[2+i][0].setForeground(Color.WHITE);
 		}
 		this.revalidate();
 		this.repaint();
+		
 	}
 	
-	
+	public void bubbleSort(int[] scoreArray, JLabel[] labels, Color[] colorArray, Player[] players) {
+		boolean sorted = false;
+		int tempScore;
+		JLabel tempScoreLabel;
+		Color tempColor;
+		Player tempPlayer;
+		while (!sorted) {
+			sorted = true;
+			for (int i=0; i < scoreArray.length-1; i++) {
+				if (scoreArray[i] < scoreArray[i+1]) {
+					tempScore = scoreArray[i];
+					scoreArray[i] = scoreArray[i+1];
+					scoreArray[i+1] = tempScore;
+					
+					tempScoreLabel = labels[i];
+					labels[i] = labels[i+1];
+					labels[i+1] = tempScoreLabel;
+					
+					tempColor = colorArray[i];
+					colorArray[i] = colorArray[i+1];
+					colorArray[i+1] = tempColor;
+					
+					tempPlayer = players[i];
+					players[i] = players[i+1];
+					players[i+1] = tempPlayer;
+					
+					sorted = false;
+				}
+			}
+		}
+	}
 }
