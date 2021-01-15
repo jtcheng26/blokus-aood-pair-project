@@ -44,6 +44,10 @@ public class ScoreboardScreen extends JPanel {
 		leaderboard[0][0].setBackground(Color.WHITE);
 		leaderboard[0][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
 		leaderboard[0][0].add(currentTurnLabel);
+		currentTurnLabel.setText("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>");
+		currentTurnLabel.setFont(new Font(currentTurnLabel.getFont().getName(), Font.BOLD, 30));
+		currentTurnLabel.setForeground(colors[0]);
+		
 		leaderboard[1][0] = new JPanel();
 		leaderboard[1][0].setPreferredSize(new Dimension(200,80));
 		leaderboard[1][0].setBackground(Color.WHITE);
@@ -51,9 +55,6 @@ public class ScoreboardScreen extends JPanel {
 		leaderboard[1][0].add(SCOREBOARD_TITLE);
 		SCOREBOARD_TITLE.setFont(new Font(SCOREBOARD_TITLE.getFont().getFontName(), Font.BOLD, 20));
 		SCOREBOARD_TITLE.setText("SCOREBOARD");
-		currentTurnLabel.setText("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>");
-		currentTurnLabel.setFont(new Font(currentTurnLabel.getFont().getName(), Font.BOLD, 30));
-		currentTurnLabel.setForeground(colors[0]);
 		this.add(leaderboard[0][0]);
 		this.add(leaderboard[1][0]);
 		
@@ -73,11 +74,12 @@ public class ScoreboardScreen extends JPanel {
 	}
 	
 	public void updateScoreboard () {
+		currentTurnLabel.setForeground(colors[gameScreen.getCurrentTurn().getID()-1]);
 		for (int i=0; i < scoreIntArray.length; i++) {
 			scoreIntArray[i] = playersArray[i].getScore();
 		}
-		currentTurnLabel.setText(("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>"));
 		bubbleSort(scoreIntArray, scores, colors, playersArray);
+		currentTurnLabel.setText(("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>"));
 		for (int i=0; i < playersArray.length; i++) {
 			scores[i].setText("Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]);
 			scores[i].setForeground(Color.WHITE);
@@ -85,10 +87,8 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[2+i][0].setBackground(colors[i]);
 			leaderboard[2+i][0].setForeground(Color.WHITE);
 		}
-		
 		this.revalidate();
 		this.repaint();
-		
 	}
 	
 	public void bubbleSort(int[] scoreArray, JLabel[] labels, Color[] colorArray, Player[] players) {
