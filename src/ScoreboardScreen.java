@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class ScoreboardScreen extends JPanel {
-	private Player[] playersArray;
+	private JPanel currentTurnPanel = new JPanel();
+	private JPanel scoreboardLabelPanel = new JPanel();
 	private JPanel[][] leaderboard;
+	private JPanel controlsPanel = new JPanel();
+	
+	private Player[] playersArray;
 	private JLabel[] scores;
+	private JLabel controlsLabel = new JLabel("<html>WASD: moves piece<br/>ARROWS: moves piece<br/>F: flips piece<br/>R: rotates piece</html>");
 	private int[] scoreIntArray;
 	public static final Color BLANK_COLOR = Color.decode("#EEEEEE");
 	public static final Color BACKGROUND_COLOR = Color.decode("#AAAAAA");
@@ -23,7 +30,9 @@ public class ScoreboardScreen extends JPanel {
 	private JLabel currentTurnLabel = new JLabel("Current Turn: ");
 	private GameScreen gameScreen;
 	
-	ScoreboardScreen (Gameboard board, List<Player> players, GameScreen screen) {
+	private GridBagConstraints gbc;
+	
+	ScoreboardScreen (Gameboard board, List<Player> players, GameScreen screen, JFrame frame) {
 		this.setBackground(BACKGROUND_COLOR);
 		playersArray = new Player[players.size()];
 		for (int i=0; i < playersArray.length; i++) {
@@ -32,43 +41,55 @@ public class ScoreboardScreen extends JPanel {
 		scoreIntArray = new int[playersArray.length];
 		scores = new JLabel[playersArray.length];
 		gameScreen = screen;
+		this.setPreferredSize(new Dimension(280, 200+40*(playersArray.length+1)));
+		this.setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
 		setUpScoreboardBoard();
 	}
 	
 	private void setUpScoreboardBoard () {
-		this.setPreferredSize(new Dimension(280, 120+80*(playersArray.length+1)));
-		this.setLayout(new GridLayout((playersArray.length+2), 1));
-		leaderboard = new JPanel[playersArray.length+2][1];
-		leaderboard[0][0] = new JPanel();
-		leaderboard[0][0].setBackground(Color.WHITE);
-		leaderboard[0][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
-		leaderboard[0][0].add(currentTurnLabel);
+		currentTurnPanel.setBackground(Color.WHITE);
+		currentTurnPanel.setBorder((BorderFactory.createLineBorder(Color.BLACK, 1, false)));
+		currentTurnPanel.add(currentTurnLabel);
 		currentTurnLabel.setText("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>");
 		currentTurnLabel.setFont(new Font(currentTurnLabel.getFont().getName(), Font.BOLD, 30));
 		currentTurnLabel.setForeground(colors[0]);
+		currentTurnPanel.setPreferredSize(new Dimension(280,100));
+		gbc.gridy=0;
+		gbc.fill = GridBagConstraints.BOTH;
+		this.add(currentTurnPanel,gbc);
 		
-		leaderboard[1][0] = new JPanel();
-		leaderboard[1][0].setBackground(Color.WHITE);
-		leaderboard[1][0].setBorder(BorderFactory.createLineBorder(Color.white, 1, false));
-		leaderboard[1][0].add(SCOREBOARD_TITLE);
-		SCOREBOARD_TITLE.setFont(new Font(SCOREBOARD_TITLE.getFont().getFontName(), Font.BOLD, 20));
-		SCOREBOARD_TITLE.setText("SCOREBOARD");
-		this.add(leaderboard[0][0]);
-		this.add(leaderboard[1][0]);
-		
+		scoreboardLabelPanel.setBackground(Color.WHITE);
+		scoreboardLabelPanel.setBorder((BorderFactory.createLineBorder(Color.WHITE, 1, false)));
+		scoreboardLabelPanel.add(SCOREBOARD_TITLE);
+		SCOREBOARD_TITLE.setFont(new Font(SCOREBOARD_TITLE.getFont().getName(), Font.BOLD, 20));
+		scoreboardLabelPanel.setPreferredSize(new Dimension(280,40));
+		gbc.gridy=1;
+		this.add(scoreboardLabelPanel,gbc);
+		leaderboard = new JPanel[playersArray.length][1];
 		for (int j=0;j<playersArray.length;j++) {
-			leaderboard[2+j][0] = new JPanel();
-			leaderboard[2+j][0].setPreferredSize(new Dimension(200,80));
+			leaderboard[j][0] = new JPanel();
+			leaderboard[j][0].setPreferredSize(new Dimension(280,40));
+			leaderboard[j][0].setBorder(BorderFactory.createEtchedBorder());
 			scores[j] = new JLabel();
 			scores[j].setFont(new Font(scores[j].getFont().getName(), Font.PLAIN, 20));
 			scores[j].setText("Player "+playersArray[j].getID()+" score: "+playersArray[j].getScore());
-			leaderboard[2+j][0].add(scores[j]);
-			leaderboard[2+j][0].setBackground(colors[j]);
+			leaderboard[j][0].add(scores[j]);
+			leaderboard[j][0].setBackground(colors[j]);
 			scores[j].setForeground(Color.WHITE);
-			this.add(leaderboard[2+j][0]);
+			gbc.gridy=2+j;
+			this.add(leaderboard[j][0],gbc);
 		}
 		
+		controlsPanel.setBackground(Color.WHITE);
+		controlsPanel.setBorder(BorderFactory.createEtchedBorder());
+		controlsPanel.add(controlsLabel);
+		controlsLabel.setFont(new Font(controlsLabel.getFont().getName(), Font.PLAIN, 16));
+		controlsPanel.setPreferredSize(new Dimension(280,100));
+		gbc.gridy=3+playersArray.length;
+		this.add(controlsPanel,gbc);
 		this.updateScoreboard();
+		
 	}
 	
 	public void updateScoreboard () {
@@ -81,9 +102,9 @@ public class ScoreboardScreen extends JPanel {
 		for (int i=0; i < playersArray.length; i++) {
 			scores[i].setText("Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]);
 			scores[i].setForeground(Color.WHITE);
-			leaderboard[2+i][0].add(scores[i]);
-			leaderboard[2+i][0].setBackground(colors[i]);
-			leaderboard[2+i][0].setForeground(Color.WHITE);
+			leaderboard[i][0].add(scores[i]);
+			leaderboard[i][0].setBackground(colors[i]);
+			leaderboard[i][0].setForeground(Color.WHITE);
 		}
 		this.revalidate();
 		this.repaint();
