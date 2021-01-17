@@ -68,7 +68,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		inventoryPanel.add(inventories.get(currentTurn));
 		this.add(inventoryPanel);
 		this.gameboardScreen = new GameboardScreen(this.board);
-		//this.scoreboardScreen = new ScoreboardScreen(this.board, players, this);
+		this.scoreboardScreen = new ScoreboardScreen(this.board, players, this, new JFrame());
 		this.add(gameboardScreen, BorderLayout.CENTER);
 		this.add(scoreboardScreen, BorderLayout.EAST);
 		RUN_TEST_GAME(false);
