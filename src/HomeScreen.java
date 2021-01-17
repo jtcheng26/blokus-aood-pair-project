@@ -33,15 +33,20 @@ public class HomeScreen extends JPanel {
 	private JComboBox<String> playerCounts;
 	private String[] countList = {"2 Players", "4 Players"};
 	private String[] playerTypeList = {"Human", "Easy AI", "Medium AI", "Hard AI"};
+	private JLabel humanWarning;
 	HomeScreen(JFrame frame) {
 		this.frame = frame;
 		init();
 	}
 	private void init() {
+		JPanel outerContainer = new JPanel();
 		this.container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		this.setLayout(new GridBagLayout());
-		this.add(container);
+		this.add(outerContainer);
+		outerContainer.setOpaque(false);
+		outerContainer.setLayout(new BorderLayout());
+		outerContainer.add(container, BorderLayout.CENTER);
 		this.setPreferredSize(new Dimension(960, 960));
 		this.setVisible(true);
 		container.setVisible(true);
@@ -91,18 +96,37 @@ public class HomeScreen extends JPanel {
 		startButton.setBackground(Color.white);
 		startButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(20, 100, 20, 100)));
 		container.add(startButton);
+		humanWarning = new JLabel("Must have at least 1 human player!");
+		humanWarning.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		humanWarning.setAlignmentX(CENTER_ALIGNMENT);
+		JPanel warningContainer = new JPanel();
+		warningContainer.add(humanWarning);
+		warningContainer.setOpaque(false);
+		outerContainer.add(warningContainer, BorderLayout.SOUTH);
+		humanWarning.setVisible(false);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<Player> players = new ArrayList<Player>();
+				boolean hasPeople = false;
 				for (int i=0;i<rows.size();i++) {
-					String name = names.get(i).getText();
-					int playerType = playerTypes.get(i).getSelectedIndex();
-					if (playerType == 0)
-						players.add(new Player(name, i+1, 0));
-					else
-						players.add(new ComputerPlayer(name, i+1, playerType));
+					if (playerTypes.get(i).getSelectedIndex() == 0)
+						hasPeople = true;
 				}
-				setGameScreen(new GameScreen(frame, players));
+				if (hasPeople) {
+					for (int i=0;i<rows.size();i++) {
+						String name = names.get(i).getText();
+						int playerType = playerTypes.get(i).getSelectedIndex();
+						if (playerType == 0)
+							players.add(new Player(name, i+1, 0));
+						else
+							players.add(new ComputerPlayer(name, i+1, playerType));
+					}
+					setGameScreen(new GameScreen(frame, players));
+				} else {
+					humanWarning.setVisible(true);
+					container.revalidate();
+					container.repaint();
+				}
 			}
 		});
 	}
@@ -137,7 +161,7 @@ public class HomeScreen extends JPanel {
     	this.frame.pack();
     }
 	private void setSize() {
-		Dimension d = new Dimension(350, 200 + this.rows.size() * 60);
+		Dimension d = new Dimension(360, 200 + this.rows.size() * 60);
 		container.setPreferredSize(d);
 	}
 	private void setMenu() {

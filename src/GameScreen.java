@@ -49,6 +49,8 @@ public class GameScreen extends JPanel implements KeyListener {
 		this.scoreboardScreen = new ScoreboardScreen(this.board, players, this, frame);
 		this.add(gameboardScreen, BorderLayout.CENTER);
 		this.add(scoreboardScreen, BorderLayout.EAST);
+		this.currentTurn = -1;
+		changeTurns();
 	}
 	GameScreen(List<Player> players) {
 		this.board = new Gameboard(players.size());
