@@ -96,6 +96,17 @@ public class HomeScreen extends JPanel {
 		startButton.setBackground(Color.white);
 		startButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(20, 100, 20, 100)));
 		container.add(startButton);
+		JPanel marginPanel = new JPanel();
+		JButton howToPlayButton = new JButton("How to Play");
+		howToPlayButton.setFont(new Font("Arial", 20, 15));
+		howToPlayButton.setAlignmentX(CENTER_ALIGNMENT);
+		howToPlayButton.setOpaque(true);
+		howToPlayButton.setBackground(Color.white);
+		howToPlayButton.setBorder(new CompoundBorder(new LineBorder(Color.black, 2, true), new EmptyBorder(10, 40, 10, 40)));
+		marginPanel.add(howToPlayButton);
+		marginPanel.setOpaque(false);
+		marginPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		container.add(marginPanel);
 		humanWarning = new JLabel("Must have at least 1 human player!");
 		humanWarning.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		humanWarning.setAlignmentX(CENTER_ALIGNMENT);
@@ -127,6 +138,14 @@ public class HomeScreen extends JPanel {
 					container.revalidate();
 					container.repaint();
 				}
+			}
+		});
+		howToPlayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame popup = new JFrame();
+				popup.setContentPane(new HowToPlay(popup));
+				popup.pack();
+				popup.setVisible(true);
 			}
 		});
 	}
@@ -161,7 +180,7 @@ public class HomeScreen extends JPanel {
     	this.frame.pack();
     }
 	private void setSize() {
-		Dimension d = new Dimension(360, 200 + this.rows.size() * 60);
+		Dimension d = new Dimension(360, 220 + this.rows.size() * 60);
 		container.setPreferredSize(d);
 	}
 	private void setMenu() {
