@@ -26,7 +26,9 @@ public class GameScreen extends JPanel implements KeyListener {
 	private boolean[] isOut;
 	private int currentTurn;
 	private JFrame frame;
+	private boolean over;
 	GameScreen(JFrame frame, List<Player> players) { // for GUI version
+		over = false;
 		this.frame = frame;
 		addKeyListener(this);
 		this.setBackground(Color.white);
@@ -53,6 +55,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		changeTurns();
 	}
 	GameScreen(List<Player> players) {
+		over = false;
 		this.board = new Gameboard(players.size());
 		this.inventories = new ArrayList<PieceInventory>();
 		for (Player player : players) {
@@ -262,6 +265,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		scoreboardScreen.setPlayerOut(player);
 	}
 	private void endGame() {
+		over = true;
 		ArrayList<Player> winners = new ArrayList<Player>();
 		int winningScore = 0;
 		for (Player player : players) {
@@ -282,6 +286,7 @@ public class GameScreen extends JPanel implements KeyListener {
 			}
 			System.out.println("and " + winners.get(winners.size() - 1).getName() + " tied for the win!");
 		}
+		scoreboardScreen.gameEnd(winners);
 	}
 	private void onSelect(GamePiece selectedPiece) {
 		System.out.println("Selected " + selectedPiece.getName());
@@ -313,7 +318,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		return false;
 	}
 	public void keyPressed(KeyEvent e) {
-		if (selectedPiece != null) {
+		if (selectedPiece != null && !over) {
 		    int key = e.getKeyCode();
 		    
 		    if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -420,7 +425,7 @@ public class GameScreen extends JPanel implements KeyListener {
 					final int j = c;
 					visualGrid[r][c].addMouseListener(new MouseAdapter() {
 						public void mousePressed(MouseEvent e) {
-							if (grid[i][j] != null) {
+							if (!over && grid[i][j] != null) {
 								selectedPiece = grid[i][j];
 								updateBoard();
 								handleClick(grid[i][j]);
