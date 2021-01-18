@@ -134,6 +134,7 @@ public class ScoreboardScreen extends JPanel {
 			currentTurnLabel.setText("TIE!");
 		} else {
 			currentTurnLabel.setText("<html>Winners: <br/>"+winnerString+"</html>");
+			currentTurnLabel.setForeground(colors[winners.get(0).getID()]);
 			for (int i=0; i < winners.size(); i++) {
 				scores[i].setText("Player "+playersArray[i].getID()+ " score: "+scoreIntArray[i]+" WINNER");
 			}
