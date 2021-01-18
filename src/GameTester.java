@@ -4,13 +4,13 @@ class GameTester {
 	public static ArrayList<Player> getPlayers() {
 		ArrayList<Player> players = new ArrayList<Player>();
 		players.add(new ComputerPlayer("Player 1", 1, 1));
-		players.add(new ComputerPlayer("Player 2", 2, 2));
-		players.add(new ComputerPlayer("Player 3", 3, 3));
-		players.add(new ComputerPlayer("Player 4", 4, 3));
+		players.add(new ComputerPlayer("Player 2", 2, 1));
+		players.add(new ComputerPlayer("Player 3", 3, 1));
+		players.add(new ComputerPlayer("Player 4", 4, 1));
 		return players;
 	}
 	public static void main(String[] args) {
-		final int GAMES = 1000;
+		final int GAMES = 500;
 		double[] score = new double[getPlayers().size()];
 		ArrayList<Player> players = getPlayers();
 		for (int i=0;i<GAMES;i++) {

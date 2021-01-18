@@ -125,8 +125,19 @@ public class ScoreboardScreen extends JPanel {
 		playersOutArray[player.getID()-1] = true;
 	}
 	
-	public void gameEnd (Player winner) {
-		currentTurnLabel.setText("<html>Winner: <br/>"+winner.getName()+"</html>");
+	public void gameEnd (List<Player> winners) {
+		String winnerString = "";
+		for (int i=0; i < winners.size(); i++) {
+			winnerString = winnerString + winners.get(i).getName();
+		}
+		if (winners.size() > 1) {
+			currentTurnLabel.setText("TIE!");
+		} else {
+			currentTurnLabel.setText("<html>Winners: <br/>"+winnerString+"</html>");
+			for (int i=0; i < winners.size(); i++) {
+				scores[i].setText("Player"+playersArray[i].getID()+ "score: "+scoreIntArray[i]+" WINNER");
+			}
+		}
 		this.setPreferredSize(new Dimension(280, 240+100+40*(playersArray.length+1)));
 		JPanel homeButtonPanel = new JPanel();
 		JButton homeButton = new JButton();
