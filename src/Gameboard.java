@@ -324,16 +324,4 @@ public class Gameboard {
 	public int getNumberOfPlayers () {
 		return numberOfPlayers;
 	}
-	
-	public static void main (String[] args) {
-		Gameboard board = new Gameboard(2);
-		Player player1 = new Player("Matthew", 1, 0);
-		Player player2 = new Player("Jeffrey", 2, 0);
-		//board.placePiece(player1.getPiece(4), player1);
-		//player1.getPiece(4).rotatePiece();
-		//board.followCurrentPiece(player1.getPiece(4), player1);
-		
-		//board.placePiece(player2.getPiece(0), player2);
-		board.printInstantaneousGrid(board);
-	}
 }

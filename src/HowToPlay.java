@@ -54,14 +54,4 @@ public class HowToPlay extends JPanel {
 		gbc.gridy=1;
 		this.add(scroll, gbc);
 	}
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		HowToPlay instructions = new HowToPlay(frame);
-		frame.add(instructions);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setSize(800,800);
-	}
 }

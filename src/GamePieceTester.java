@@ -154,14 +154,4 @@ class GamePieceTester {
 			System.out.println("");
 		}
 	}
-	public static void main(String[] args) {
-		/*
-		test5Pieces();
-		test4Pieces();
-		test3Pieces();
-		test2Pieces();
-		test1Pieces();*/
-		testPiece(new GamePiece(new L5Piece()));
-		//testPieceCoordinateLocation(new V5Piece());
-	}
 }

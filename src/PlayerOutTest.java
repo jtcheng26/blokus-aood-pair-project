@@ -5,7 +5,7 @@ class PlayerOutTest {
 		boolean actual = board.playerOut(player);
 		System.out.printf("%-30s %-30s \n", name, expected == actual ? "Passed" : "Failed");
 	}
-	public static void main(String[] args) {
+	public static void TEST() {
 		Gameboard board = new Gameboard(2);
 		Player player1 = new Player("bruh", 1, 0);
 		Player player2 = new Player("bruh2", 2, 0);

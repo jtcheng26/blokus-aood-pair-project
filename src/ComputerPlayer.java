@@ -411,9 +411,4 @@ public class ComputerPlayer extends Player {
 			}
 		}
 	}
-	
-	public static void main (String[] args) {
-		ComputerPlayer player = new ComputerPlayer("Computer Player 1", 1, 0);
-		System.out.println(player.getPiecesLeft().get(20).getName() == "O1 Shape");
-	}
 }

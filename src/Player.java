@@ -60,16 +60,4 @@ public class Player {
 	 public List<Position> getCornerPositions () {
 		 return cornerPositions;
 	 }
-	 
-	 public static void main(String[] args) {
-		 Player player1 = new Player("matthew", 1, 0);
-		 System.out.println(player1.getName());
-		 System.out.println(player1.getScore());
-		 System.out.println(player1.getID());
-		 /*
-		 System.out.println(player1.getPiece(0).getName());
-		 System.out.println(player1.getPiece(1).getName());
-		 System.out.println(player1.getPiece(2).getName());
-		 */
-	 }
 }

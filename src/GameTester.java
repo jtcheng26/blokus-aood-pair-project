@@ -9,8 +9,7 @@ class GameTester {
 		players.add(new ComputerPlayer("Player 4", 4, 1));
 		return players;
 	}
-	public static void main(String[] args) {
-		final int GAMES = 500;
+	public static void TEST(int GAMES) {
 		double[] score = new double[getPlayers().size()];
 		ArrayList<Player> players = getPlayers();
 		for (int i=0;i<GAMES;i++) {
@@ -26,5 +25,8 @@ class GameTester {
 		for (int i=0;i<score.length;i++) {
 			System.out.println(players.get(i).getName() + ": " + (score[i] / GAMES));
 		}
+	}
+	public static void main(String[] args) {
+		TEST(5000);
 	}
 }
