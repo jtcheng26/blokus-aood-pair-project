@@ -17,7 +17,7 @@ public class HowToPlay extends JPanel {
 	
 	private JLabel titleLabel = new JLabel("HOW TO PLAY");
 	
-	private final JTextArea rules = new JTextArea(10,30);
+	private final JTextArea rules = new JTextArea(23,50);
 	private final String rulesLabel = "Objective: Try to fit as many of your squares on the board as you can.\n\n"
 			+ "Playing the Game\n1. The first piece placed by each player must be on their corner of the board"
 			+ "\n2. Players take turns laying down one piece at a time. Each new piece must touch at least one other"
@@ -26,9 +26,14 @@ public class HowToPlay extends JPanel {
 			+ "\n3. Whenever a player is unable to place a piece on the board, that player must pass their turn."
 			+ "\n4. The game ends when no player can place any more pieces."
 			+ "\n\nScoring\nThe player with the highest number of squares covered up wins the game"
-			+ "\n\nControls\n1. Use WASD or the arrow keys to move around the pieces."
-			+ "\n2. Press on the F key to flip the piece."
-			+ "\n3. Press on the R key to rotate the piece.";;
+			+ "\n\nControls"
+			+ "\n1. Click on a piece on the left side to select it."
+			+ "\n2. Use WASD or the arrow keys to move around the selected piece."
+			+ "\n3. Press on the F key to flip the selected piece."
+			+ "\n4. Press on the R key to rotate the selected piece 90 degrees clockwise."
+			+ "\n5. If the piece is at a valid location, it will be bright green. If it is not, it will be orange."
+			+ "\n6. Press the ENTER key to place the piece. If the location is valid, it will place and move to the next turn."
+			+ "\nThe board will rotate each turn and each player starts in the bottom left corner.";
 	private final JScrollPane scroll = new JScrollPane(rules, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	
 	GridBagConstraints gbc = new GridBagConstraints();
@@ -38,6 +43,10 @@ public class HowToPlay extends JPanel {
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		setUpHowToPlay();
+		rules.setEditable(false);
+		frame.pack();
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	private void setUpHowToPlay () {
