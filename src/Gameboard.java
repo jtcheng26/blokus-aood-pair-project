@@ -120,8 +120,7 @@ public class Gameboard {
 				/*
 				 * checks corner for first piece
 				 */
-				if (pieceCoordinatesList.get(i).equals(new Position(0,0)) || pieceCoordinatesList.get(i).equals(new Position(0,this.gridSize-1))
-				|| pieceCoordinatesList.get(i).equals(new Position(this.gridSize-1,0)) || pieceCoordinatesList.get(i).equals(new Position(this.gridSize-1,this.gridSize-1))) {
+				if (pieceCoordinatesList.get(i).equals(new Position(0,0))) {
 					if (grid[piece.getPieceCoordinates().get(i).getX()][piece.getPieceCoordinates().get(i).getY()] != 0) {
 						return false;
 					} else {
