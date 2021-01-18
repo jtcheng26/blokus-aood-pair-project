@@ -278,6 +278,7 @@ public class GameScreen extends JPanel implements KeyListener {
 				winners.add(player);
 			}
 		}
+		/*
 		if (winners.size() == 1)
 			System.out.println(winners.get(0).getName() + " won the game!");
 		else {
@@ -286,6 +287,7 @@ public class GameScreen extends JPanel implements KeyListener {
 			}
 			System.out.println("and " + winners.get(winners.size() - 1).getName() + " tied for the win!");
 		}
+		*/
 		scoreboardScreen.gameEnd(winners);
 	}
 	private void onSelect(GamePiece selectedPiece) {
