@@ -259,6 +259,7 @@ public class GameScreen extends JPanel implements KeyListener {
 	private void endPlayer(Player player) {
 		//System.out.println(player.getName() + " is out.");
 		isOut[players.indexOf(player)] = true;
+		scoreboardScreen.setPlayerOut(player);
 	}
 	private void endGame() {
 		ArrayList<Player> winners = new ArrayList<Player>();
