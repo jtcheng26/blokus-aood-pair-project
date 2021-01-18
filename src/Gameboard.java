@@ -190,23 +190,31 @@ public class Gameboard {
 						copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 						if (!isValid(copyPiece, player)) {
 							copyPiece.rotatePiece();
+							copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 							if (!isValid(copyPiece, player)) {
 								copyPiece.rotatePiece();
+								copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 								if (!isValid(copyPiece, player)) {
 									copyPiece.rotatePiece();
+									copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 									if (!isValid(copyPiece, player)) {
 										copyPiece.rotatePiece();
 										copyPiece.flipPiece();
+										copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 										if (!isValid(copyPiece, player)) {
 											copyPiece.rotatePiece();
+											copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 											if (!isValid(copyPiece, player)) {
 												copyPiece.rotatePiece();
+												copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 												if (!isValid(copyPiece, player)) {
 													copyPiece.rotatePiece();
+													copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 													if (!isValid(copyPiece, player)) {
 														returnBoolean = true;
 														copyPiece.rotatePiece();
 														copyPiece.flipPiece();
+														copyPiece.setPieceCoordinateLocation(j, player.getCornerPositions().get(k));
 													} else {
 														copyPiece.rotatePiece();
 														copyPiece.flipPiece();
