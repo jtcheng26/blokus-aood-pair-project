@@ -83,7 +83,7 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[j][0].setBorder(BorderFactory.createEtchedBorder());
 			scores[j] = new JLabel();
 			scores[j].setFont(new Font(scores[j].getFont().getName(), Font.PLAIN, 20));
-			scores[j].setText("Player "+playersArray[j].getID()+" score: "+playersArray[j].getScore());
+			scores[j].setText(playersArray[j].getName()+" score: "+playersArray[j].getScore());
 			leaderboard[j][0].add(scores[j]);
 			leaderboard[j][0].setBackground(colors[j]);
 			scores[j].setForeground(Color.WHITE);
@@ -108,13 +108,13 @@ public class ScoreboardScreen extends JPanel {
 		bubbleSort(scoreIntArray, scores, colors, playersArray);
 		currentTurnLabel.setText(("<html>Current Turn: <br/>"+gameScreen.getCurrentTurn().getName()+"</html>"));
 		for (int i=0; i < playersArray.length; i++) {
-			scores[i].setText("Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]);
+			scores[i].setText(playersArray[i].getName()+" score: "+scoreIntArray[i]);
 			scores[i].setForeground(Color.WHITE);
 			leaderboard[i][0].add(scores[i]);
 			leaderboard[i][0].setBackground(colors[i]);
 			leaderboard[i][0].setForeground(Color.WHITE);
 			if (playersOutArray[playersArray[i].getID()-1]) {
-				scores[i].setText("Player "+playersArray[i].getID()+" score (out): "+scoreIntArray[i]);
+				scores[i].setText(playersArray[i].getName()+" score (out): "+scoreIntArray[i]);
 			}
 		}
 		this.revalidate();
@@ -136,7 +136,7 @@ public class ScoreboardScreen extends JPanel {
 			currentTurnLabel.setText("<html>Winners: <br/>"+winnerString+"</html>");
 			currentTurnLabel.setForeground(colors[winners.get(0).getID()]);
 			for (int i=0; i < winners.size(); i++) {
-				scores[i].setText("Player "+playersArray[i].getID()+ " score: "+scoreIntArray[i]+" WINNER");
+				scores[i].setText(playersArray[i].getName()+ " score: "+scoreIntArray[i]+" WINNER");
 			}
 		}
 		this.setPreferredSize(new Dimension(280, 240+100+40*(playersArray.length+1)));
