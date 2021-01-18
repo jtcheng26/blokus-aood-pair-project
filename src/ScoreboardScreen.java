@@ -135,7 +135,7 @@ public class ScoreboardScreen extends JPanel {
 		} else {
 			currentTurnLabel.setText("<html>Winners: <br/>"+winnerString+"</html>");
 			for (int i=0; i < winners.size(); i++) {
-				scores[i].setText("Player"+playersArray[i].getID()+ "score: "+scoreIntArray[i]+" WINNER");
+				scores[i].setText("Player "+playersArray[i].getID()+ " score: "+scoreIntArray[i]+" WINNER");
 			}
 		}
 		this.setPreferredSize(new Dimension(280, 240+100+40*(playersArray.length+1)));
@@ -152,6 +152,7 @@ public class ScoreboardScreen extends JPanel {
 		homeButton.setForeground(Color.WHITE);
 		homeButton.setFont(new Font(homeButton.getFont().getName(), Font.PLAIN, 20));
 		homeButton.setText("QUIT");
+		homeButtonPanel.add(homeButton);
 		gbc.gridy=4+playersArray.length;
 		this.add(homeButtonPanel,gbc);
 		
