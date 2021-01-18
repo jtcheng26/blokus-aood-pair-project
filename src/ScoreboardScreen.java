@@ -4,10 +4,13 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,6 +33,7 @@ public class ScoreboardScreen extends JPanel {
 	private JLabel currentTurnLabel = new JLabel("Current Turn: ");
 	private GameScreen gameScreen;
 	private Gameboard gameboard;
+	private JFrame mainFrame;
 	
 	private GridBagConstraints gbc;
 	
@@ -43,6 +47,7 @@ public class ScoreboardScreen extends JPanel {
 		scores = new JLabel[playersArray.length];
 		gameScreen = screen;
 		gameboard = board;
+		mainFrame = frame;
 		this.setPreferredSize(new Dimension(280, 240+40*(playersArray.length+1)));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -115,6 +120,23 @@ public class ScoreboardScreen extends JPanel {
 	
 	public void gameEnd (Player winner) {
 		currentTurnLabel.setText("<html>Winner: <br/>"+winner.getName()+"</html>");
+		this.setPreferredSize(new Dimension(280, 240+100+40*(playersArray.length+1)));
+		JPanel homeButtonPanel = new JPanel();
+		JButton homeButton = new JButton();
+		homeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.setContentPane(new HomeScreen(mainFrame));
+			}
+		});
+		homeButton.setBackground(Color.RED);
+		homeButton.setForeground(Color.WHITE);
+		homeButton.setFont(new Font(homeButton.getFont().getName(), Font.PLAIN, 20));
+		homeButton.setText("QUIT");
+		gbc.gridy=4+playersArray.length;
+		this.add(homeButtonPanel,gbc);
+		
 	}
 	
 	public void bubbleSort(int[] scoreArray, JLabel[] labels, Color[] colorArray, Player[] players) {
