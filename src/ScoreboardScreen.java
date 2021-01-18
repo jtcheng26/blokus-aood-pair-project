@@ -106,7 +106,7 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[i][0].setBackground(colors[i]);
 			leaderboard[i][0].setForeground(Color.WHITE);
 			if (gameboard.playerOut(playersArray[i])) {
-				scores[i].setText("<html>Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]+"<br/>Out"+"</html>");
+				scores[i].setText("Player "+playersArray[i].getID()+" score (out): "+scoreIntArray[i]);
 			}
 		}
 		this.revalidate();
