@@ -21,7 +21,7 @@ public class ScoreboardScreen extends JPanel {
 	
 	private Player[] playersArray;
 	private JLabel[] scores;
-	private JLabel controlsLabel = new JLabel("<html>WASD: moves piece<br/>ARROWS: moves piece<br/>F: flips piece<br/>R: rotates piece</html>");
+	private JLabel controlsLabel = new JLabel("<html>Click to select piece<br/>ENTER: places piece<br/>WASD: moves piece<br/>ARROWS: moves piece<br/>F: flips piece<br/>R: rotates piece</html>");
 	private int[] scoreIntArray;
 	public static final Color BLANK_COLOR = Color.decode("#EEEEEE");
 	public static final Color BACKGROUND_COLOR = Color.decode("#AAAAAA");
@@ -43,7 +43,7 @@ public class ScoreboardScreen extends JPanel {
 		scores = new JLabel[playersArray.length];
 		gameScreen = screen;
 		gameboard = board;
-		this.setPreferredSize(new Dimension(280, 200+40*(playersArray.length+1)));
+		this.setPreferredSize(new Dimension(280, 240+40*(playersArray.length+1)));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 		setUpScoreboardBoard();
@@ -86,7 +86,7 @@ public class ScoreboardScreen extends JPanel {
 		controlsPanel.setBorder(BorderFactory.createEtchedBorder());
 		controlsPanel.add(controlsLabel);
 		controlsLabel.setFont(new Font(controlsLabel.getFont().getName(), Font.PLAIN, 16));
-		controlsPanel.setPreferredSize(new Dimension(280,100));
+		controlsPanel.setPreferredSize(new Dimension(280,140));
 		gbc.gridy=3+playersArray.length;
 		this.add(controlsPanel,gbc);
 		this.updateScoreboard();	
