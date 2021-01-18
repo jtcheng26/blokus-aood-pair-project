@@ -29,6 +29,7 @@ public class ScoreboardScreen extends JPanel {
 	private static final JLabel SCOREBOARD_TITLE = new JLabel("SCOREBOARD");
 	private JLabel currentTurnLabel = new JLabel("Current Turn: ");
 	private GameScreen gameScreen;
+	private Gameboard gameboard;
 	
 	private GridBagConstraints gbc;
 	
@@ -41,6 +42,7 @@ public class ScoreboardScreen extends JPanel {
 		scoreIntArray = new int[playersArray.length];
 		scores = new JLabel[playersArray.length];
 		gameScreen = screen;
+		gameboard = board;
 		this.setPreferredSize(new Dimension(280, 200+40*(playersArray.length+1)));
 		this.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -80,7 +82,6 @@ public class ScoreboardScreen extends JPanel {
 			gbc.gridy=2+j;
 			this.add(leaderboard[j][0],gbc);
 		}
-		
 		controlsPanel.setBackground(Color.WHITE);
 		controlsPanel.setBorder(BorderFactory.createEtchedBorder());
 		controlsPanel.add(controlsLabel);
@@ -88,8 +89,7 @@ public class ScoreboardScreen extends JPanel {
 		controlsPanel.setPreferredSize(new Dimension(280,100));
 		gbc.gridy=3+playersArray.length;
 		this.add(controlsPanel,gbc);
-		this.updateScoreboard();
-		
+		this.updateScoreboard();	
 	}
 	
 	public void updateScoreboard () {
@@ -105,9 +105,16 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[i][0].add(scores[i]);
 			leaderboard[i][0].setBackground(colors[i]);
 			leaderboard[i][0].setForeground(Color.WHITE);
+			if (gameboard.playerOut(playersArray[i])) {
+				scores[i].setText("<html>Player "+playersArray[i].getID()+" score: "+scoreIntArray[i]+"<br/>Out"+"</html>");
+			}
 		}
 		this.revalidate();
 		this.repaint();
+	}
+	
+	public void gameEnd (Player winner) {
+		currentTurnLabel.setText("<html>Winner: <br/>"+winner.getName()+"</html>");
 	}
 	
 	public void bubbleSort(int[] scoreArray, JLabel[] labels, Color[] colorArray, Player[] players) {

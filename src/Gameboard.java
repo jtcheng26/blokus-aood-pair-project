@@ -175,6 +175,8 @@ public class Gameboard {
 		boolean returnBoolean = false;
 		if (player.getPiecesLeft().size() == 0) {
 			returnBoolean = true;
+		} else if (player.getCornerPositions().size() == 0) {
+			returnBoolean = false;
 		} else {
 			for (int i = 0; i < player.getPiecesLeft().size(); i++) {
 				GamePiece piece = player.getPiecesLeft().get(i);
