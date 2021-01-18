@@ -134,7 +134,7 @@ public class ScoreboardScreen extends JPanel {
 			currentTurnLabel.setText("TIE!");
 		} else {
 			currentTurnLabel.setText("<html>Winners: <br/>"+winnerString+"</html>");
-			currentTurnLabel.setForeground(colors[winners.get(0).getID()]);
+			currentTurnLabel.setForeground(colors[0]);
 			for (int i=0; i < winners.size(); i++) {
 				scores[i].setText(playersArray[i].getName()+ " score: "+scoreIntArray[i]+" WINNER");
 			}
@@ -147,6 +147,9 @@ public class ScoreboardScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				mainFrame.setContentPane(new HomeScreen(mainFrame));
+				mainFrame.pack();
+				mainFrame.revalidate();
+				mainFrame.repaint();
 			}
 		});
 		homeButton.setBackground(Color.RED);
