@@ -181,7 +181,7 @@ public class Gameboard {
 			} else {
 				return true;
 			}
-		} else {
+		} else if (player.getPiecesLeft().size() < 21 && player.getPiecesLeft().size() > 0){
 			for (int i = 0; i < player.getPiecesLeft().size(); i++) {
 				GamePiece piece = player.getPiecesLeft().get(i);
 				GamePiece copyPiece = new GamePiece(piece);

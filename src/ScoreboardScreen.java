@@ -23,6 +23,7 @@ public class ScoreboardScreen extends JPanel {
 	private JPanel controlsPanel = new JPanel();
 	
 	private Player[] playersArray;
+	private boolean[] playersOutArray;
 	private JLabel[] scores;
 	private JLabel controlsLabel = new JLabel("<html>Click to select piece<br/>ENTER: places piece<br/>WASD: moves piece<br/>ARROWS: moves piece<br/>F: flips piece<br/>R: rotates piece</html>");
 	private int[] scoreIntArray;
@@ -40,8 +41,10 @@ public class ScoreboardScreen extends JPanel {
 	ScoreboardScreen (Gameboard board, List<Player> players, GameScreen screen, JFrame frame) {
 		this.setBackground(BACKGROUND_COLOR);
 		playersArray = new Player[players.size()];
+		playersOutArray = new boolean[players.size()];
 		for (int i=0; i < playersArray.length; i++) {
 			playersArray[i] = players.get(i);
+			playersOutArray[i] = false;
 		}
 		scoreIntArray = new int[playersArray.length];
 		scores = new JLabel[playersArray.length];
@@ -110,12 +113,16 @@ public class ScoreboardScreen extends JPanel {
 			leaderboard[i][0].add(scores[i]);
 			leaderboard[i][0].setBackground(colors[i]);
 			leaderboard[i][0].setForeground(Color.WHITE);
-			if (gameboard.playerOut(playersArray[i])) {
+			if (playersOutArray[playersArray[i].getID()-1]) {
 				scores[i].setText("Player "+playersArray[i].getID()+" score (out): "+scoreIntArray[i]);
 			}
 		}
 		this.revalidate();
 		this.repaint();
+	}
+	
+	public void setPlayerOut(Player player) {
+		playersOutArray[player.getID()-1] = true;
 	}
 	
 	public void gameEnd (Player winner) {
