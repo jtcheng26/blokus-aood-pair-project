@@ -206,6 +206,7 @@ public class GameScreen extends JPanel implements KeyListener {
 		int orig = currentTurn; // method should only be called when at least one player is still in
 		selectedPiece = null;
 		inventoryPanel.removeAll();
+		int outCnt = 0;
 		do {
 			//System.out.println("Turn " + currentTurn);
 			currentTurn = (currentTurn + 1) % players.size();
@@ -217,18 +218,21 @@ public class GameScreen extends JPanel implements KeyListener {
 					endPlayer(players.get(currentTurn));
 				} else if (players.get(currentTurn).getDifficultyLevel() != 0) {
 					ComputerPlayer p = (ComputerPlayer) players.get(currentTurn);
+					GamePiece choice;
 					if (p.getDifficultyLevel() == Player.EASY_AI) {
 						//System.out.println("Placing easy " + currentTurn);
-						board.placePiece(p.easyAI(board), p);
+						choice = p.easyAI(board);
 					}
-					if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
+					else if (p.getDifficultyLevel() == Player.MEDIUM_AI) {
 						//System.out.println("Placing med " + currentTurn);
-						board.placePiece(p.mediumAI(board), p);
+						choice = p.mediumAI(board);
 					}
-					if (p.getDifficultyLevel() == Player.HARD_AI) {
+					else {
 						//System.out.println("Placing hard " + currentTurn);
-						board.placePiece(p.hardAI(board), p);
+						choice = p.hardAI(board);
 					}
+					board.placePiece(choice, p);
+					inventories.get(currentTurn).placedPiece(choice);
 					updateBoard();
 				}
 			} else {
@@ -237,16 +241,19 @@ public class GameScreen extends JPanel implements KeyListener {
 			for (int i=0; i < players.size(); i++) {
 				//System.out.println("Player " + i + " score: " + players.get(i).getScore());
 			}
-		} while ((isOut[currentTurn] || players.get(currentTurn).getDifficultyLevel() != 0) && currentTurn != orig);
+			outCnt = 0;
+			for (int i=0;i<players.size();i++)
+				if (isOut[i])
+					outCnt++;
+		} while ((isOut[currentTurn] || players.get(currentTurn).getDifficultyLevel() != 0) && outCnt < players.size());
 		inventoryPanel.add(inventories.get(currentTurn));
 		inventoryPanel.revalidate();
 		inventoryPanel.repaint();
 		updateBoard();
-		System.out.println(players.get(currentTurn).getName());
+		//System.out.println(players.get(currentTurn).getName());
 		updateScoreboard();
-		if (orig == currentTurn) {
-			if (board.playerOut(players.get(currentTurn)))
-				endGame();
+		if (outCnt == players.size()) {
+			endGame();
 		}
 	}
 	private void endPlayer(Player player) {
